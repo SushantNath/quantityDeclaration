@@ -1,0 +1,10 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog title="{i18>Select}" class="sapUiPopupWithPadding pageDialog" search="onReasonF4Search"
+		confirm="onReasonF4Confirm" liveChange="onReasonF4Search" items="{oReasonModel>/results}">
+		<StandardListItem title="{oReasonModel>Grund}"  info = "{oReasonModel>Grdtx}" infoState = "Success"/>
+		
+			
+	</SelectDialog>
+
+		
+</core:FragmentDefinition>
