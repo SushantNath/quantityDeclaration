@@ -1,0 +1,149 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:m="sap.m"
+	xmlns:core="sap.ui.core" >
+	<Dialog
+	    id="idquan"
+	    afterClose="dialogAfterClose2"
+	    class="sapUiPopupWithPadding pageDialog"
+		contentHeight="100%"
+		contentWidth="50%"
+		showHeader="false">
+		
+			    <Toolbar height="3.8rem">
+				<m:OverflowToolbar>
+				<m:Title text="{i18n>Dec}"/>
+				<m:ToolbarSpacer width="15rem"/>
+					
+				</m:OverflowToolbar>
+			    </Toolbar>
+			
+						<HBox>
+						<FlexBox id="idFOrder2" alignItems="Center">
+						<Label id="idLOrder2" width="8rem" text="{i18n>Order}" class="sapUiTinyMarginBegin ColLabel"/>
+						<Input id="idOrder2" width="8rem" class="ColInput" editable="false"/>
+						</FlexBox>
+					
+						<FlexBox id="idFoper2" alignItems="Center">	
+						<Label id="idLOper2" width="8rem" text="{i18n>Operation}" class="sapUiTinyMarginBegin ColLabel"/>
+						<Input id="idOper2" width="8rem" class="ColInput" editable="false"/>
+						</FlexBox>
+					    </HBox>
+					<!--    --><!--    --><!--    --><!--    -->
+					    <HBox>
+						<FlexBox id="idFWork2" alignItems="Center">	
+						<Label id="idLWork2" width="8rem" text="{i18n>Work}" class="sapUiTinyMarginBegin ColLabel"/>
+						<Input id="idWork2" width="8rem" class="ColInput" editable="false"/>
+						</FlexBox>
+						
+						<FlexBox id="idFDesc2" alignItems="Center">
+					     <Label id="idLDesc2" width="0.6rem" class="sapUiTinyMarginBegin ColLabel"/>
+						 <Input id="idDesc2" width="15rem" class="ColInput" editable="false"/>
+						</FlexBox>
+						</HBox>
+						
+						<HBox>
+						<FlexBox id="idFMat2" alignItems="Center">
+						<Label id="idLMat2" width="8rem" text="{i18n>Material}" class="sapUiTinyMarginBegin ColLabel"/>
+						<Input id="idMat2" width="8rem" class="ColInput" editable="false"/>
+						</FlexBox>
+					
+						<FlexBox id="idFMatD2" alignItems="Center">	
+						<Label id="idLMatD2" width="0.6rem" class="sapUiTinyMarginBegin ColLabel"/>
+						<Input id="idMatD2" width="15rem" class="ColInput" editable="false"/>
+						</FlexBox>
+						</HBox>
+						
+						<HBox>
+						<FlexBox id="idFLast2" alignItems="Center">
+						<Label id="idLLast2" width="12rem" text="{i18n>Last}" class="sapUiTinyMarginBegin ColLabel"/>
+						<Input id="idLast2" width="8rem" class="ColInput" editable="false"/>
+						</FlexBox>
+					
+					    <FlexBox id="idFQTime2" alignItems="Center">	
+						<Label id="idLQTime2" width="0.6rem" class="sapUiTinyMarginBegin ColLabel"/>
+						<Input id="idQTime2" width="4rem" class="ColInput" editable="false"/>
+						</FlexBox>
+						
+						<FlexBox id="idFQStat2" alignItems="Center">	
+						<Label id="idLQStat2" width="0.6rem" class="sapUiTinyMarginBegin ColLabel"/>
+						<Input id="idQStat2" width="6rem" class="ColInput" editable="false"/>
+						</FlexBox>
+						
+						<FlexBox id="idFQUnit2" alignItems="Center">	
+						<Label id="idLQUnit2" width="0.6rem" class="sapUiTinyMarginBegin ColLabel"/>
+						<Input id="idQUnit2" width="4rem" class="ColInput" editable="false"/>
+						</FlexBox>
+						</HBox>
+		
+						<HBox>
+						<FlexBox id="idFType2" alignItems="Center">
+						<Label id="idLType2" width="8rem" text="{i18n>Type}" class="sapUiTinyMarginBegin ColLabel"/>
+						<Input id="idType2" width="12rem" class="ColInput" editable="false"/>
+						</FlexBox>
+						</HBox>
+						
+						<HBox>
+						<FlexBox id="idFNumber2" alignItems="Center">
+						<Label id="idLNumber2" width="10rem" text="{i18n>Number}" class="sapUiTinyMarginBegin ColLabel"/>
+						<Input id="idNumber2" width="3rem" class="ColInput" editable="true"/>
+						</FlexBox>
+						</HBox>
+			
+						<HBox>
+						<FlexBox id="idFQuan2" alignItems="Center">
+						<Label id="idLQuan2" width="8rem" text="{i18n>Quantity}" class="sapUiTinyMarginBegin ColLabel"/>
+						<Input id="idQuan2" width="8rem" class="ColInput" editable="true"/>
+						</FlexBox>
+						
+						<FlexBox id="idFQU2" alignItems="Center">	
+						<Label id="idLQU2" width="0.6rem" class="sapUiTinyMarginBegin ColLabel"/>
+						<Input id="idQU2" width="4rem" class="ColInput" editable="true"/>
+						</FlexBox>
+						</HBox>
+						
+						<HBox>
+						<FlexBox id="idFAuto2" alignItems="Center">
+						<RadioButtonGroup id="rbg2" columns="2" selectedIndex="3" class="sapUiMediumMarginBottom">
+		             	<RadioButton id="idAuto2" text="{i18n>Auto}" select="autoCompSel" />
+			            <RadioButton id="idManual2" text="{i18n>Manual}" select="manualCompSel"/>
+			            <RadioButton id="idcon2" text="{i18n>Con}" select="autoSel"/>
+		                </RadioButtonGroup>
+			            </FlexBox>
+						</HBox>
+						
+						<HBox>
+						<FlexBox id="idFDate2" alignItems="Center">
+						<Label id="idLDate2" width="8rem" text="{i18n>Date}" class="sapUiTinyMarginBegin ColLabel"/>
+						<DatePicker
+		             	id="idDate2"
+		             	width="9rem"
+		             	valueFormat="dd.MM.yyyy"
+		             	displayFormat="dd.MM.yyyy"
+			            class="sapUiSmallMarginBottom" />
+						</FlexBox>
+						</HBox>
+						
+						<HBox>
+						<FlexBox id="idFTime2" alignItems="Center">
+						<Label id="idLTime2" width="8rem" text="{i18n>Time}" class="sapUiTinyMarginBegin ColLabel"/>
+						<TimePicker
+			            id="idTime2"
+			            width="9rem"
+			            valueFormat="HH:mm:ss"
+				        displayFormat="HH:mm:ss"
+			            class="sapUiSmallMarginBottom" />
+						</FlexBox>
+						
+						<FlexBox id="idFAccept2" alignItems="Center">
+			            <ToolbarSpacer/>
+			         	<Label id="idLReject2" width="6rem" class="sapUiTinyMarginBegin ColLabel"/>
+				        <Button id="idReject2" icon="sap-icon://decline" class="ButtonColorBrown" press="fHandleClose2" ariaLabelledBy="actionButtonLabel"/>
+				        <Label id="idLAccept2" width="0.5rem" class="sapUiTinyMarginBegin ColLabel"/>
+				        <Button id="idAccept2" icon="sap-icon://accept" class="ButtonColorGreen" press="fConfirm2" ariaLabelledBy="actionButtonLabel"/>
+				        <ToolbarSpacer/>
+			            </FlexBox>
+			<!--    --><!--    --><!--    --><!--    --><!--    --><!--    --><!--    --><!--    --><!--    --><!--    --><!--    --><!--    -->
+						</HBox>
+	</Dialog>
+</core:FragmentDefinition>
