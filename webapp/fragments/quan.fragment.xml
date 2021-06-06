@@ -140,7 +140,6 @@
 							</f:fields>
 						</f:FormElement>
 						
-						
 							<f:FormElement label="Comments">
 							<f:fields>
 						<TextArea id="commentsText" width="30%" value=" " rows="4"/>
