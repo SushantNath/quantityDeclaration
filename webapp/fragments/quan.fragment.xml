@@ -1,14 +1,157 @@
 <core:FragmentDefinition
 	xmlns="sap.m"
 	xmlns:m="sap.m"
+	xmlns:f="sap.ui.layout.form"
 	xmlns:core="sap.ui.core" >
 	<Dialog
 	    id="idquan"
 	    afterClose="dialogAfterClose2"
 	    class="sapUiPopupWithPadding pageDialog"
 		contentHeight="100%"
-		contentWidth="50%"
+		contentWidth="65%"
 		showHeader="false">
+		
+		
+			<f:Form id="firstForm"
+			editable="false">
+			<f:title>
+				<core:Title text="Quantity declaration" />
+			</f:title>
+			<f:layout>
+				<f:ResponsiveGridLayout
+					labelSpanXL="4"
+					labelSpanL="3"
+					labelSpanM="4"
+					labelSpanS="12"
+					adjustLabelSpan="false"
+					emptySpanXL="0"
+					emptySpanL="4"
+					emptySpanM="0"
+					emptySpanS="0"
+					columnsXL="2"
+					columnsL="1"
+					columnsM="1"
+					singleContainerFullSize="false" />
+					
+			</f:layout>
+			<f:formContainers>
+				<f:FormContainer >
+					<f:formElements>
+						<f:FormElement label="Production Order">
+							<f:fields>
+								<Input id="idOrder2" width="60%" class="ColInput" editable="false"/>
+									<Label id="idLOper2" width="8rem" text="Operation" class="sapUiTinyMarginBegin ColLabel"/>
+					<Input id="idOper2" width="80%" class="ColInput" editable="false"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Work Center">
+							<f:fields>
+							<Input id="idWork2" width="60%" class="ColInput" editable="false"/>
+								<Input id="idDesc2" class="ColInput" editable="false"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Material">
+							<f:fields>
+							<Input id="idMat2" width="60%" class="ColInput" editable="false"/>
+							<Input id="idMatD2" class="ColInput" editable="false"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Last activity confirmation">
+							<f:fields>
+								<Input id="idQact2" class="ColInput" editable="false"/>
+							<Input id="idATime2" class="ColInput" editable="false"/>
+					<Input id="idAStat2" class="ColInput" editable="false"/>
+					<Input id="idAUnit2" class="ColInput" editable="false"/>
+			<!--	<Label id="idConf" class="ColInput"/>
+					<Label id="idReason" class="ColInput"/>-->
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+				
+		
+			</f:formContainers>
+		</f:Form>
+		
+		
+			<f:Form id="secondForm"
+			editable="false">
+			<f:title>
+				<core:Title  />
+			</f:title>
+			<f:layout>
+				<f:ResponsiveGridLayout
+					labelSpanXL="4"
+					labelSpanL="3"
+					labelSpanM="4"
+					labelSpanS="12"
+					adjustLabelSpan="false"
+					emptySpanXL="0"
+					emptySpanL="4"
+					emptySpanM="0"
+					emptySpanS="0"
+					columnsXL="2"
+					columnsL="1"
+					columnsM="1"
+					singleContainerFullSize="false" />
+					
+			</f:layout>
+			<f:formContainers>
+			
+					
+								
+				<f:FormContainer   >
+					<f:formElements>
+						<f:FormElement label="Confirmation Type">
+							<f:fields>
+								<ComboBox id="DropDown" width="30%" change=".changeConfirmation"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Number of Operators">
+							<f:fields>
+							<Input id="idNumber2" width="30%" class="ColInput" editable="true" />
+							
+						
+							
+						
+							</f:fields>
+						</f:FormElement>
+							<f:FormElement label="Quantity">
+							<f:fields>
+							<Input id="idQuan2" width="30%" class="ColInput"  placeholder="{i18n>Select}" valueHelpRequest="onReasonF4" change="onReasonF4Change"
+						showValueHelp="true" value="{GET_REASONModel>/Aufnr}" />
+						
+					<!--	<RadioButtonGroup id="rbg2" columns="2" selectedIndex="3" class="sapUiMediumMarginBottom">
+		             	<RadioButton id="idAuto2" text="{i18n>Auto}" select="autoCompSel" />-->
+						
+							</f:fields>
+						</f:FormElement>
+							<f:FormElement label="Date">
+							<f:fields>
+							<DatePicker id="idDate2" width="30%" valueFormat="dd.MM.yyyy" displayFormat="dd.MM.yyyy" required="true" class="sapUiSmallMarginBottom"/>
+						
+							</f:fields>
+						</f:FormElement>
+							<f:FormElement label="Time">
+							<f:fields>
+							<TimePicker id="idTime2" width="30%" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" required="true" class="sapUiSmallMarginBottom"/>
+						
+				
+							</f:fields>
+						</f:FormElement>
+						
+						
+							<f:FormElement label="Comments">
+							<f:fields>
+						<TextArea id="commentsText" width="30%" value=" " rows="4"/>
+							</f:fields>
+						</f:FormElement>
+						
+					</f:formElements>
+			
+						</f:FormContainer>
+			</f:formContainers>
+		</f:Form>
 		
 			    <Toolbar height="3.8rem">
 				<m:OverflowToolbar>
@@ -18,7 +161,7 @@
 				</m:OverflowToolbar>
 			    </Toolbar>
 			
-						<HBox>
+					<!--	<HBox>
 						<FlexBox id="idFOrder2" alignItems="Center">
 						<Label id="idLOrder2" width="8rem" text="{i18n>Order}" class="sapUiTinyMarginBegin ColLabel"/>
 						<Input id="idOrder2" width="8rem" class="ColInput" editable="false"/>
@@ -29,7 +172,7 @@
 						<Input id="idOper2" width="8rem" class="ColInput" editable="false"/>
 						</FlexBox>
 					    </HBox>
-					<!--    --><!--    --><!--    --><!--    -->
+				
 					    <HBox>
 						<FlexBox id="idFWork2" alignItems="Center">	
 						<Label id="idLWork2" width="8rem" text="{i18n>Work}" class="sapUiTinyMarginBegin ColLabel"/>
@@ -128,7 +271,7 @@
 						<FlexBox id="idFTime2" alignItems="Center">
 						<Label id="idLTime2" width="8rem" text="{i18n>Time}" class="sapUiTinyMarginBegin ColLabel"/>
 						<TimePicker
-			            id="idTime2"
+			           
 			            width="9rem"
 			            valueFormat="HH:mm:ss"
 				        displayFormat="HH:mm:ss"
@@ -143,7 +286,7 @@
 				        <Button id="idAccept2" icon="sap-icon://accept" class="ButtonColorGreen" press="fConfirm2" ariaLabelledBy="actionButtonLabel"/>
 				        <ToolbarSpacer/>
 			            </FlexBox>
-			<!--    --><!--    --><!--    --><!--    --><!--    --><!--    --><!--    --><!--    --><!--    --><!--    --><!--    --><!--    -->
-						</HBox>
+		
+						</HBox> -->
 	</Dialog>
 </core:FragmentDefinition>

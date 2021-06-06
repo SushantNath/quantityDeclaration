@@ -1,121 +1,147 @@
 <core:FragmentDefinition backgroundColor="Grey" xmlns="sap.m" xmlns:m="sap.m" xmlns:f="sap.ui.layout.form" xmlns:mvc="sap.ui.core.mvc"
 	xmlns:l="sap.ui.layout" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:tnt="sap.tnt" xmlns:core="sap.ui.core">
-	<Dialog id="idact" class="sapUiPopupWithPadding pageDialog" afterClose="dialogAfterClose1" contentHeight="90%" contentWidth="55%"
+	<Dialog id="idact" class="sapUiPopupWithPadding pageDialog" afterClose="dialogAfterClose1" contentHeight="90%" contentWidth="75%"
 		showHeader="false">
-		<Toolbar height="3rem">
-			<m:OverflowToolbar>
-				<m:Title text="{i18n>Text}"/>
-				<m:ToolbarSpacer width="15rem"/>
-			</m:OverflowToolbar>
-		</Toolbar>
-		<FlexBox id="idFOrder1" alignItems="Center">
-			<!--<html:div class="icon" style="background-color: Grey"/>	-->
-			<Label id="idLOrder1" design="Bold" width="8rem" text="Production Order" class="sapUiTinyMarginBegin ColLabel"/>
-			<!--<Label id="idLOrder1" width="8rem" text="Hello" class="ColInput" />-->
-			<tnt:InfoLabel id="idOrder1"  colorScheme="9" width="100px" class=" sapUiTinyMarginTop ColInput" />
-		</FlexBox>
-		<FlexBox id="idFoper1" alignItems="Center">
-			<Label id="idLOper1" design="Bold" width="8rem" text="Operation" class="sapUiTinyMarginBegin ColLabel"/>
-			<!--<Label id="idOper1" width="8rem" class="ColInput" />-->
-			<tnt:InfoLabel id="idOper1" colorScheme="9" renderMode="Narrow" displayOnly="true" class="sapUiTinyMarginTop"/>
-		</FlexBox>
-		<HBox>
-			<FlexBox id="idFWork1" alignItems="Center">
-				<Label id="idLWork1" design="Bold" width="8rem" text="Work Center" class="sapUiTinyMarginBegin ColLabel"/>
-				<!--<Label id="idWork1" width="8rem" class="ColInput" />-->
-				<tnt:InfoLabel id="idWork1" colorScheme="4" renderMode="Narrow" displayOnly="true" class="sapUiTinyMarginTop"/>
-			</FlexBox>
-			<FlexBox id="idFDesc1" alignItems="Center">
-				<Label id="idLDesc1" design="Bold" width="0.6rem" class="sapUiTinyMarginBegin ColLabel"/>
-				<!--<Label id="idDesc1" width="15rem" class="ColInput" />-->
-				<tnt:InfoLabel id="idDesc1" colorScheme="4" renderMode="Narrow" displayOnly="true" class="sapUiTinyMarginTop"/>
-			</FlexBox>
-		</HBox>
-		<HBox>
-			<FlexBox id="idFMat1" alignItems="Center">
-				<Label id="idLMat1" design="Bold" width="8rem" text="Material" class="sapUiTinyMarginBegin ColLabel"/>
-				<!--<Label id="idMat1" width="8rem" class="ColInput" />-->
-				<tnt:InfoLabel id="idMat1" colorScheme="5" renderMode="Narrow" displayOnly="true" class="sapUiTinyMarginTop"/>
-			</FlexBox>
-			<FlexBox id="idFMatD1" alignItems="Center">
-				<Label id="idLMatD1" width="0.6rem" class="sapUiTinyMarginBegin ColLabel"/>
-				<!--<Label id="idMatD1" width="15rem" class="ColInput" />-->
-				<tnt:InfoLabel id="idMatD1" colorScheme="6" renderMode="Narrow" displayOnly="true" class="sapUiTinyMarginTop"/>
-			</FlexBox>
-		</HBox>
-		<HBox>
-			<FlexBox id="idFact1" alignItems="Center">
-				<Label id="idLQact1" design="Bold" width="12rem" text="Last activity confirmation" class="sapUiTinyMarginBegin ColLabel"/>
-				<!--<Label id="idQact1" width="8rem" class="ColInput" />-->
-				<tnt:InfoLabel id="idQact1" colorScheme="7" renderMode="Narrow" displayOnly="true" class="sapUiTinyMarginTop"/>
-			</FlexBox>
-			<FlexBox id="idFATime1" alignItems="Center">
-				<Label id="idLATime1" width="0.6rem" class="sapUiTinyMarginBegin ColLabel"/>
-				<!--<Label id="idATime1" width="4rem" class="ColInput" />-->
-				<tnt:InfoLabel id="idATime1" colorScheme="7" renderMode="Narrow" displayOnly="true" class="sapUiTinyMarginTop"/>
-			</FlexBox>
-			<FlexBox id="idFAStat1" alignItems="Center">
-				<Label id="idLAStat1" width="0.6rem" class="sapUiTinyMarginBegin ColLabel"/>
-				<!--<Label id="idAStat1" width="6rem" class="ColInput" />-->
-				<tnt:InfoLabel id="idAStat1" colorScheme="7" renderMode="Narrow" displayOnly="true" class="sapUiTinyMarginTop"/>
-			</FlexBox>
-			<FlexBox id="idFAUnit1" alignItems="Center">
-				<Label id="idLAUnit1" width="0.6rem" class="sapUiTinyMarginBegin ColLabel"/>
-				<!--<Label id="idAUnit1" width="7rem" class="ColInput" />-->
-				<tnt:InfoLabel id="idAUnit1" colorScheme="7" renderMode="Narrow" displayOnly="true" class="sapUiTinyMarginTop"/>
-			</FlexBox>
-		</HBox>
+	
+
+	
+
+
+		<f:Form id="firstForm"
+			editable="false">
+			<f:title>
+				<core:Title text="Activity confirmation" />
+			</f:title>
+			<f:layout>
+				<f:ResponsiveGridLayout
+					labelSpanXL="4"
+					labelSpanL="3"
+					labelSpanM="4"
+					labelSpanS="12"
+					adjustLabelSpan="false"
+					emptySpanXL="0"
+					emptySpanL="4"
+					emptySpanM="0"
+					emptySpanS="0"
+					columnsXL="2"
+					columnsL="1"
+					columnsM="1"
+					singleContainerFullSize="false" />
+					
+			</f:layout>
+			<f:formContainers>
+				<f:FormContainer >
+					<f:formElements>
+						<f:FormElement label="Production Order">
+							<f:fields>
+								<Input id="idOrder1" width="60%" class="ColInput" editable="false"/>
+									<Label id="idLOper1" width="8rem" text="Operation" class="sapUiTinyMarginBegin ColLabel"/>
+					<Input id="idOper1" width="80%" class="ColInput" editable="false"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Work Center">
+							<f:fields>
+							<Input id="idWork1" width="60%" class="ColInput" editable="false"/>
+								<Input id="idDesc1" class="ColInput" editable="false"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Material">
+							<f:fields>
+							<Input id="idMat1" width="60%" class="ColInput" editable="false"/>
+							<Input id="idMatD1" class="ColInput" editable="false"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Last activity confirmation">
+							<f:fields>
+								<Input id="idQact1" class="ColInput" editable="false"/>
+							<Input id="idATime1" class="ColInput" editable="false"/>
+					<Input id="idAStat1" class="ColInput" editable="false"/>
+					<Input id="idAUnit1" class="ColInput" editable="false"/>
+			<!--	<Label id="idConf" class="ColInput"/>
+					<Label id="idReason" class="ColInput"/>-->
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+				
 		
-			<m:OverflowToolbar>
-				
-				<m:ToolbarSpacer />
-			</m:OverflowToolbar>
-		<HBox>
+			</f:formContainers>
+		</f:Form>
+		
+		
+			<f:Form id="secondForm"
+			editable="false">
+			<f:title>
+				<core:Title  />
+			</f:title>
+			<f:layout>
+				<f:ResponsiveGridLayout
+					labelSpanXL="4"
+					labelSpanL="3"
+					labelSpanM="4"
+					labelSpanS="12"
+					adjustLabelSpan="false"
+					emptySpanXL="0"
+					emptySpanL="4"
+					emptySpanM="0"
+					emptySpanS="0"
+					columnsXL="2"
+					columnsL="1"
+					columnsM="1"
+					singleContainerFullSize="false" />
+					
+			</f:layout>
+			<f:formContainers>
 			
+					
+								
+				<f:FormContainer   >
+					<f:formElements>
+						<f:FormElement label="Confirmation Type">
+							<f:fields>
+								<ComboBox id="DropDown" width="30%" change=".changeConfirmation"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="Number of Operators">
+							<f:fields>
+							<Input id="idNumber1" width="30%" class="ColInput" editable="true" enabled="false"/>
+						
+							</f:fields>
+						</f:FormElement>
+							<f:FormElement label="Reason for Deviation">
+							<f:fields>
+							<Input id="idReason1" width="30%" class="ColInput"  placeholder="{i18n>Select}" valueHelpRequest="onReasonF4" change="onReasonF4Change"
+						showValueHelp="true" value="{GET_REASONModel>/Aufnr}" enabled="false"/>
+						
+							</f:fields>
+						</f:FormElement>
+							<f:FormElement label="Date">
+							<f:fields>
+							<DatePicker id="idDate1" width="30%" valueFormat="dd.MM.yyyy" displayFormat="dd.MM.yyyy" required="true" class="sapUiSmallMarginBottom"/>
+						
+							</f:fields>
+						</f:FormElement>
+							<f:FormElement label="Time">
+							<f:fields>
+							<TimePicker id="idTime1" width="30%" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" required="true" class="sapUiSmallMarginBottom"/>
+						
+				
+							</f:fields>
+						</f:FormElement>
+						
+						
+							<f:FormElement label="Comments">
+							<f:fields>
+						<TextArea id="commentsText" width="30%" value=" " rows="4"/>
+							</f:fields>
+						</f:FormElement>
+						
+					</f:formElements>
 			
-			<FlexBox id="idFType1" alignItems="Center">
-				<Label id="idLType1" design="Bold" width="8rem" text="Confirmation Type" class="sapUiTinyMarginBegin ColLabel"/>
-			<!--	<Select selectedKey="Interrupt processing" class="ColInput">
-					<core:Item key="IP" text="Interrupt processing"/>
-				</Select>-->
-				
-				<ComboBox id="DropDown" change=".changeConfirmation">
-   
-</ComboBox>
-				
-			</FlexBox>
-		</HBox>
-		<HBox>
-			<HBox>
-				<FlexBox id="idFNumber1" alignItems="Center">
-					<Label id="idLNumber1" design="Bold" width="10rem" text="Number of Operators" class="sapUiTinyMarginBegin ColLabel"/>
-					<Input id="idNumber1" width="3rem" class="ColInput" editable="true" enabled="false"/>
-				</FlexBox>
-			</HBox>
-		</HBox>
-		<HBox>
-			<FlexBox id="idFReason1" alignItems="Center">
-				<Label id="idLReason1" design="Bold" width="10rem" text="Reason for Deviation" class="sapUiTinyMarginBegin ColLabel"/>
-				<Input id="idReason1" width="80%" class="ColInput" placeholder="{i18n>Select}" valueHelpRequest="onReasonF4" change="onReasonF4Change"
-					showValueHelp="true" value="{GET_REASONModel>/Aufnr}" enabled="false"/>
-			</FlexBox>
-		</HBox>
-		<HBox>
-			<FlexBox id="idFDate1" alignItems="Center">
-				<Label id="idLDate1" design="Bold" width="8rem" text="Date" class="sapUiTinyMarginBegin ColLabel" required="true"/>
-				<DatePicker id="idDate1" width="9rem" valueFormat="dd.MM.yyyy" displayFormat="dd.MM.yyyy" class="sapUiSmallMarginBottom"/>
-			</FlexBox>
-		</HBox>
-		<HBox>
-			<FlexBox id="idFTime1" alignItems="Center">
-				<Label id="idLTime1" design="Bold" width="8rem" text="Time" class="sapUiTinyMarginBegin ColLabel" required="true"/>
-				<TimePicker id="idTime1" width="9rem" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" class="sapUiSmallMarginBottom"/>
-			</FlexBox>
-		</HBox>
-		<HBox>
-			<Label width="8rem" design="Bold" text="Comments" class="sapUiSmallMarginBegin ColLabel"/>
-			<TextArea id ="commentsText" value=" " rows="4"/>
-		</HBox>
+						</f:FormContainer>
+			</f:formContainers>
+		</f:Form>
+	
 		<beginButton>
 			<Button text="Save" press=".fConfirm1"/>
 		</beginButton>

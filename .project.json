@@ -40,10 +40,10 @@
     "targetFolder": "dist",
     "excludedFolders": [],
     "excludedFiles": [],
-    "lastBuildDateTime": "Tue, 01 Jun 2021 10:39:04 GMT"
+    "lastBuildDateTime": "Thu, 03 Jun 2021 07:12:53 GMT"
   },
   "deploy": {
     "destination": "DE4",
-    "name": "ZACTIVITYCONF"
+    "name": "ZQuantityDec"
   }
 }
