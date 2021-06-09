@@ -13,6 +13,33 @@ sap.ui.define([
 
 			var ParameterData = this.getOwnerComponent().getComponentData();
 				gmsgbundle = this.getOwnerComponent().getModel("i18n");
+				
+				//  n = "0020";
+				// V = "1002206";
+				
+					if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined){
+ console.log("passed order number is undefined ");
+
+				n = "0030";
+				V = "1000082";
+			} else {
+
+ console.log("passed order number is ", ParameterData.startupParameters.orderType);
+ console.log("passed operation number is ", ParameterData.startupParameters.operationNum);
+
+				if (ParameterData.startupParameters.orderType) {
+
+					V = ParameterData.startupParameters.orderType[0]; // “Getting the Purchase Order Value passed along with the URL
+
+				}
+
+				if (ParameterData.startupParameters.operationNum) {
+
+					n = ParameterData.startupParameters.operationNum[0]; // “Getting the Purchase Order Value passed along with the URL
+
+				}
+
+			}  
 
 			var processField;
 			var startField;
@@ -23,8 +50,7 @@ sap.ui.define([
 					var n;
 			var V;
 			var t = this.getView();
-	           n = "0020";
-				V = "1002206";
+	          
 			var p = {};
 			var I = "/PO_GETSet(Aufnr='" + V + "',Vornr='" + n + "')";
 			oModel.read(I, {
@@ -43,12 +69,12 @@ sap.ui.define([
 			sap.ui.getCore().byId("idDesc2").setValue(oData.Ktext);
 			sap.ui.getCore().byId("idMat2").setValue(oData.Matnr);
 			sap.ui.getCore().byId("idMatD2").setValue(oData.Maktx);
-		/*	sap.ui.getCore().byId("idLast2").setValue(u);
-			sap.ui.getCore().byId("idQTime2").setValue(g);
-			sap.ui.getCore().byId("idQStat2").setValue(n);
-			sap.ui.getCore().byId("idQUnit2").setValue(l);
-			sap.ui.getCore().byId("idType2").setValue(p1);
-			sap.ui.getCore().byId("idQU2").setValue(b);*/
+			sap.ui.getCore().byId("idQact2").setValue(oData.ZquanDate);
+			sap.ui.getCore().byId("idATime2").setValue(oData.ZquanTime);
+			sap.ui.getCore().byId("idAStat2").setValue(oData.ZquanPro);
+			sap.ui.getCore().byId("idAUnit2").setValue(oData.ZquanUnit);
+			sap.ui.getCore().byId("idDate2").setDateValue(new Date);
+			sap.ui.getCore().byId("idTime2").setDateValue(new Date);
 				
 				
 
