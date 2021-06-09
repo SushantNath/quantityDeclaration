@@ -14,8 +14,8 @@
 			"version": "1.40.12"
 		},
 		"dataSources": {
-			"ZPTMPROD_CONF_SRV": {
-				"uri": "/sap/opu/odata/sap/ZPTMPOST_ACT_SRV/",
+			"ZPTMQUAN_ACT_SRV": {
+				"uri": "/sap/opu/odata/sap/ZPTMQUAN_ACT_SRV/",
 				"type": "OData",
 				"settings": {
 					"localUri": "localService/metadata.xml"
@@ -78,7 +78,7 @@
 					"defaultBindingMode": "OneWay",
 					"defaultCountMode": "Request"
 				},
-				"dataSource": "ZPTMPROD_CONF_SRV",
+				"dataSource": "ZPTMQUAN_ACT_SRV",
 				"preload": true
 			}
 		},

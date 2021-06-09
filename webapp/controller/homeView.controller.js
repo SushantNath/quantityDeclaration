@@ -17,7 +17,70 @@ sap.ui.define([
 			var processField;
 			var startField;
 			var that = this;
-		
+			
+			var oModel = this.getOwnerComponent().getModel();
+				var b = this;
+					var n;
+			var V;
+			var t = this.getView();
+	           n = "0020";
+				V = "1002206";
+			var p = {};
+			var I = "/PO_GETSet(Aufnr='" + V + "',Vornr='" + n + "')";
+			oModel.read(I, {
+				success: function(oData) {
+					p = oData;
+					
+					// 	if (oData.Gv_msg1 !== "") {
+					// 	MessageBox.error(oData.Gv_msg1);
+					// 	return;
+					// }
+			
+				
+					sap.ui.getCore().byId("idOrder2").setValue(V);
+			sap.ui.getCore().byId("idOper2").setValue(n);
+			sap.ui.getCore().byId("idWork2").setValue(oData.Arbpl);
+			sap.ui.getCore().byId("idDesc2").setValue(oData.Ktext);
+			sap.ui.getCore().byId("idMat2").setValue(oData.Matnr);
+			sap.ui.getCore().byId("idMatD2").setValue(oData.Maktx);
+		/*	sap.ui.getCore().byId("idLast2").setValue(u);
+			sap.ui.getCore().byId("idQTime2").setValue(g);
+			sap.ui.getCore().byId("idQStat2").setValue(n);
+			sap.ui.getCore().byId("idQUnit2").setValue(l);
+			sap.ui.getCore().byId("idType2").setValue(p1);
+			sap.ui.getCore().byId("idQU2").setValue(b);*/
+				
+				
+
+				/*	var i = oData.Igmng;
+					var s = oData.Gmein;
+
+					sap.ui.getCore().byId("idDate1").setDateValue(new Date);
+					sap.ui.getCore().byId("idTime1").setDateValue(new Date);
+					sap.ui.getCore().byId("idOrder1").setValue(V);
+					sap.ui.getCore().byId("idOper1").setValue(n);
+					sap.ui.getCore().byId("idWork1").setValue(oData.Arbpl);
+					sap.ui.getCore().byId("idDesc1").setValue(oData.Ktext);
+					sap.ui.getCore().byId("idMat1").setValue(oData.Matnr);
+					sap.ui.getCore().byId("idMatD1").setValue(oData.Maktx);
+
+					if (i === "") {
+						s = "";
+					}
+
+					sap.ui.getCore().byId("idQact1").setValue(oData.ZactDate);
+					sap.ui.getCore().byId("idATime1").setValue(oData.ZactTime);
+					sap.ui.getCore().byId("idAStat1").setValue(oData.ZactPro);
+					sap.ui.getCore().byId("idAUnit1").setValue(oData.ZactStart);
+					sap.ui.getCore().byId("idConf").setText(oData.Satza);
+					sap.ui.getCore().byId("idReason").setText(oData.Grund);
+					processField = oData.ZactPro;
+					startField = oData.ZactStart;
+					// reasonField= oData.Grund;
+					// confirmationField= oData.Satza; */
+				}
+				
+			});
 
 			this.fQuantityClick();
 

@@ -56,7 +56,7 @@
 							<Input id="idMatD2" class="ColInput" editable="false"/>
 							</f:fields>
 						</f:FormElement>
-						<f:FormElement label="Last activity confirmation">
+						<f:FormElement label="Last quantity declaration">
 							<f:fields>
 								<Input id="idQact2" class="ColInput" editable="false"/>
 							<Input id="idATime2" class="ColInput" editable="false"/>
@@ -104,7 +104,7 @@
 					<f:formElements>
 						<f:FormElement label="Confirmation Type">
 							<f:fields>
-								<ComboBox id="DropDown" width="30%" change=".changeConfirmation"/>
+								<Input id="DropDown" width="30%" />
 							</f:fields>
 						</f:FormElement>
 						<f:FormElement label="Number of Operators">
@@ -118,15 +118,14 @@
 						</f:FormElement>
 							<f:FormElement label="Quantity">
 							<f:fields>
-							<Input id="idQuan2" width="30%" class="ColInput"  placeholder="{i18n>Select}" valueHelpRequest="onReasonF4" change="onReasonF4Change"
-						showValueHelp="true" value="{GET_REASONModel>/Aufnr}" />
-						
+								<Input id="idQuan2" width="8rem" class="ColInput" editable="true"/>
+						        <Input id="idQU2" width="4rem" class="ColInput" editable="true"/>
 					<!--	<RadioButtonGroup id="rbg2" columns="2" selectedIndex="3" class="sapUiMediumMarginBottom">
 		             	<RadioButton id="idAuto2" text="{i18n>Auto}" select="autoCompSel" />-->
 						
 							</f:fields>
 						</f:FormElement>
-							<f:FormElement label="Date">
+							<f:FormElement label="Date" >
 							<f:fields>
 							<DatePicker id="idDate2" width="30%" valueFormat="dd.MM.yyyy" displayFormat="dd.MM.yyyy" required="true" class="sapUiSmallMarginBottom"/>
 						
@@ -140,9 +139,11 @@
 							</f:fields>
 						</f:FormElement>
 						
-							<f:FormElement label="Comments">
+							<f:FormElement >
 							<f:fields>
-						<TextArea id="commentsText" width="30%" value=" " rows="4"/>
+					<RadioButtonGroup id="rbg2" columns="2" selectedIndex="2"/>
+		             	<RadioButton id="idAuto2" text="Automatic component consumption" select="autoCompSel" />
+		             	   <RadioButton id="idManual2" text="Manual component consumption" select="manualCompSel"/>
 							</f:fields>
 						</f:FormElement>
 						
@@ -151,14 +152,14 @@
 						</f:FormContainer>
 			</f:formContainers>
 		</f:Form>
-		
+		<!--
 			    <Toolbar height="3.8rem">
 				<m:OverflowToolbar>
 				<m:Title text="{i18n>Dec}"/>
 				<m:ToolbarSpacer width="15rem"/>
 					
 				</m:OverflowToolbar>
-			    </Toolbar>
+			    </Toolbar>-->
 			
 					<!--	<HBox>
 						<FlexBox id="idFOrder2" alignItems="Center">
