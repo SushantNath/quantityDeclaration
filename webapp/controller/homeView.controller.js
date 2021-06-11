@@ -299,12 +299,6 @@ sap.ui.define([
                          sap.ui.core.BusyIndicator.show();
 							
 
-							
-
-							
-
-							
-
 							}
 							//	b.navTo("RouteView1");
 						}
