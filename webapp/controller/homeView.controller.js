@@ -14,10 +14,10 @@ sap.ui.define([
 			var ParameterData = this.getOwnerComponent().getComponentData();
 				gmsgbundle = this.getOwnerComponent().getModel("i18n");
 				
-				//  n = "0020";
-				// V = "1002206";
+				var n = "0020";
+			var	V = "1002206";
 				
-					if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined){
+				/*	if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined){
  console.log("passed order number is undefined ");
 
 				n = "0030";
@@ -39,7 +39,7 @@ sap.ui.define([
 
 				}
 
-			}  
+			}  */
 
 			var processField;
 			var startField;
@@ -47,8 +47,8 @@ sap.ui.define([
 			
 			var oModel = this.getOwnerComponent().getModel();
 				var b = this;
-					var n;
-			var V;
+			// 		var n;
+			// var V;
 			var t = this.getView();
 	          
 			var p = {};
@@ -221,7 +221,255 @@ sap.ui.define([
 			}
 		this._oDialog2.open();
 			
+				},
+				
+				//code for quantuty save
+				
+					fConfirm2: function(e) {
+		//	messageArray = [];
+			var t = this;
+			var i = sap.ui.getCore().byId("idOrder2").getValue();
+			var s = sap.ui.getCore().byId("idOper2").getValue();
+		//	var r = sap.ui.getCore().byId("idType2").getValue();
+			var d = sap.ui.getCore().byId("idDate2").getValue();
+			var o = "164059";
+			//sap.ui.getCore().byId("idTime2").getValue();
+			var u = sap.ui.getCore().byId("idQuan2").getValue();
+			var g = sap.ui.getCore().byId("idQU2").getValue();
+			var n = sap.ui.getCore().byId("idNumber2").getValue();
+			var oModel = t.getOwnerComponent().getModel();
+			var l = "";
+			var r ="B20";
+			var selectedArray = [];
+			var payloadObject = {};
+
+			payloadObject.Lgnum = "4A10";
+			payloadObject.Huident = "";
+			payloadObject.MfgOrder = i;
+			payloadObject.Quana = u;
+			payloadObject.Altme = g;
+			payloadObject.Operation = s;
+			payloadObject.Psa = "";
+
+			var l = "";
+
+			var V = {};
+			var b = sap.ui.core.UIComponent.getRouterFor(this);
+			var p = this.getOwnerComponent().getModel();
+			//new sap.ui.model.odata.ODataModel("/sap/opu/odata/sap/ZPTMPROD_CONF_SRV");
+			var I = "/PO_CONFSet(Order='" + i + "',Operation='" + s + "',Reason='" + l + "',Number='" + n + "',Record='" + r + "',Logdate='" +
+				d + "',Logtime='" + o + "',Unit='" + g + "',Yield='" + u + "')";
+			var vmsg ;
+			
+		var	selectionValue = "auto";
+		var messageArray=[];
+
+			//if selected radio button is automatic then trigger background job processing
+			if (selectionValue === "auto") {
+
+				console.log("Inside auto selection");
+
+				if (n === "" || n === "0") {
+					MessageBox.error("Please insert a number of operators");
+					return;
 				}
+				// Added - 12152
+					if (n > "3" ) {
+						MessageBox.error("The number of operators should be maximum 3. Please check your entry before proceeding");
+						return;
+					}
+					// Added - 12152
+
+				////////////////////////////////////////////
+
+				p.read(I, {
+				success: function(oData) {
+					p = oData;
+		        	console.log("Inside success function");
+		        	
+		        	/////////////////////////////////
+		        		vmsg = oData.GvMsg;
+		        	
+		        				MessageBox.show(vmsg, {
+						title: "Message",
+						actions: [sap.m.MessageBox.Action.CLOSE],
+						onClose: function(r) {
+							if (oData.GvFlag === "") {
+								// Calling background processing
+                         sap.ui.core.BusyIndicator.show();
+							
+
+							
+
+							
+
+							
+
+							}
+							//	b.navTo("RouteView1");
+						}
+					});
+		        	
+		        	////////////////////////////////////////
+
+				},
+				error: function(e) {
+					console.log("Inside error function");
+				}
+			});
+			}
+			//if selected radio button is manual then trigger manual consumption
+			//else {
+           else if(selectionValue === "manual") { 
+				if (this._oDialog2) {
+
+					if (n === "" || n === "0") {
+						MessageBox.error("Please insert a number of operators");
+						return;
+					}
+					// Added - 12152
+					if (n > "3" ) {
+						MessageBox.error("The number of operators should be maximum 3. Please check your entry before proceeding");
+						return;
+					}
+					// Added - 12152
+				
+					p.read(I, null, null, false, function(e) {
+						V = e;
+						vmsg = V.GvMsg;
+						MessageBox.show(vmsg, {
+							title: y,
+							actions: [sap.m.MessageBox.Action.CLOSE],
+							onClose: function(r) {
+								if (e.GvFlag === "") {
+									// Calling Post consumption App
+									if (sap.ui.getCore().byId("idManual2").getSelected()) {
+										sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+											target: {
+												semanticObject: "ZpostCons_semobj",
+												action: "display"
+											},
+											params: {
+												"Warehouse": "4A10",
+												"ManufacturingOrder": i,
+												"Operation": s,
+												"Quantity": u,
+												"Unit": g,
+												"mode": "crossNavigation"
+											}
+										});
+									}
+									//
+									t._oDialog2.close();
+									var d = "/PO_GETSet(Aufnr='" + i + "',Vornr='" + s + "')";
+									var o = gmsgbundle.getText("Title");
+									t.oModel.read(d, {
+										success: function(e) {
+											V = e;
+											if (e.Gv_msg1 !== "") {
+												MessageBox.error(e.Gv_msg1);
+												return;
+											}
+											
+											console.log("Inside success of create");
+										/*	t.getView().byId("idNumber").setValue(e.ANZMA);
+											t.getView().byId("idWork").setValue(e.Arbpl);
+											t.getView().byId("idDesc").setValue(e.Ktext);
+											t.getView().byId("idMat").setValue(e.Matnr);
+											t.getView().byId("idMatD").setValue(e.Maktx);
+											t.getView().byId("idQuan").setValue(e.Gamng);
+											t.getView().byId("idQU").setValue(e.Gmein);
+											t.getView().byId("idQConf").setValue(e.Igmng);
+											var i = e.Igmng;
+											var s = e.Gmein;
+											if (i === "") {
+												s = "";
+											}
+											t.getView().byId("idQCon").setValue(s);
+											t.getView().byId("idLast").setValue(e.ZquanDate);
+											t.getView().byId("idQTime").setValue(e.ZquanTime);
+											t.getView().byId("idQStat").setValue(e.ZquanPro);
+											t.getView().byId("idQUnit").setValue(e.ZquanUnit);
+											var r = new sap.ui.model.json.JSONModel(V);
+											sap.ui.getCore().setModel(r, "Idetails");
+											b.navTo("RouteView1");*/
+										},
+										error: function(e) {}
+									});
+								}
+								b.navTo("RouteView1");
+							}
+						});
+					});
+				}
+			}
+			/////////
+			else if(selectionValue === "nocomp") { 
+				if (this._oDialog2) {
+
+					if (n === "" || n === "0") {
+						MessageBox.error("Please insert a number of operators");
+						return;
+					}
+					
+					// Added - 12152
+					if (n > "3" ) {
+						MessageBox.error("The number of operators should be maximum 3. Please check your entry before proceeding");
+						return;
+					}
+					// Added - 12152
+				
+					p.read(I, null, null, false, function(e) {
+						V = e;
+						vmsg = V.GvMsg;
+						MessageBox.show(vmsg, {
+							title: y,
+							actions: [sap.m.MessageBox.Action.CLOSE],
+							onClose: function(r) {
+								if (e.GvFlag === "") {
+									t._oDialog2.close();
+									var d = "/PO_GETSet(Aufnr='" + i + "',Vornr='" + s + "')";
+									var o = gmsgbundle.getText("Title");
+									t.oModel.read(d, {
+										success: function(e) {
+											V = e;
+											if (e.Gv_msg1 !== "") {
+												MessageBox.error(e.Gv_msg1);
+												return;
+											}
+											t.getView().byId("idNumber").setValue(e.ANZMA);
+											t.getView().byId("idWork").setValue(e.Arbpl);
+											t.getView().byId("idDesc").setValue(e.Ktext);
+											t.getView().byId("idMat").setValue(e.Matnr);
+											t.getView().byId("idMatD").setValue(e.Maktx);
+											t.getView().byId("idQuan").setValue(e.Gamng);
+											t.getView().byId("idQU").setValue(e.Gmein);
+											t.getView().byId("idQConf").setValue(e.Igmng);
+											var i = e.Igmng;
+											var s = e.Gmein;
+											if (i === "") {
+												s = "";
+											}
+											t.getView().byId("idQCon").setValue(s);
+											t.getView().byId("idLast").setValue(e.ZquanDate);
+											t.getView().byId("idQTime").setValue(e.ZquanTime);
+											t.getView().byId("idQStat").setValue(e.ZquanPro);
+											t.getView().byId("idQUnit").setValue(e.ZquanUnit);
+											var r = new sap.ui.model.json.JSONModel(V);
+											sap.ui.getCore().setModel(r, "Idetails");
+											b.navTo("RouteView1");
+										},
+										error: function(e) {}
+									});
+								}
+								b.navTo("RouteView1");
+							}
+						});
+					});
+				}
+			}
+			/////////
+		}
 		
 
 	});

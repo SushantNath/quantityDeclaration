@@ -152,6 +152,15 @@
 						</f:FormContainer>
 			</f:formContainers>
 		</f:Form>
+		
+			<beginButton>
+			<Button text="Save" press=".fConfirm2"/>
+		</beginButton>
+		<endButton>
+			<Button text="Close" press=".closeDialog"/>
+		</endButton>
+		
+		
 		<!--
 			    <Toolbar height="3.8rem">
 				<m:OverflowToolbar>
