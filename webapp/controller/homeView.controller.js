@@ -1,5 +1,5 @@
 var gmsgbundle;
-
+var selectionValue;
 sap.ui.define([
 	"sap/ui/core/mvc/Controller", "sap/m/MessageToast", "sap/m/MessageBox", "sap/ui/core/BusyIndicator",
 	"sap/ui/model/Filter", "sap/ui/model/json/JSONModel",
@@ -223,6 +223,26 @@ sap.ui.define([
 			
 				},
 				
+					//Selecttin event for automatic component consumption
+
+		autoCompSel: function(e) {
+
+			selectionValue = "auto";
+		},
+
+		//Selectton event for manual component consumption
+
+		manualCompSel: function(e) {
+
+			selectionValue = "manual";
+		},
+		
+		// Selection event for no component consumption
+		autoSel: function(e) {
+
+			selectionValue = "nocomp";
+		},
+				
 				//code for quantuty save
 				
 					fConfirm2: function(e) {
@@ -232,8 +252,11 @@ sap.ui.define([
 			var s = sap.ui.getCore().byId("idOper2").getValue();
 		//	var r = sap.ui.getCore().byId("idType2").getValue();
 			var d = sap.ui.getCore().byId("idDate2").getValue();
-			var o = "164059";
+		//	var o = "164059";
 			//sap.ui.getCore().byId("idTime2").getValue();
+				var logTime = sap.ui.getCore().byId("idTime2").getValue();
+				var logtime1= (logTime.replace(":", ""));
+				var o= (logtime1.replace(":", "")); //time
 			var u = sap.ui.getCore().byId("idQuan2").getValue();
 			var g = sap.ui.getCore().byId("idQU2").getValue();
 			var n = sap.ui.getCore().byId("idNumber2").getValue();
@@ -256,12 +279,13 @@ sap.ui.define([
 			var V = {};
 			var b = sap.ui.core.UIComponent.getRouterFor(this);
 			var p = this.getOwnerComponent().getModel();
+			var oModel = this.getOwnerComponent().getModel();
 			//new sap.ui.model.odata.ODataModel("/sap/opu/odata/sap/ZPTMPROD_CONF_SRV");
 			var I = "/PO_CONFSet(Order='" + i + "',Operation='" + s + "',Reason='" + l + "',Number='" + n + "',Record='" + r + "',Logdate='" +
 				d + "',Logtime='" + o + "',Unit='" + g + "',Yield='" + u + "')";
 			var vmsg ;
 			
-		var	selectionValue = "auto";
+	//	var	selectionValue = "auto";
 		var messageArray=[];
 
 			//if selected radio button is automatic then trigger background job processing
@@ -297,12 +321,105 @@ sap.ui.define([
 							if (oData.GvFlag === "") {
 								// Calling background processing
                          sap.ui.core.BusyIndicator.show();
-							
+								selectedArray.push(payloadObject);
+
+								var aCreateDocPayload = selectedArray;
+								oModel.setDeferredGroups(["backgroundConsumptionBatch"]);
+								oModel.setUseBatch(true);
 
 							}
+							
+								var mParameter = {
+
+									urlParameters: null,
+									groupId: "ReversalConsumptionBatch",
+									success: function(oData, oRet) {
+
+										//	var serverMessage = oRet.headers["sap-message"];
+
+										//	console.log("Message from server", serverMessage);
+										console.log("Inside mparameter success");
+									//	sap.ui.core.BusyIndicator.hide();
+
+									},
+									error: function(oError) {
+										console.log("Inside mparameter error");
+									//	sap.ui.core.BusyIndicator.hide();
+
+									}
+								};
+								
+										var singleentry = {
+									groupId: "ReversalConsumptionBatch",
+									urlParameters: null,
+									success: function(oData, oRet) {
+										console.log("Inside singleentry success");
+										//The success callback function for each record
+
+										var serverMessage = oRet.headers["sap-message"];
+
+										if (serverMessage === undefined) {
+											console.log("Inside if block for message toast");
+											sap.ui.core.BusyIndicator.hide();
+											MessageBox.show("Consumption posted successfully", {
+												icon: MessageBox.Icon.SUCCESS,
+												title: "Dear User",
+												actions: [sap.m.MessageBox.Action.CLOSE],
+												
+												onClose: function(r) {
+													
+												//	t._oDialog2.close();	
+												}
+
+											});
+
+										} else {
+											messageArray.push(JSON.parse(serverMessage).details);
+											t.sapMessageDisplay();
+											sap.ui.core.BusyIndicator.hide();
+											return;
+											// return;
+										}
+
+									},
+									error: function(oError) {
+										MessageBox.show("Error in background job processing", {
+											icon: MessageBox.Icon.ERROR,
+											title: "Dear User",
+											actions: [sap.m.MessageBox.Action.OK]
+
+										});
+									}
+
+								};
+									for (var m = 0; m < aCreateDocPayload.length; m++) {
+
+									singleentry.properties = aCreateDocPayload[m];
+									singleentry.changeSetId = "changeset " + m;
+									oModel.createEntry("/PO_POSTSet", singleentry);
+
+								}
+								oModel.submitChanges(mParameter);
 							//	b.navTo("RouteView1");
 						}
 					});
+					
+					
+						t._oDialog2.close();
+								var d = "/PO_GETSet(Aufnr='" + i + "',Vornr='" + s + "')";
+								var o = "Title";
+											oModel.read(d, {
+									success: function(e) {
+										V = e;
+										if (e.Gv_msg1 !== "") {
+											MessageBox.error(e.Gv_msg1);
+											return;
+										}
+									console.log("Inside create success");
+										//	b.navTo("RouteView1");
+									},
+									error: function(e) {}
+								});
 		        	
 		        	////////////////////////////////////////
 
@@ -417,13 +534,13 @@ sap.ui.define([
 						V = e;
 						vmsg = V.GvMsg;
 						MessageBox.show(vmsg, {
-							title: y,
+							title: "Message",
 							actions: [sap.m.MessageBox.Action.CLOSE],
 							onClose: function(r) {
 								if (e.GvFlag === "") {
 									t._oDialog2.close();
 									var d = "/PO_GETSet(Aufnr='" + i + "',Vornr='" + s + "')";
-									var o = gmsgbundle.getText("Title");
+								//	var o = gmsgbundle.getText("Title");
 									t.oModel.read(d, {
 										success: function(e) {
 											V = e;
@@ -431,27 +548,7 @@ sap.ui.define([
 												MessageBox.error(e.Gv_msg1);
 												return;
 											}
-											t.getView().byId("idNumber").setValue(e.ANZMA);
-											t.getView().byId("idWork").setValue(e.Arbpl);
-											t.getView().byId("idDesc").setValue(e.Ktext);
-											t.getView().byId("idMat").setValue(e.Matnr);
-											t.getView().byId("idMatD").setValue(e.Maktx);
-											t.getView().byId("idQuan").setValue(e.Gamng);
-											t.getView().byId("idQU").setValue(e.Gmein);
-											t.getView().byId("idQConf").setValue(e.Igmng);
-											var i = e.Igmng;
-											var s = e.Gmein;
-											if (i === "") {
-												s = "";
-											}
-											t.getView().byId("idQCon").setValue(s);
-											t.getView().byId("idLast").setValue(e.ZquanDate);
-											t.getView().byId("idQTime").setValue(e.ZquanTime);
-											t.getView().byId("idQStat").setValue(e.ZquanPro);
-											t.getView().byId("idQUnit").setValue(e.ZquanUnit);
-											var r = new sap.ui.model.json.JSONModel(V);
-											sap.ui.getCore().setModel(r, "Idetails");
-											b.navTo("RouteView1");
+										console.log("Inside success of Message")
 										},
 										error: function(e) {}
 									});

@@ -104,7 +104,7 @@
 					<f:formElements>
 						<f:FormElement label="Confirmation Type">
 							<f:fields>
-								<Input id="DropDown" width="30%" />
+								<Input id="DropDown" value="Quantity Declaration" width="30%" />
 							</f:fields>
 						</f:FormElement>
 						<f:FormElement label="Number of Operators">
