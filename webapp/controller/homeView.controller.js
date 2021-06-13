@@ -40,7 +40,7 @@ sap.ui.define([
 
 				}
 
-			} 
+			}
 
 			var processField;
 			var startField;
@@ -210,7 +210,7 @@ sap.ui.define([
 
 		//code for quantuty save
 
-	/*	fConfirm2: function(e) {
+		/*	fConfirm2: function(e) {
 			messageArray = [];
 			var t = this;
 			var i = sap.ui.getCore().byId("idOrder2").getValue();
@@ -524,8 +524,8 @@ else {
 
 			/////////
 		}, */
-		
-			fConfirm2: function(e) {
+
+		fConfirm2: function(e) {
 			messageArray = [];
 			var t = this;
 			var i = sap.ui.getCore().byId("idOrder2").getValue();
@@ -585,146 +585,138 @@ else {
 				// Added - 12152
 
 				////////////////////////////////////////////////////////////
-				
-					selectedArray.push(payloadObject);
 
-									var aCreateDocPayload = selectedArray;
-									oModel.setDeferredGroups(["backgroundConsumptionBatch"]);
-									oModel.setUseBatch(true);
-					var mParameter = {
+				selectedArray.push(payloadObject);
 
-									urlParameters: null,
-									groupId: "ReversalConsumptionBatch",
-									success: function(oData, oRet) {
+				var aCreateDocPayload = selectedArray;
+				oModel.setDeferredGroups(["backgroundConsumptionBatch"]);
+				oModel.setUseBatch(true);
+				var mParameter = {
 
-										//	var serverMessage = oRet.headers["sap-message"];
+					urlParameters: null,
+					groupId: "ReversalConsumptionBatch",
+					success: function(oData, oRet) {
 
-										//	console.log("Message from server", serverMessage);
-										console.log("Inside mparameter success");
-										//	sap.ui.core.BusyIndicator.hide();
+						//	var serverMessage = oRet.headers["sap-message"];
 
-									},
-									error: function(oError) {
-										console.log("Inside mparameter error");
-										//	sap.ui.core.BusyIndicator.hide();
+						//	console.log("Message from server", serverMessage);
+						console.log("Inside mparameter success");
+						//	sap.ui.core.BusyIndicator.hide();
 
-									}
-								};
-								
-																var singleentry = {
-									groupId: "ReversalConsumptionBatch",
-									urlParameters: null,
-									success: function(oData, oRet) {
-										console.log("Inside singleentry success");
-										//The success callback function for each record
+					},
+					error: function(oError) {
+						console.log("Inside mparameter error");
+						//	sap.ui.core.BusyIndicator.hide();
 
-										var serverMessage = oRet.headers["sap-message"];
+					}
+				};
 
-										if (serverMessage === undefined) {
-											console.log("Inside if block for message toast");
-											sap.ui.core.BusyIndicator.hide();
-											MessageBox.show("Consumption posted successfully", {
-												icon: MessageBox.Icon.SUCCESS,
-												title: "Dear User",
-												actions: [sap.m.MessageBox.Action.CLOSE],
+				var singleentry = {
+					groupId: "ReversalConsumptionBatch",
+					urlParameters: null,
+					success: function(oData, oRet) {
+						console.log("Inside singleentry success");
+						//The success callback function for each record
 
-												onClose: function(r) {
-													
-														p.read(I, {
-					success: function(oData) {
-						p = oData;
-						console.log("Inside success function");
+						var serverMessage = oRet.headers["sap-message"];
 
-					
-								console.log("Inside create success");
-								//	b.navTo("RouteView1");
-							},
-							error: function(e) {}
-						});
+						if (serverMessage === undefined) {
+							console.log("Inside if block for message toast");
+							sap.ui.core.BusyIndicator.hide();
+							MessageBox.show("Consumption posted successfully", {
+								icon: MessageBox.Icon.SUCCESS,
+								title: "Dear User",
+								actions: [sap.m.MessageBox.Action.CLOSE],
 
+								onClose: function(r) {
 
+									p.read(I, {
+										success: function(oData) {
+											p = oData;
+											console.log("Inside success function");
 
-	if (oData.Gvstag === "X") {
-								
-	var stagingUrl = "/PO_GETSet(Aufnr='" + i + "')";
-	oModel.read(stagingUrl, {
-							success: function(oData) {
-								
-									MessageToast.show("Automatic schedule staging triggered in background");
-									
-									     //Cross navigation to product monitor app
-													sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
-														target: {
-															semanticObject: "ZPTM",
-															action: "display"
-														}
+											console.log("Inside create success");
+											//	b.navTo("RouteView1");
+										},
+										error: function(e) {}
+									});
 
-													});
-								
-							console.log("Inside staging success");
-								},
-								
-								//	b.navTo("RouteView1");
-							
-							error: function(e) {
-								
-								console.log("Inside staging error");
-							}
-						});
-	
-	
-	
-								}
+									if (oData.Gvstag === "X") {
 
-else {
+										var stagingUrl = "/PO_GETSet(Aufnr='" + i + "')";
+										oModel.read(stagingUrl, {
+											success: function(oData) {
 
-                                             //Cross navigation to product monitor app
-													sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
-														target: {
-															semanticObject: "ZPTM",
-															action: "display"
-														}
+												MessageToast.show("Automatic schedule staging triggered in background");
 
-													});
-													
-}	
-													
-												}
+												//Cross navigation to product monitor app
+												sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+													target: {
+														semanticObject: "ZPTM",
+														action: "display"
+													}
 
-											});
+												});
 
-										} else {
-											messageArray.push(JSON.parse(serverMessage).details);
-											t.sapMessageDisplay();
-											sap.ui.core.BusyIndicator.hide();
-											return;
-											// return;
-										}
+												console.log("Inside staging success");
+											},
 
-									},
-									error: function(oError) {
-										MessageBox.show("Error in background job processing", {
-											icon: MessageBox.Icon.ERROR,
-											title: "Dear User",
-											actions: [sap.m.MessageBox.Action.OK]
+											//	b.navTo("RouteView1");
+
+											error: function(e) {
+
+												console.log("Inside staging error");
+											}
+										});
+
+									} else {
+
+										//Cross navigation to product monitor app
+										sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+											target: {
+												semanticObject: "ZPTM",
+												action: "display"
+											}
 
 										});
+
 									}
 
-								};
-								
-									for (var m = 0; m < aCreateDocPayload.length; m++) {
-
-									singleentry.properties = aCreateDocPayload[m];
-									singleentry.changeSetId = "changeset " + m;
-									oModel.createEntry("/PO_POSTSet", singleentry);
-
 								}
-								oModel.submitChanges(mParameter);
+
+							});
+
+						} else {
+							messageArray.push(JSON.parse(serverMessage).details);
+							t.sapMessageDisplay();
+							sap.ui.core.BusyIndicator.hide();
+							return;
+							// return;
+						}
+
+					},
+					error: function(oError) {
+						MessageBox.show("Error in background job processing", {
+							icon: MessageBox.Icon.ERROR,
+							title: "Dear User",
+							actions: [sap.m.MessageBox.Action.OK]
+
+						});
+					}
+
+				};
+
+				for (var m = 0; m < aCreateDocPayload.length; m++) {
+
+					singleentry.properties = aCreateDocPayload[m];
+					singleentry.changeSetId = "changeset " + m;
+					oModel.createEntry("/PO_POSTSet", singleentry);
+
+				}
+				oModel.submitChanges(mParameter);
 				////////////////////////////////////////////////////////////////////////////////////////////////
 
-			
-						////////////////////////////////////////
+				////////////////////////////////////////
 
 				//	}
 				/*	error: function(e) {
