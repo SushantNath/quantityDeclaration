@@ -17,11 +17,11 @@ sap.ui.define([
 				var n = "0020";
 			var	V = "1002206";
 				
-				/*	if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined){
+					if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined){
  console.log("passed order number is undefined ");
 
-				n = "0030";
-				V = "1000082";
+			n =  "0030";
+		V =	"1000082";
 			} else {
 
  console.log("passed order number is ", ParameterData.startupParameters.orderType);
@@ -39,7 +39,7 @@ sap.ui.define([
 
 				}
 
-			}  */
+			}  
 
 			var processField;
 			var startField;
@@ -75,7 +75,7 @@ sap.ui.define([
 			sap.ui.getCore().byId("idAUnit2").setValue(oData.ZquanUnit);
 			sap.ui.getCore().byId("idDate2").setDateValue(new Date);
 			sap.ui.getCore().byId("idTime2").setDateValue(new Date);
-				
+			sap.ui.getCore().byId("idQU2").setValue(oData.ZquanUnit);
 				
 
 				/*	var i = oData.Igmng;
@@ -368,7 +368,13 @@ sap.ui.define([
 												
 												onClose: function(r) {
 													
-												//	t._oDialog2.close();	
+												sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+				target: {
+					semanticObject: "ZPTM",
+					action: "display"
+				}
+
+			});	
 												}
 
 											});
@@ -445,14 +451,20 @@ sap.ui.define([
 					}
 					// Added - 12152
 				
-					p.read(I, null, null, false, function(e) {
-						V = e;
-						vmsg = V.GvMsg;
+					p.read(I,  {
+						
+						
+							success: function(oData) {
+								
+							//	p=oData;
+							
+							//	V = e;
+						vmsg = oData.GvMsg;
 						MessageBox.show(vmsg, {
-							title: y,
+							title: "Message",
 							actions: [sap.m.MessageBox.Action.CLOSE],
 							onClose: function(r) {
-								if (e.GvFlag === "") {
+								if (oData.GvFlag === "") {
 									// Calling Post consumption App
 									if (sap.ui.getCore().byId("idManual2").getSelected()) {
 										sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
@@ -473,94 +485,96 @@ sap.ui.define([
 									//
 									t._oDialog2.close();
 									var d = "/PO_GETSet(Aufnr='" + i + "',Vornr='" + s + "')";
-									var o = gmsgbundle.getText("Title");
-									t.oModel.read(d, {
+									var o = "Title";
+									oModel.read(d, {
 										success: function(e) {
-											V = e;
-											if (e.Gv_msg1 !== "") {
-												MessageBox.error(e.Gv_msg1);
-												return;
-											}
+										
 											
-											console.log("Inside success of create");
-										/*	t.getView().byId("idNumber").setValue(e.ANZMA);
-											t.getView().byId("idWork").setValue(e.Arbpl);
-											t.getView().byId("idDesc").setValue(e.Ktext);
-											t.getView().byId("idMat").setValue(e.Matnr);
-											t.getView().byId("idMatD").setValue(e.Maktx);
-											t.getView().byId("idQuan").setValue(e.Gamng);
-											t.getView().byId("idQU").setValue(e.Gmein);
-											t.getView().byId("idQConf").setValue(e.Igmng);
-											var i = e.Igmng;
-											var s = e.Gmein;
-											if (i === "") {
-												s = "";
-											}
-											t.getView().byId("idQCon").setValue(s);
-											t.getView().byId("idLast").setValue(e.ZquanDate);
-											t.getView().byId("idQTime").setValue(e.ZquanTime);
-											t.getView().byId("idQStat").setValue(e.ZquanPro);
-											t.getView().byId("idQUnit").setValue(e.ZquanUnit);
-											var r = new sap.ui.model.json.JSONModel(V);
-											sap.ui.getCore().setModel(r, "Idetails");
-											b.navTo("RouteView1");*/
+											console.log("Inside success of create manual");
+									
 										},
-										error: function(e) {}
+										error: function(e) {
+											
+											console.log("Inside error function manual");
+											
+										}
 									});
 								}
-								b.navTo("RouteView1");
+							//	b.navTo("RouteView1");
 							}
 						});
+								
+									console.log("Inside  success manual");
+							},
+							error: function(oError) {
+										console.log("Inside  error manual");
+									//	sap.ui.core.BusyIndicator.hide();
+
+									}
+						
+						
+						// V = e;
+						// vmsg = V.GvMsg;
+						// MessageBox.show(vmsg, {
+						// 	title: "Message",
+						// 	actions: [sap.m.MessageBox.Action.CLOSE],
+						// 	onClose: function(r) {
+						// 		if (e.GvFlag === "") {
+						// 			// Calling Post consumption App
+						// 			if (sap.ui.getCore().byId("idManual2").getSelected()) {
+						// 				sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+						// 					target: {
+						// 						semanticObject: "ZpostCons_semobj",
+						// 						action: "display"
+						// 					},
+						// 					params: {
+						// 						"Warehouse": "4A10",
+						// 						"ManufacturingOrder": i,
+						// 						"Operation": s,
+						// 						"Quantity": u,
+						// 						"Unit": g,
+						// 						"mode": "crossNavigation"
+						// 					}
+						// 				});
+						// 			}
+						// 			//
+						// 			t._oDialog2.close();
+						// 			var d = "/PO_GETSet(Aufnr='" + i + "',Vornr='" + s + "')";
+						// 			var o = "Title";
+						// 			oModel.read(d, {
+						// 				success: function(e) {
+										
+											
+						// 					console.log("Inside success of create manual");
+									
+						// 				},
+						// 				error: function(e) {
+											
+						// 					console.log("Inside error function manual");
+											
+						// 				}
+						// 			});
+						// 		}
+						// 	//	b.navTo("RouteView1");
+						// 	}
+						// });
+						
+						
+						
+						
 					});
 				}
 			}
 			/////////
-			else if(selectionValue === "nocomp") { 
-				if (this._oDialog2) {
-
-					if (n === "" || n === "0") {
-						MessageBox.error("Please insert a number of operators");
-						return;
-					}
-					
-					// Added - 12152
-					if (n > "3" ) {
-						MessageBox.error("The number of operators should be maximum 3. Please check your entry before proceeding");
-						return;
-					}
-					// Added - 12152
+			else if(selectionValue === undefined){
+				MessageBox.show("Please select a consumption type");
 				
-					p.read(I, null, null, false, function(e) {
-						V = e;
-						vmsg = V.GvMsg;
-						MessageBox.show(vmsg, {
-							title: "Message",
-							actions: [sap.m.MessageBox.Action.CLOSE],
-							onClose: function(r) {
-								if (e.GvFlag === "") {
-									t._oDialog2.close();
-									var d = "/PO_GETSet(Aufnr='" + i + "',Vornr='" + s + "')";
-								//	var o = gmsgbundle.getText("Title");
-									t.oModel.read(d, {
-										success: function(e) {
-											V = e;
-											if (e.Gv_msg1 !== "") {
-												MessageBox.error(e.Gv_msg1);
-												return;
-											}
-										console.log("Inside success of Message")
-										},
-										error: function(e) {}
-									});
-								}
-								b.navTo("RouteView1");
-							}
-						});
-					});
-				}
 			}
+		
 			/////////
 		}
+		
+		
 		
 
 	});
