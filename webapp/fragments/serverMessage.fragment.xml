@@ -1,0 +1,25 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:m="sap.m" xmlns:core="sap.ui.core">
+	<Dialog contentHeight="50%" contentWidth="60%" showHeader="false">
+		<m:Table growing="true" growingScrollToLoad="true" growingThreshold="5" items="{ path : 'messageModel>/messageSet'}"
+			noDataText="No server Messages">
+			<m:headerToolbar>
+				<m:OverflowToolbar class="overFlowToolbarBackground sapUiLargeMarginTop">
+					<m:Title text="{i18n>backgroundMessage}"/>
+					<core:Icon src="sap-icon://warning"/>
+					<m:ToolbarSpacer/>
+					<m:Button icon="sap-icon://decline" press="handleClose"/>
+				</m:OverflowToolbar>
+			</m:headerToolbar>
+			<columns>
+				<Column ><Text text="Message" wrapping="true"/></Column>
+			</columns>
+			<items>
+				<ColumnListItem>
+					<cells>
+						<Text text="{messageModel>message}"/>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</m:Table>
+	</Dialog>
+</core:FragmentDefinition>

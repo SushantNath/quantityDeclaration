@@ -1,5 +1,6 @@
 var gmsgbundle;
 var selectionValue;
+var messageArray = [];
 sap.ui.define([
 	"sap/ui/core/mvc/Controller", "sap/m/MessageToast", "sap/m/MessageBox", "sap/ui/core/BusyIndicator",
 	"sap/ui/model/Filter", "sap/ui/model/json/JSONModel",
@@ -12,20 +13,20 @@ sap.ui.define([
 		onInit: function() {
 
 			var ParameterData = this.getOwnerComponent().getComponentData();
-				gmsgbundle = this.getOwnerComponent().getModel("i18n");
-				
-				var n = "0020";
-			var	V = "1002206";
-				
-					if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined){
- console.log("passed order number is undefined ");
+			gmsgbundle = this.getOwnerComponent().getModel("i18n");
 
-			n =  "0030";
-		V =	"1000082";
+			var n = "0020";
+			var V = "1002206";
+
+			if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined) {
+				console.log("passed order number is undefined ");
+
+				n = "0030";
+				V = "1000082";
 			} else {
 
- console.log("passed order number is ", ParameterData.startupParameters.orderType);
- console.log("passed operation number is ", ParameterData.startupParameters.operationNum);
+				console.log("passed order number is ", ParameterData.startupParameters.orderType);
+				console.log("passed operation number is ", ParameterData.startupParameters.operationNum);
 
 				if (ParameterData.startupParameters.orderType) {
 
@@ -39,70 +40,40 @@ sap.ui.define([
 
 				}
 
-			}  
+			}
 
 			var processField;
 			var startField;
 			var that = this;
-			
+
 			var oModel = this.getOwnerComponent().getModel();
-				var b = this;
+			var b = this;
 			// 		var n;
 			// var V;
 			var t = this.getView();
-	          
+
 			var p = {};
 			var I = "/PO_GETSet(Aufnr='" + V + "',Vornr='" + n + "')";
 			oModel.read(I, {
 				success: function(oData) {
 					p = oData;
-					
-				
-			
-				
+
 					sap.ui.getCore().byId("idOrder2").setValue(V);
-			sap.ui.getCore().byId("idOper2").setValue(n);
-			sap.ui.getCore().byId("idWork2").setValue(oData.Arbpl);
-			sap.ui.getCore().byId("idDesc2").setValue(oData.Ktext);
-			sap.ui.getCore().byId("idMat2").setValue(oData.Matnr);
-			sap.ui.getCore().byId("idMatD2").setValue(oData.Maktx);
-			sap.ui.getCore().byId("idQact2").setValue(oData.ZquanDate);
-			sap.ui.getCore().byId("idATime2").setValue(oData.ZquanTime);
-			sap.ui.getCore().byId("idAStat2").setValue(oData.ZquanPro);
-			sap.ui.getCore().byId("idAUnit2").setValue(oData.ZquanUnit);
-			sap.ui.getCore().byId("idDate2").setDateValue(new Date);
-			sap.ui.getCore().byId("idTime2").setDateValue(new Date);
-			sap.ui.getCore().byId("idQU2").setValue(oData.ZquanUnit);
-				
+					sap.ui.getCore().byId("idOper2").setValue(n);
+					sap.ui.getCore().byId("idWork2").setValue(oData.Arbpl);
+					sap.ui.getCore().byId("idDesc2").setValue(oData.Ktext);
+					sap.ui.getCore().byId("idMat2").setValue(oData.Matnr);
+					sap.ui.getCore().byId("idMatD2").setValue(oData.Maktx);
+					sap.ui.getCore().byId("idQact2").setValue(oData.ZquanDate);
+					sap.ui.getCore().byId("idATime2").setValue(oData.ZquanTime);
+					sap.ui.getCore().byId("idAStat2").setValue(oData.ZquanPro);
+					sap.ui.getCore().byId("idAUnit2").setValue(oData.ZquanUnit);
+					sap.ui.getCore().byId("idDate2").setDateValue(new Date);
+					sap.ui.getCore().byId("idTime2").setDateValue(new Date);
+					sap.ui.getCore().byId("idQU2").setValue(oData.ZquanUnit);
 
-				/*	var i = oData.Igmng;
-					var s = oData.Gmein;
-
-					sap.ui.getCore().byId("idDate1").setDateValue(new Date);
-					sap.ui.getCore().byId("idTime1").setDateValue(new Date);
-					sap.ui.getCore().byId("idOrder1").setValue(V);
-					sap.ui.getCore().byId("idOper1").setValue(n);
-					sap.ui.getCore().byId("idWork1").setValue(oData.Arbpl);
-					sap.ui.getCore().byId("idDesc1").setValue(oData.Ktext);
-					sap.ui.getCore().byId("idMat1").setValue(oData.Matnr);
-					sap.ui.getCore().byId("idMatD1").setValue(oData.Maktx);
-
-					if (i === "") {
-						s = "";
-					}
-
-					sap.ui.getCore().byId("idQact1").setValue(oData.ZactDate);
-					sap.ui.getCore().byId("idATime1").setValue(oData.ZactTime);
-					sap.ui.getCore().byId("idAStat1").setValue(oData.ZactPro);
-					sap.ui.getCore().byId("idAUnit1").setValue(oData.ZactStart);
-					sap.ui.getCore().byId("idConf").setText(oData.Satza);
-					sap.ui.getCore().byId("idReason").setText(oData.Grund);
-					processField = oData.ZactPro;
-					startField = oData.ZactStart;
-					// reasonField= oData.Grund;
-					// confirmationField= oData.Satza; */
 				}
-				
+
 			});
 
 			this.fQuantityClick();
@@ -137,41 +108,38 @@ sap.ui.define([
 			});
 
 		},
-		
+
 		//code to handle change event for Confirmation type.
 		changeConfirmation: function() {
-		var confirmType	= sap.ui.getCore().byId("DropDown")._getSelectedItemText();
-		// validation for "reason for deviation" based on "confirmation type"
-		if(confirmType === "End Failure"){
-			sap.ui.getCore().byId("idReason1").setEnabled(true);
+			var confirmType = sap.ui.getCore().byId("DropDown")._getSelectedItemText();
+			// validation for "reason for deviation" based on "confirmation type"
+			if (confirmType === "End Failure") {
+				sap.ui.getCore().byId("idReason1").setEnabled(true);
 				sap.ui.getCore().byId("idLReason1").setRequired(true);
-			
-		}
-		else{
-			sap.ui.getCore().byId("idReason1").setEnabled(false);	
+
+			} else {
+				sap.ui.getCore().byId("idReason1").setEnabled(false);
 				sap.ui.getCore().byId("idLReason1").setRequired(false);
-			
-		}
-		
-		//Validation for "No. of operators" based on "confirmation type"
-		
-			if(confirmType === "Start Setup" || confirmType === "Start Processing"){
-			sap.ui.getCore().byId("idNumber1").setEnabled(false);
+
+			}
+
+			//Validation for "No. of operators" based on "confirmation type"
+
+			if (confirmType === "Start Setup" || confirmType === "Start Processing") {
+				sap.ui.getCore().byId("idNumber1").setEnabled(false);
 				sap.ui.getCore().byId("idLNumber1").setRequired(false);
-			
-		}
-		else{
-			sap.ui.getCore().byId("idNumber1").setEnabled(true);
+
+			} else {
+				sap.ui.getCore().byId("idNumber1").setEnabled(true);
 				sap.ui.getCore().byId("idLNumber1").setRequired(true);
-			
-		}
-		//set values to balnk on change of confirmation type
-		sap.ui.getCore().byId("idReason1").setValue("");
-		sap.ui.getCore().byId("idReason1").setDescription("");
-		sap.ui.getCore().byId("commentsText").setValue("");	
-		sap.ui.getCore().byId("idNumber1").setValue("");
-		
-		
+
+			}
+			//set values to balnk on change of confirmation type
+			sap.ui.getCore().byId("idReason1").setValue("");
+			sap.ui.getCore().byId("idReason1").setDescription("");
+			sap.ui.getCore().byId("commentsText").setValue("");
+			sap.ui.getCore().byId("idNumber1").setValue("");
+
 		},
 
 		//  code to get value help "Reason for deviation"
@@ -208,19 +176,19 @@ sap.ui.define([
 			sap.ui.getCore().byId("idReason1").setValue(t.getTitle());
 			sap.ui.getCore().byId("idReason1").setDescription(t.getInfo());
 		},
-		
+
 		//code to open quantity decaration fragment
-				fQuantityClick: function(e) {
+		fQuantityClick: function(e) {
 			var t = this.getView();
 			if (!this._oDialog2) {
 				this._oDialog2 = sap.ui.xmlfragment("com.sap.quantityDeclaration.fragments.quan", this);
 				this.getView().addDependent(this._oDialog2);
 			}
-		this._oDialog2.open();
-			
-				},
-				
-					//Selecttin event for automatic component consumption
+			this._oDialog2.open();
+
+		},
+
+		//Selecttin event for automatic component consumption
 
 		autoCompSel: function(e) {
 
@@ -233,33 +201,33 @@ sap.ui.define([
 
 			selectionValue = "manual";
 		},
-		
+
 		// Selection event for no component consumption
 		autoSel: function(e) {
 
 			selectionValue = "nocomp";
 		},
-				
-				//code for quantuty save
-				
-					fConfirm2: function(e) {
-		//	messageArray = [];
+
+		//code for quantuty save
+
+		fConfirm2: function(e) {
+			messageArray = [];
 			var t = this;
 			var i = sap.ui.getCore().byId("idOrder2").getValue();
 			var s = sap.ui.getCore().byId("idOper2").getValue();
-		//	var r = sap.ui.getCore().byId("idType2").getValue();
+			//	var r = sap.ui.getCore().byId("idType2").getValue();
 			var d = sap.ui.getCore().byId("idDate2").getValue();
-		//	var o = "164059";
+			//	var o = "164059";
 			//sap.ui.getCore().byId("idTime2").getValue();
-				var logTime = sap.ui.getCore().byId("idTime2").getValue();
-				var logtime1= (logTime.replace(":", ""));
-				var o= (logtime1.replace(":", "")); //time
+			var logTime = sap.ui.getCore().byId("idTime2").getValue();
+			var logtime1 = (logTime.replace(":", ""));
+			var o = (logtime1.replace(":", "")); //time
 			var u = sap.ui.getCore().byId("idQuan2").getValue();
 			var g = sap.ui.getCore().byId("idQU2").getValue();
 			var n = sap.ui.getCore().byId("idNumber2").getValue();
 			var oModel = t.getOwnerComponent().getModel();
 			var l = "";
-			var r ="B20";
+			var r = "B20";
 			var selectedArray = [];
 			var payloadObject = {};
 
@@ -280,10 +248,10 @@ sap.ui.define([
 			//new sap.ui.model.odata.ODataModel("/sap/opu/odata/sap/ZPTMPROD_CONF_SRV");
 			var I = "/PO_CONFSet(Order='" + i + "',Operation='" + s + "',Reason='" + l + "',Number='" + n + "',Record='" + r + "',Logdate='" +
 				d + "',Logtime='" + o + "',Unit='" + g + "',Yield='" + u + "')";
-			var vmsg ;
-			
-	//	var	selectionValue = "auto";
-		var messageArray=[];
+			var vmsg;
+
+			//	var	selectionValue = "auto";
+			var messageArray = [];
 
 			//if selected radio button is automatic then trigger background job processing
 			if (selectionValue === "auto") {
@@ -295,37 +263,37 @@ sap.ui.define([
 					return;
 				}
 				// Added - 12152
-					if (n > "3" ) {
-						MessageBox.error("The number of operators should be maximum 3. Please check your entry before proceeding");
-						return;
-					}
-					// Added - 12152
+				if (n > "3") {
+					MessageBox.error("The number of operators should be maximum 3. Please check your entry before proceeding");
+					return;
+				}
+				// Added - 12152
 
 				////////////////////////////////////////////
 
 				p.read(I, {
-				success: function(oData) {
-					p = oData;
-		        	console.log("Inside success function");
-		        	
-		        	/////////////////////////////////
-		        		vmsg = oData.GvMsg;
-		        	
-		        				MessageBox.show(vmsg, {
-						title: "Message",
-						actions: [sap.m.MessageBox.Action.CLOSE],
-						onClose: function(r) {
-							if (oData.GvFlag === "") {
-								// Calling background processing
-                         sap.ui.core.BusyIndicator.show();
-								selectedArray.push(payloadObject);
+					success: function(oData) {
+						p = oData;
+						console.log("Inside success function");
 
-								var aCreateDocPayload = selectedArray;
-								oModel.setDeferredGroups(["backgroundConsumptionBatch"]);
-								oModel.setUseBatch(true);
+						/////////////////////////////////
+						vmsg = oData.GvMsg;
 
-							}
-							
+						MessageBox.show(vmsg, {
+							title: "Message",
+							actions: [sap.m.MessageBox.Action.CLOSE],
+							onClose: function(r) {
+								if (oData.GvFlag === "") {
+									// Calling background processing
+									sap.ui.core.BusyIndicator.show();
+									selectedArray.push(payloadObject);
+
+									var aCreateDocPayload = selectedArray;
+									oModel.setDeferredGroups(["backgroundConsumptionBatch"]);
+									oModel.setUseBatch(true);
+
+								}
+
 								var mParameter = {
 
 									urlParameters: null,
@@ -336,17 +304,17 @@ sap.ui.define([
 
 										//	console.log("Message from server", serverMessage);
 										console.log("Inside mparameter success");
-									//	sap.ui.core.BusyIndicator.hide();
+										//	sap.ui.core.BusyIndicator.hide();
 
 									},
 									error: function(oError) {
 										console.log("Inside mparameter error");
-									//	sap.ui.core.BusyIndicator.hide();
+										//	sap.ui.core.BusyIndicator.hide();
 
 									}
 								};
-								
-										var singleentry = {
+
+								var singleentry = {
 									groupId: "ReversalConsumptionBatch",
 									urlParameters: null,
 									success: function(oData, oRet) {
@@ -362,16 +330,16 @@ sap.ui.define([
 												icon: MessageBox.Icon.SUCCESS,
 												title: "Dear User",
 												actions: [sap.m.MessageBox.Action.CLOSE],
-												
-												onClose: function(r) {
-													
-												sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
-				target: {
-					semanticObject: "ZPTM",
-					action: "display"
-				}
 
-			});	
+												onClose: function(r) {
+
+													sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+														target: {
+															semanticObject: "ZPTM",
+															action: "display"
+														}
+
+													});
 												}
 
 											});
@@ -395,7 +363,7 @@ sap.ui.define([
 									}
 
 								};
-									for (var m = 0; m < aCreateDocPayload.length; m++) {
+								for (var m = 0; m < aCreateDocPayload.length; m++) {
 
 									singleentry.properties = aCreateDocPayload[m];
 									singleentry.changeSetId = "changeset " + m;
@@ -403,38 +371,37 @@ sap.ui.define([
 
 								}
 								oModel.submitChanges(mParameter);
-							//	b.navTo("RouteView1");
-						}
-					});
-					
-					
-						t._oDialog2.close();
-								var d = "/PO_GETSet(Aufnr='" + i + "',Vornr='" + s + "')";
-								var o = "Title";
-											oModel.read(d, {
-									success: function(e) {
-										V = e;
-										if (e.Gv_msg1 !== "") {
-											MessageBox.error(e.Gv_msg1);
-											return;
-										}
-									console.log("Inside create success");
-										//	b.navTo("RouteView1");
-									},
-									error: function(e) {}
-								});
-		        	
-		        	////////////////////////////////////////
+								//	b.navTo("RouteView1");
+							}
+						});
 
-				},
-				error: function(e) {
-					console.log("Inside error function");
-				}
-			});
+						t._oDialog2.close();
+						var d = "/PO_GETSet(Aufnr='" + i + "',Vornr='" + s + "')";
+						var o = "Title";
+						oModel.read(d, {
+							success: function(e) {
+								V = e;
+								if (e.Gv_msg1 !== "") {
+									MessageBox.error(e.Gv_msg1);
+									return;
+								}
+								console.log("Inside create success");
+								//	b.navTo("RouteView1");
+							},
+							error: function(e) {}
+						});
+
+						////////////////////////////////////////
+
+					},
+					error: function(e) {
+						console.log("Inside error function");
+					}
+				});
 			}
 			//if selected radio button is manual then trigger manual consumption
 			//else {
-           else if(selectionValue === "manual") { 
+			else if (selectionValue === "manual") {
 				if (this._oDialog2) {
 
 					if (n === "" || n === "0") {
@@ -442,137 +409,115 @@ sap.ui.define([
 						return;
 					}
 					// Added - 12152
-					if (n > "3" ) {
+					if (n > "3") {
 						MessageBox.error("The number of operators should be maximum 3. Please check your entry before proceeding");
 						return;
 					}
 					// Added - 12152
-				
-					p.read(I,  {
-						
-						
-							success: function(oData) {
-								
+
+					p.read(I, {
+
+						success: function(oData) {
+
 							//	p=oData;
-							
+
 							//	V = e;
-						vmsg = oData.GvMsg;
-						MessageBox.show(vmsg, {
-							title: "Message",
-							actions: [sap.m.MessageBox.Action.CLOSE],
-							onClose: function(r) {
-								if (oData.GvFlag === "") {
-									// Calling Post consumption App
-									if (sap.ui.getCore().byId("idManual2").getSelected()) {
-										sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
-											target: {
-												semanticObject: "ZpostCons_semobj",
-												action: "display"
+							vmsg = oData.GvMsg;
+							MessageBox.show(vmsg, {
+								title: "Message",
+								actions: [sap.m.MessageBox.Action.CLOSE],
+								onClose: function(r) {
+									if (oData.GvFlag === "") {
+										// Calling Post consumption App
+										if (sap.ui.getCore().byId("idManual2").getSelected()) {
+											sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+												target: {
+													semanticObject: "ZpostCons_semobj",
+													action: "display"
+												},
+												params: {
+													"Warehouse": "4A10",
+													"ManufacturingOrder": i,
+													"Operation": s,
+													"Quantity": u,
+													"Unit": g,
+													"mode": "crossNavigation"
+												}
+											});
+										}
+										//
+										t._oDialog2.close();
+										var d = "/PO_GETSet(Aufnr='" + i + "',Vornr='" + s + "')";
+										var o = "Title";
+										oModel.read(d, {
+											success: function(e) {
+
+												console.log("Inside success of create manual");
+
 											},
-											params: {
-												"Warehouse": "4A10",
-												"ManufacturingOrder": i,
-												"Operation": s,
-												"Quantity": u,
-												"Unit": g,
-												"mode": "crossNavigation"
+											error: function(e) {
+
+												console.log("Inside error function manual");
+
 											}
 										});
 									}
-									//
-									t._oDialog2.close();
-									var d = "/PO_GETSet(Aufnr='" + i + "',Vornr='" + s + "')";
-									var o = "Title";
-									oModel.read(d, {
-										success: function(e) {
-										
-											
-											console.log("Inside success of create manual");
-									
-										},
-										error: function(e) {
-											
-											console.log("Inside error function manual");
-											
-										}
-									});
+									//	b.navTo("RouteView1");
 								}
-							//	b.navTo("RouteView1");
-							}
-						});
-								
-									console.log("Inside  success manual");
-							},
-							error: function(oError) {
-										console.log("Inside  error manual");
-									//	sap.ui.core.BusyIndicator.hide();
+							});
 
-									}
-						
-						
-						// V = e;
-						// vmsg = V.GvMsg;
-						// MessageBox.show(vmsg, {
-						// 	title: "Message",
-						// 	actions: [sap.m.MessageBox.Action.CLOSE],
-						// 	onClose: function(r) {
-						// 		if (e.GvFlag === "") {
-						// 			// Calling Post consumption App
-						// 			if (sap.ui.getCore().byId("idManual2").getSelected()) {
-						// 				sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
-						// 					target: {
-						// 						semanticObject: "ZpostCons_semobj",
-						// 						action: "display"
-						// 					},
-						// 					params: {
-						// 						"Warehouse": "4A10",
-						// 						"ManufacturingOrder": i,
-						// 						"Operation": s,
-						// 						"Quantity": u,
-						// 						"Unit": g,
-						// 						"mode": "crossNavigation"
-						// 					}
-						// 				});
-						// 			}
-						// 			//
-						// 			t._oDialog2.close();
-						// 			var d = "/PO_GETSet(Aufnr='" + i + "',Vornr='" + s + "')";
-						// 			var o = "Title";
-						// 			oModel.read(d, {
-						// 				success: function(e) {
-										
-											
-						// 					console.log("Inside success of create manual");
-									
-						// 				},
-						// 				error: function(e) {
-											
-						// 					console.log("Inside error function manual");
-											
-						// 				}
-						// 			});
-						// 		}
-						// 	//	b.navTo("RouteView1");
-						// 	}
-						// });
-						
-						
-						
-						
+							console.log("Inside  success manual");
+						},
+						error: function(oError) {
+							console.log("Inside  error manual");
+							//	sap.ui.core.BusyIndicator.hide();
+
+						}
+
 					});
 				}
 			}
 			/////////
-			else if(selectionValue === undefined){
+			else if (selectionValue === undefined) {
 				MessageBox.show("Please select a consumption type");
-				
+
 			}
-		
+
 			/////////
+		},
+
+		sapMessageDisplay: function(e) {
+			sap.ui.core.BusyIndicator.show();
+			var messageArray2 = [];
+			for (var m = 0; m < messageArray[0].length; m++) {
+
+				messageArray2.push(messageArray[0][m]);
+
+			}
+
+			var messageModel = new sap.ui.model.json.JSONModel();
+			this.getView().setModel(messageModel, "messageModel");
+			this.getView().getModel("messageModel").setProperty("/messageSet", messageArray2);
+			sap.ui.core.BusyIndicator.hide();
+
+			if (!this._oDialog) {
+				//	this._oDialog = sap.ui.xmlfragment("com.bp.lubescustfinancial.fragments.OrderChangeHx", this);
+				this._oDialog = sap.ui.xmlfragment("com.sap.quantityDeclaration.fragments.serverMessage", this);
+			}
+
+			this.getView().addDependent(this._oDialog);
+			this._oDialog.open();
+
+			console.log("Inside sap message display");
+		},
+		//Close sap-message dialog
+		handleClose: function(oEvent) {
+			/* This function closes the dialog box */
+			if (this._oDialog) {
+
+				this._oDialog.close();
+			}
 		}
-		
-		
-		
 
 	});
 });
