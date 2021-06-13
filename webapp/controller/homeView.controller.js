@@ -333,6 +333,16 @@ sap.ui.define([
 
 												onClose: function(r) {
 
+
+	if (oData.Gvstag === "X") {
+								
+	var stagingUrl = "/PO_GETSet(Aufnr='" + i + "')";
+	oModel.read(stagingUrl, {
+							success: function(oData) {
+								
+									MessageToast.show("Automatic schedule staging triggered in background");
+									
+									     //Cross navigation to product monitor app
 													sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
 														target: {
 															semanticObject: "ZPTM",
@@ -340,6 +350,35 @@ sap.ui.define([
 														}
 
 													});
+								
+							console.log("Inside staging success");
+								},
+								
+								//	b.navTo("RouteView1");
+							
+							error: function(e) {
+								
+								console.log("Inside staging error");
+							}
+						});
+	
+	
+	
+								}
+
+else {
+
+                                             //Cross navigation to product monitor app
+													sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+														target: {
+															semanticObject: "ZPTM",
+															action: "display"
+														}
+
+													});
+													
+}	
+													
 												}
 
 											});
