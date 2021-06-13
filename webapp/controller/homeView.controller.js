@@ -57,10 +57,7 @@ sap.ui.define([
 				success: function(oData) {
 					p = oData;
 					
-					// 	if (oData.Gv_msg1 !== "") {
-					// 	MessageBox.error(oData.Gv_msg1);
-					// 	return;
-					// }
+				
 			
 				
 					sap.ui.getCore().byId("idOrder2").setValue(V);
