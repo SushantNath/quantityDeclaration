@@ -16,10 +16,10 @@ sap.ui.define([
 			gmsgbundle = this.getOwnerComponent().getModel("i18n");
 
 			var n = "0020";
-			var V = "1002064";
+			var V = "1001575";
 		//	var V = "1002206";
 
-			if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined) {
+		/*	if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined) {
 				console.log("passed order number is undefined ");
 
 				n = "0030";
@@ -41,7 +41,7 @@ sap.ui.define([
 
 				}
 
-			} 
+			}  */
 
 			var processField;
 			var startField;
@@ -258,6 +258,7 @@ sap.ui.define([
 
 			//if selected radio button is automatic then trigger background job processing
 			if (selectionValue === "auto") {
+   sap.ui.core.BusyIndicator.show();
 
 				console.log("Inside auto selection");
 
@@ -273,7 +274,11 @@ sap.ui.define([
 				// Added - 12152
 
 				////////////////////////////////////////////////////////////
+		var delayInMilliseconds = 1000; //1 second
 
+
+
+//setTimeout(this.sayHi, 1000);
 				selectedArray.push(payloadObject);
 
 				var aCreateDocPayload = selectedArray;
@@ -289,15 +294,20 @@ sap.ui.define([
 
 						//	console.log("Message from server", serverMessage);
 						console.log("Inside mparameter success");
-						//	sap.ui.core.BusyIndicator.hide();
+							sap.ui.core.BusyIndicator.hide();
 
 					},
 					error: function(oError) {
 						console.log("Inside mparameter error");
-						//	sap.ui.core.BusyIndicator.hide();
+							sap.ui.core.BusyIndicator.hide();
 
 					}
 				};
+				
+		setTimeout(function() {
+  //your delaycode to be executed after 1 second
+}, delayInMilliseconds);		
+			
 
 				var singleentry = {
 					groupId: "ReversalConsumptionBatch",
@@ -308,12 +318,17 @@ sap.ui.define([
 
 						var serverMessage = oRet.headers["sap-message"];
 
+//Timer delay code starts here
+	setTimeout(function() {
+  //your delaycode to be executed after 1 second
+	
+
 						if (serverMessage === undefined) {
 							console.log("Inside if block for message toast");
-							sap.ui.core.BusyIndicator.hide();
 							
-							///////////////////////////
 							
+							//Timer delay since PO_Post does some background check, in server
+						
 							
 								oModel.read(I, {
 											success: function(oData) {
@@ -325,7 +340,7 @@ sap.ui.define([
 								onClose: function(r) {
 									if (oData.GvFlag === "") {
 										// Calling Post consumption App
-									
+									sap.ui.core.BusyIndicator.hide();
 										//
 									//	t._oDialog2.close();
 										var d = "/PO_STAGSet(Order='" + i + "')";
@@ -335,16 +350,26 @@ sap.ui.define([
 
 	MessageBox.show(OData.GvString, {
 								title: " Staging Message",
-								actions: [sap.m.MessageBox.Action.CLOSE]
+								actions: [sap.m.MessageBox.Action.CLOSE],
+									onClose: function(r) {
+										sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+													target: {
+														semanticObject: "ZPTM",
+														action: "display"
+													}
+
+												});
+								
+								}
 								
 								});
 
-
+sap.ui.core.BusyIndicator.hide();
 												console.log("Inside success of PO_Stag");
 
 											},
 											error: function(OData) {
-
+sap.ui.core.BusyIndicator.hide();
 												console.log("Inside error PO_stag");
 
 											}
@@ -353,14 +378,14 @@ sap.ui.define([
 									//	b.navTo("RouteView1");
 								}
 							});
-
+sap.ui.core.BusyIndicator.hide();
 												console.log("Inside Po_confset success");
 											},
 
 											//	b.navTo("RouteView1");
 
 											error: function(e) {
-
+sap.ui.core.BusyIndicator.hide();
 												console.log("Inside Po_confset error");
 											}
 										});
@@ -376,9 +401,12 @@ sap.ui.define([
 							return;
 							// return;
 						}
-
+						
+//Timer delay code ends here						
+}, delayInMilliseconds);
 					},
 					error: function(oError) {
+						sap.ui.core.BusyIndicator.hide();
 						MessageBox.show("Error in background job processing", {
 							icon: MessageBox.Icon.ERROR,
 							title: "Dear User",
@@ -493,6 +521,10 @@ sap.ui.define([
 
 			/////////
 		},
+		 sayHi:	function() {
+  alert('Hello');
+},
+		
 
 		sapMessageDisplay: function(e) {
 		//	sap.ui.core.BusyIndicator.show();
