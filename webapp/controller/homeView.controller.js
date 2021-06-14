@@ -17,31 +17,31 @@ sap.ui.define([
 
 			var n = "0020";
 			var V = "1001575";
-		//	var V = "1002206";
+			//	var V = "1002206";
 
-		/*	if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined) {
-				console.log("passed order number is undefined ");
+					if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined) {
+						console.log("passed order number is undefined ");
 
-				n = "0030";
-				V = "1000082";
-			} else {
+						n = "0030";
+						V = "1000082";
+					} else {
 
-				console.log("passed order number is ", ParameterData.startupParameters.orderType);
-				console.log("passed operation number is ", ParameterData.startupParameters.operationNum);
+						console.log("passed order number is ", ParameterData.startupParameters.orderType);
+						console.log("passed operation number is ", ParameterData.startupParameters.operationNum);
 
-				if (ParameterData.startupParameters.orderType) {
+						if (ParameterData.startupParameters.orderType) {
 
-					V = ParameterData.startupParameters.orderType[0]; // “Getting the Purchase Order Value passed along with the URL
+							V = ParameterData.startupParameters.orderType[0]; // “Getting the Purchase Order Value passed along with the URL
 
-				}
+						}
 
-				if (ParameterData.startupParameters.operationNum) {
+						if (ParameterData.startupParameters.operationNum) {
 
-					n = ParameterData.startupParameters.operationNum[0]; // “Getting the Purchase Order Value passed along with the URL
+							n = ParameterData.startupParameters.operationNum[0]; // “Getting the Purchase Order Value passed along with the URL
 
-				}
+						}
 
-			}  */
+					}  
 
 			var processField;
 			var startField;
@@ -180,12 +180,63 @@ sap.ui.define([
 
 		//code to open quantity decaration fragment
 		fQuantityClick: function(e) {
-			var t = this.getView();
+
+	var t = this.getView();
 			if (!this._oDialog2) {
 				this._oDialog2 = sap.ui.xmlfragment("com.sap.quantityDeclaration.fragments.quan", this);
 				this.getView().addDependent(this._oDialog2);
 			}
 			this._oDialog2.open();
+
+
+			var i = sap.ui.getCore().byId("idOrder2").getValue();
+			var s = sap.ui.getCore().byId("idOper2").getValue();
+			//	var r = sap.ui.getCore().byId("idType2").getValue();
+			var d = sap.ui.getCore().byId("idDate2").getValue();
+			//	var o = "164059";
+			//sap.ui.getCore().byId("idTime2").getValue();
+			var logTime = sap.ui.getCore().byId("idTime2").getValue();
+			var logtime1 = (logTime.replace(":", ""));
+			var o = (logtime1.replace(":", "")); //time
+			var u = sap.ui.getCore().byId("idQuan2").getValue();
+			var g = sap.ui.getCore().byId("idQU2").getValue();
+			var n = sap.ui.getCore().byId("idNumber2").getValue();
+			var oModel = this.getOwnerComponent().getModel();
+			var l = "";
+			var r = "B20";
+
+			var I = "/PO_CONFSet(Order='" + i + "',Operation='" + s + "',Reason='" + l + "',Number='" + n + "',Record='" + r + "',Logdate='" +
+				d + "',Logtime='" + o + "',Unit='" + g + "',Yield='" + u + "')";
+
+			oModel.read(I, {
+				success: function(oData) {
+
+				var	setRadio = oData.Gvwork;
+					
+						if (setRadio === "1")
+					{
+					sap.ui.getCore().byId("idAuto2").setSelected(true);   
+					selectionValue = "auto";
+					}
+					else 
+					{
+					sap.ui.getCore().byId("idManual2").setSelected(true);  
+					selectionValue = "manual";
+					}
+
+					sap.ui.core.BusyIndicator.hide();
+					console.log("Inside Po_confset success radio button");
+				},
+
+				//	b.navTo("RouteView1");
+
+				error: function(e) {
+					sap.ui.core.BusyIndicator.hide();
+					console.log("Inside Po_confset error  radio button");
+				}
+			});
+
+		
 
 		},
 
@@ -210,8 +261,6 @@ sap.ui.define([
 		},
 
 		//code for quantuty save
-
-	
 
 		fConfirm2: function(e) {
 			messageArray = [];
@@ -258,7 +307,6 @@ sap.ui.define([
 
 			//if selected radio button is automatic then trigger background job processing
 			if (selectionValue === "auto") {
-   sap.ui.core.BusyIndicator.show();
 
 				console.log("Inside auto selection");
 
@@ -274,16 +322,15 @@ sap.ui.define([
 				// Added - 12152
 
 				////////////////////////////////////////////////////////////
-		var delayInMilliseconds = 1000; //1 second
+				var delayInMilliseconds = 1000; //1 second
 
-
-
-//setTimeout(this.sayHi, 1000);
+				//setTimeout(this.sayHi, 1000);
 				selectedArray.push(payloadObject);
 
 				var aCreateDocPayload = selectedArray;
 				oModel.setDeferredGroups(["backgroundConsumptionBatch"]);
 				oModel.setUseBatch(true);
+				sap.ui.core.BusyIndicator.show();
 				var mParameter = {
 
 					urlParameters: null,
@@ -294,20 +341,15 @@ sap.ui.define([
 
 						//	console.log("Message from server", serverMessage);
 						console.log("Inside mparameter success");
-							sap.ui.core.BusyIndicator.hide();
+						sap.ui.core.BusyIndicator.hide();
 
 					},
 					error: function(oError) {
 						console.log("Inside mparameter error");
-							sap.ui.core.BusyIndicator.hide();
+						sap.ui.core.BusyIndicator.hide();
 
 					}
 				};
-				
-		setTimeout(function() {
-  //your delaycode to be executed after 1 second
-}, delayInMilliseconds);		
-			
 
 				var singleentry = {
 					groupId: "ReversalConsumptionBatch",
@@ -318,92 +360,87 @@ sap.ui.define([
 
 						var serverMessage = oRet.headers["sap-message"];
 
-//Timer delay code starts here
-	setTimeout(function() {
-  //your delaycode to be executed after 1 second
-	
-
 						if (serverMessage === undefined) {
 							console.log("Inside if block for message toast");
-							
-							
-							//Timer delay since PO_Post does some background check, in server
-						
-							
+
+							//Timer delay code starts here
+							setTimeout(function() {
+								//your delaycode to be executed after 1 second
+								//Timer delay since PO_Post does some background check, in server
+
 								oModel.read(I, {
-											success: function(oData) {
-												
-												vmsg = oData.GvMsg;
-							MessageBox.show(vmsg, {
-								title: "Message",
-								actions: [sap.m.MessageBox.Action.CLOSE],
-								onClose: function(r) {
-									if (oData.GvFlag === "") {
-										// Calling Post consumption App
-									sap.ui.core.BusyIndicator.hide();
-										//
-									//	t._oDialog2.close();
-										var d = "/PO_STAGSet(Order='" + i + "')";
-										var o = "Title";
-										oModel.read(d, {
-											success: function(OData) {
+									success: function(oData) {
 
-	MessageBox.show(OData.GvString, {
-								title: " Staging Message",
-								actions: [sap.m.MessageBox.Action.CLOSE],
-									onClose: function(r) {
-										sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
-													target: {
-														semanticObject: "ZPTM",
-														action: "display"
-													}
+										vmsg = oData.GvMsg;
+										MessageBox.show(vmsg, {
+											title: "Message",
+											actions: [sap.m.MessageBox.Action.CLOSE],
+											onClose: function(r) {
+												if (oData.GvFlag === "") {
+													// Calling Post consumption App
+													sap.ui.core.BusyIndicator.hide();
+													//
+													//	t._oDialog2.close();
+													var d = "/PO_STAGSet(Order='" + i + "')";
+													var o = "Title";
+													oModel.read(d, {
+														success: function(OData) {
 
-												});
-								
-								}
-								
-								});
+															MessageBox.show(OData.GvString, {
+																title: " Staging Message",
+																actions: [sap.m.MessageBox.Action.CLOSE],
+																onClose: function(r) {
+																	sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+																		target: {
+																			semanticObject: "ZPTM",
+																			action: "display"
+																		}
 
-sap.ui.core.BusyIndicator.hide();
-												console.log("Inside success of PO_Stag");
+																	});
 
-											},
-											error: function(OData) {
-sap.ui.core.BusyIndicator.hide();
-												console.log("Inside error PO_stag");
+																}
 
-											}
-										}); 
-									}
-									//	b.navTo("RouteView1");
-								}
-							});
-sap.ui.core.BusyIndicator.hide();
-												console.log("Inside Po_confset success");
-											},
+															});
 
-											//	b.navTo("RouteView1");
+															sap.ui.core.BusyIndicator.hide();
+															console.log("Inside success of PO_Stag");
 
-											error: function(e) {
-sap.ui.core.BusyIndicator.hide();
-												console.log("Inside Po_confset error");
+														},
+														error: function(OData) {
+															sap.ui.core.BusyIndicator.hide();
+															console.log("Inside error PO_stag");
+
+														}
+													});
+												}
+												//	b.navTo("RouteView1");
 											}
 										});
-			
-						
+										sap.ui.core.BusyIndicator.hide();
+										console.log("Inside Po_confset success");
+									},
+
+									//	b.navTo("RouteView1");
+
+									error: function(e) {
+										sap.ui.core.BusyIndicator.hide();
+										console.log("Inside Po_confset error");
+									}
+								});
+
+								//Timer delay code ends here						
+							}, delayInMilliseconds);
 
 						} else {
-							t.serverMessage= [];
-					//	t.messageArray.push(JSON.parse(serverMessage).details);
+							t.serverMessage = [];
+							//	t.messageArray.push(JSON.parse(serverMessage).details);
 							t.serverMessage.push(JSON.parse(serverMessage).details);
 							t.sapMessageDisplay();
 							sap.ui.core.BusyIndicator.hide();
 							return;
 							// return;
 						}
-						
-//Timer delay code ends here						
-}, delayInMilliseconds);
+
 					},
 					error: function(oError) {
 						sap.ui.core.BusyIndicator.hide();
@@ -424,7 +461,7 @@ sap.ui.core.BusyIndicator.hide();
 					oModel.createEntry("/PO_POSTSet", singleentry);
 
 				}
-				oModel.submitChanges(mParameter); 
+				oModel.submitChanges(mParameter);
 				////////////////////////////////////////////////////////////////////////////////////////////////
 
 				////////////////////////////////////////
@@ -521,13 +558,12 @@ sap.ui.core.BusyIndicator.hide();
 
 			/////////
 		},
-		 sayHi:	function() {
-  alert('Hello');
-},
-		
+		sayHi: function() {
+			alert('Hello');
+		},
 
 		sapMessageDisplay: function(e) {
-		//	sap.ui.core.BusyIndicator.show();
+			//	sap.ui.core.BusyIndicator.show();
 			var messageArray2 = [];
 			for (var m = 0; m < this.serverMessage[0].length; m++) {
 
