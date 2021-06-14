@@ -18,7 +18,7 @@ sap.ui.define([
 			var n = "0020";
 			var V = "1002206";
 
-			if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined) {
+		/*	if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined) {
 				console.log("passed order number is undefined ");
 
 				n = "0030";
@@ -40,7 +40,7 @@ sap.ui.define([
 
 				}
 
-			}
+			}*/
 
 			var processField;
 			var startField;
@@ -623,7 +623,7 @@ else {
 						if (serverMessage === undefined) {
 							console.log("Inside if block for message toast");
 							sap.ui.core.BusyIndicator.hide();
-							MessageBox.show("Consumption posted successfully", {
+						/*	MessageBox.show("Consumption posted successfully", {
 								icon: MessageBox.Icon.SUCCESS,
 								title: "Dear User",
 								actions: [sap.m.MessageBox.Action.CLOSE],
@@ -684,10 +684,56 @@ else {
 
 								}
 
+							});*/
+							
+								var stagingUrl = "/PO_GETSet(Aufnr='" + i + "')";
+								oModel.read(stagingUrl, {
+											success: function(oData) {
+												
+												var stagMessage = oData.GvString;
+
+											//	MessageToast.show(stagMessage);
+														MessageBox.show(stagMessage, {
+								title: "Message",
+								actions: [sap.m.MessageBox.Action.CLOSE],
+								onClose: function(r) {
+										sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+													target: {
+														semanticObject: "ZPTM",
+														action: "display"
+													}
+
+												});
+								
+								}
 							});
+												
+												
+
+												//Cross navigation to product monitor app
+											/*	sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+													target: {
+														semanticObject: "ZPTM",
+														action: "display"
+													}
+
+												});*/
+
+												console.log("Inside staging success");
+											},
+
+											//	b.navTo("RouteView1");
+
+											error: function(e) {
+
+												console.log("Inside staging error");
+											}
+										});
 
 						} else {
-							messageArray.push(JSON.parse(serverMessage).details);
+							t.serverMessage= [];
+					//	t.messageArray.push(JSON.parse(serverMessage).details);
+							t.serverMessage.push(JSON.parse(serverMessage).details);
 							t.sapMessageDisplay();
 							sap.ui.core.BusyIndicator.hide();
 							return;
@@ -812,11 +858,11 @@ else {
 		},
 
 		sapMessageDisplay: function(e) {
-			sap.ui.core.BusyIndicator.show();
+		//	sap.ui.core.BusyIndicator.show();
 			var messageArray2 = [];
-			for (var m = 0; m < messageArray[0].length; m++) {
+			for (var m = 0; m < this.serverMessage[0].length; m++) {
 
-				messageArray2.push(messageArray[0][m]);
+				messageArray2.push(this.serverMessage[0][m]);
 
 			}
 

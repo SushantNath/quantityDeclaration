@@ -4,7 +4,7 @@
 			noDataText="No server Messages">
 			<m:headerToolbar>
 				<m:OverflowToolbar class="overFlowToolbarBackground sapUiLargeMarginTop">
-					<m:Title text="{i18n>backgroundMessage}"/>
+					<m:Title text="Consumption could not be posted due to below issues"/>
 					<core:Icon src="sap-icon://warning"/>
 					<m:ToolbarSpacer/>
 					<m:Button icon="sap-icon://decline" press="handleClose"/>
