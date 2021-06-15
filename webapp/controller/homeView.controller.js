@@ -15,11 +15,11 @@ sap.ui.define([
 			var ParameterData = this.getOwnerComponent().getComponentData();
 			gmsgbundle = this.getOwnerComponent().getModel("i18n");
 
-			var n = "0020";
-			var V = "1001575";
+			var n = "0010";
+			var V = "1002391";
 			//	var V = "1002206";
 
-					if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined) {
+			/*		if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined) {
 						console.log("passed order number is undefined ");
 
 						n = "0030";
@@ -41,7 +41,7 @@ sap.ui.define([
 
 						}
 
-					}  
+					}  */
 
 			var processField;
 			var startField;
@@ -211,17 +211,20 @@ sap.ui.define([
 			oModel.read(I, {
 				success: function(oData) {
 
-				var	setRadio = oData.Gvwork;
+				var	setRadio = oData.GvWork;
 					
-						if (setRadio === "1")
+						if (setRadio === "1" || setRadio==="")
 					{
 					sap.ui.getCore().byId("idAuto2").setSelected(true);   
 					selectionValue = "auto";
 					}
-					else 
+					else if(setRadio === "2")
 					{
 					sap.ui.getCore().byId("idManual2").setSelected(true);  
 					selectionValue = "manual";
+					}
+					else {
+						console.log("value for Gvwork/radiobutton is",setRadio);
 					}
 
 					sap.ui.core.BusyIndicator.hide();
@@ -310,12 +313,12 @@ sap.ui.define([
 
 				console.log("Inside auto selection");
 
-				if (n === "" || n === "0") {
+				if (n === "" || n === 0) {
 					MessageBox.error("Please insert a number of operators");
 					return;
 				}
 				// Added - 12152
-				if (n > "3") {
+				if (n > 3) {
 					MessageBox.error("The number of operators should be maximum 3. Please check your entry before proceeding");
 					return;
 				}
@@ -364,7 +367,7 @@ sap.ui.define([
 							console.log("Inside if block for message toast");
 
 							//Timer delay code starts here
-							setTimeout(function() {
+						//	setTimeout(function() {
 								//your delaycode to be executed after 1 second
 								//Timer delay since PO_Post does some background check, in server
 
@@ -429,7 +432,7 @@ sap.ui.define([
 								});
 
 								//Timer delay code ends here						
-							}, delayInMilliseconds);
+				//			}, delayInMilliseconds);
 
 						} else {
 							t.serverMessage = [];
@@ -477,12 +480,12 @@ sap.ui.define([
 			else if (selectionValue === "manual") {
 				if (this._oDialog2) {
 
-					if (n === "" || n === "0") {
+					if (n === "" || n === 0) {
 						MessageBox.error("Please insert a number of operators");
 						return;
 					}
 					// Added - 12152
-					if (n > "3") {
+					if (n > 3) {
 						MessageBox.error("The number of operators should be maximum 3. Please check your entry before proceeding");
 						return;
 					}
