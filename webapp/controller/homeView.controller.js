@@ -16,10 +16,10 @@ sap.ui.define([
 			gmsgbundle = this.getOwnerComponent().getModel("i18n");
 
 			var n = "0010";
-			var V = "1002391";
+			var V = "1002392";
 			//	var V = "1002206";
 
-			/*		if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined) {
+				/*	if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined) {
 						console.log("passed order number is undefined ");
 
 						n = "0030";
@@ -285,6 +285,10 @@ sap.ui.define([
 			var r = "B20";
 			var selectedArray = [];
 			var payloadObject = {};
+			// Convering the quantity unit from PC to PAL for specific oredr#
+				if (g === "PC") {
+				g = "PAL";
+			}
 
 			payloadObject.Lgnum = "4A10";
 			payloadObject.Huident = "";
@@ -313,21 +317,16 @@ sap.ui.define([
 
 				console.log("Inside auto selection");
 
-				if (n === "" || n === 0) {
+				if (n === "" || n === "0" || n=== 0) {
 					MessageBox.error("Please insert a number of operators");
 					return;
 				}
 				// Added - 12152
-				if (n > 3) {
+				if (n > 3 || n > "3") {
 					MessageBox.error("The number of operators should be maximum 3. Please check your entry before proceeding");
 					return;
 				}
-				// Added - 12152
-
-				////////////////////////////////////////////////////////////
-				var delayInMilliseconds = 1000; //1 second
-
-				//setTimeout(this.sayHi, 1000);
+			
 				selectedArray.push(payloadObject);
 
 				var aCreateDocPayload = selectedArray;
@@ -459,33 +458,25 @@ sap.ui.define([
 
 				}
 				oModel.submitChanges(mParameter);
-				////////////////////////////////////////////////////////////////////////////////////////////////
-
-				////////////////////////////////////////
-
-				//	}
-				/*	error: function(e) {
-						console.log("Inside error function");
-					}
-				});*/
+			
 			}
 			//if selected radio button is manual then trigger manual consumption
 			//else {
 			else if (selectionValue === "manual") {
 				if (this._oDialog2) {
 
-					if (n === "" || n === 0) {
+					if (n === "" || n === "0" || n=== 0) {
 						MessageBox.error("Please insert a number of operators");
 						return;
 					}
 					// Added - 12152
-					if (n > 3) {
+					if (n > 3 || n > "3") {
 						MessageBox.error("The number of operators should be maximum 3. Please check your entry before proceeding");
 						return;
 					}
 					// Added - 12152
 
-					p.read(I, {
+				/*	p.read(I, {
 
 						success: function(oData) {
 
@@ -544,7 +535,151 @@ sap.ui.define([
 
 						}
 
-					});
+					}); */
+					///////////////////////////////////
+					
+					var selectedArray2=[];
+									selectedArray2.push(payloadObject);
+
+				var aCreateDocPayload2 = selectedArray2;
+				oModel.setDeferredGroups(["backgroundConsumptionBatch2"]);
+				oModel.setUseBatch(true);
+				sap.ui.core.BusyIndicator.show();
+				var mParameter2 = {
+
+					urlParameters: null,
+					groupId: "ReversalConsumptionBatch2",
+					success: function(oData, oRet) {
+
+						//	var serverMessage = oRet.headers["sap-message"];
+
+						//	console.log("Message from server", serverMessage);
+						console.log("Inside mparameter success 2");
+						sap.ui.core.BusyIndicator.hide();
+
+					},
+					error: function(oError) {
+						console.log("Inside mparameter error 2");
+						sap.ui.core.BusyIndicator.hide();
+
+					}
+				};
+
+				var singleentry2 = {
+					groupId: "ReversalConsumptionBatch2",
+					urlParameters: null,
+					success: function(oData, oRet) {
+						console.log("Inside singleentry success 2");
+						//The success callback function for each record
+
+						var serverMessage2 = oRet.headers["sap-message"];
+
+						if (serverMessage2 === undefined) {
+							console.log("Inside if block for message toast");
+
+								oModel.read(I, {
+									success: function(oData) {
+
+										vmsg = oData.GvMsg;
+										MessageBox.show(vmsg, {
+											title: "Message",
+											actions: [sap.m.MessageBox.Action.CLOSE],
+											onClose: function(r) {
+												if (oData.GvFlag === "") {
+													// Calling Post consumption App
+													sap.ui.core.BusyIndicator.hide();
+													//
+													//	t._oDialog2.close();
+													var d = "/PO_STAGSet(Order='" + i + "')";
+													var o = "Title";
+													oModel.read(d, {
+														success: function(OData) {
+
+															MessageBox.show(OData.GvString, {
+																title: " Staging Message",
+																actions: [sap.m.MessageBox.Action.CLOSE],
+																onClose: function(r) {
+																	sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+											target: {
+												semanticObject: "ZpostCons_semobj",
+												action: "display"
+											},
+											params: {
+												"Warehouse": "4A10",
+												"ManufacturingOrder": i,
+												"Operation": s,
+												"Quantity": u,
+												"Unit": g,
+												"mode": "crossNavigation"
+											}
+										});
+
+																}
+
+															});
+
+															sap.ui.core.BusyIndicator.hide();
+															console.log("Inside success of PO_Stag");
+
+														},
+														error: function(OData) {
+															sap.ui.core.BusyIndicator.hide();
+															console.log("Inside error PO_stag");
+
+														}
+													});
+												}
+												//	b.navTo("RouteView1");
+											}
+										});
+										sap.ui.core.BusyIndicator.hide();
+										console.log("Inside Po_confset success");
+									},
+
+									//	b.navTo("RouteView1");
+
+									error: function(e) {
+										sap.ui.core.BusyIndicator.hide();
+										console.log("Inside Po_confset error");
+									}
+								});
+
+							
+
+						} else {
+							t.serverMessage2 = [];
+							//	t.messageArray.push(JSON.parse(serverMessage).details);
+							t.serverMessage2.push(JSON.parse(serverMessage2).details);
+							t.sapMessageDisplay2();
+							sap.ui.core.BusyIndicator.hide();
+							return;
+							// return;
+						}
+
+					},
+					error: function(oError) {
+						sap.ui.core.BusyIndicator.hide();
+						MessageBox.show("Error in background job processing", {
+							icon: MessageBox.Icon.ERROR,
+							title: "Dear User",
+							actions: [sap.m.MessageBox.Action.OK]
+
+						});
+					}
+
+				};
+
+				for (var m = 0; m < aCreateDocPayload2.length; m++) {
+
+					singleentry2.properties = aCreateDocPayload2[m];
+					singleentry2.changeSetId = "changeset " + m;
+					oModel.createEntry("/PO_POSTSet", singleentry2);
+
+				}
+				oModel.submitChanges(mParameter2);
+					
+					
+					/////////////////////////////////////
 				}
 			}
 			/////////
@@ -555,9 +690,7 @@ sap.ui.define([
 
 			/////////
 		},
-		sayHi: function() {
-			alert('Hello');
-		},
+	
 
 		sapMessageDisplay: function(e) {
 			//	sap.ui.core.BusyIndicator.show();
@@ -583,12 +716,45 @@ sap.ui.define([
 
 			console.log("Inside sap message display");
 		},
+			sapMessageDisplay2: function(e) {
+			//	sap.ui.core.BusyIndicator.show();
+			var messageArrayManual = [];
+			for (var m = 0; m < this.serverMessage2[0].length; m++) {
+
+				messageArrayManual.push(this.serverMessage2[0][m]);
+
+			}
+
+			var messageModel2 = new sap.ui.model.json.JSONModel();
+			this.getView().setModel(messageModel2, "messageModel2");
+			this.getView().getModel("messageModel2").setProperty("/messageSet2", messageArrayManual);
+			sap.ui.core.BusyIndicator.hide();
+
+			if (!this._oDialogManual) {
+				//	this._oDialog = sap.ui.xmlfragment("com.bp.lubescustfinancial.fragments.OrderChangeHx", this);
+				this._oDialogManual = sap.ui.xmlfragment("com.sap.quantityDeclaration.fragments.serverMessageManual", this);
+			}
+
+			this.getView().addDependent(this._oDialogManual);
+			this._oDialogManual.open();
+
+			console.log("Inside sap message display");
+		},
 		//Close sap-message dialog
 		handleClose: function(oEvent) {
 			/* This function closes the dialog box */
 			if (this._oDialog) {
 
 				this._oDialog.close();
+			}
+		},
+		
+		//Close sap-message dialog manual
+		handleClose2: function(oEvent) {
+			/* This function closes the dialog box */
+			if (this._oDialogManual) {
+
+				this._oDialogManual.close();
 			}
 		}
 
