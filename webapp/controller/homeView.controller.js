@@ -366,11 +366,6 @@ sap.ui.define([
 						if (serverMessage === undefined) {
 							console.log("Inside if block for message toast");
 
-							//Timer delay code starts here
-						//	setTimeout(function() {
-								//your delaycode to be executed after 1 second
-								//Timer delay since PO_Post does some background check, in server
-
 								oModel.read(I, {
 									success: function(oData) {
 
@@ -431,8 +426,7 @@ sap.ui.define([
 									}
 								});
 
-								//Timer delay code ends here						
-				//			}, delayInMilliseconds);
+							
 
 						} else {
 							t.serverMessage = [];
