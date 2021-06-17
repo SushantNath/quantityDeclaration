@@ -23,8 +23,9 @@ sap.ui.define([
 			//"1002439";
 			//"1002426";
 			//	var V = "1002206";
+		var	that = this;
 
-			/*		if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined) {
+					if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined) {
 						console.log("passed order number is undefined ");
 
 						n = "0030";
@@ -37,20 +38,30 @@ sap.ui.define([
 						if (ParameterData.startupParameters.orderType) {
 
 							V = ParameterData.startupParameters.orderType[0]; // “Getting the Purchase Order Value passed along with the URL
-
+                            that.orderNumber= V;
 						}
 
 						if (ParameterData.startupParameters.operationNum) {
 
 							n = ParameterData.startupParameters.operationNum[0]; // “Getting the Purchase Order Value passed along with the URL
+                           that.operationNum = n;
+						}
+							if (ParameterData.startupParameters.intOper) {
 
+						var	intOper = ParameterData.startupParameters.intOper[0]; // “Getting the Purchase Order Value passed along with the URL
+                        that.iOper = intOper;
+						}
+							if (ParameterData.startupParameters.intOperItem) {
+
+						var	intOperItem = ParameterData.startupParameters.intOperItem[0]; // “Getting the Purchase Order Value passed along with the URL
+                                      that.iOperItem =   intOperItem ;
 						}
 
-					} */
+					} 
 
 			// var processField;
 			// var startField;
-			var that = this;
+		//	var that = this;
 			this.orderValue = V;
 			this.operationValue = n;
 
@@ -105,7 +116,17 @@ sap.ui.define([
 									target: {
 										semanticObject: "ZPTM",
 										action: "display"
-									}
+									},
+									
+										params: {
+						"orderType": b.orderNumber,
+						"operationNum": b.operationNum,
+						"mode": "crossNavigation",
+							"intOper": b.iOper,
+								"intOperItem":  b.iOperItem
+						
+
+					}
 
 								});
 
@@ -124,7 +145,16 @@ sap.ui.define([
 									target: {
 										semanticObject: "ZPTM",
 										action: "display"
-									}
+									},
+										params: {
+						"orderType": b.orderNumber,
+						"operationNum": b.operationNum,
+						"mode": "crossNavigation",
+							"intOper": b.iOper,
+								"intOperItem":  b.iOperItem
+						
+
+					}
 
 								});
 
@@ -199,15 +229,27 @@ sap.ui.define([
 
 		// code for pop up close and cross navigation
 		closeDialog: function(e) {
+			
+			var t= this;
 			if (this._oDialog1) {
 				this._oDialog1.close();
+				
 			}
 
 			sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
 				target: {
 					semanticObject: "ZPTM",
 					action: "display"
-				}
+				},
+					params: {
+						"orderType": t.orderNumber,
+						"operationNum": t.operationNum,
+						"mode": "crossNavigation",
+							"intOper": t.iOper,
+								"intOperItem":  t.iOperItem
+						
+
+					}
 
 			});
 
@@ -513,7 +555,16 @@ sap.ui.define([
 																		target: {
 																			semanticObject: "ZPTM",
 																			action: "display"
-																		}
+																		},
+																			params: {
+						"orderType": t.orderNumber,
+						"operationNum": t.operationNum,
+						"mode": "crossNavigation",
+							"intOper": t.iOper,
+								"intOperItem":  t.iOperItem
+						
+
+					}
 
 																	});
 
@@ -609,7 +660,11 @@ sap.ui.define([
 					// Added - 12152
 					
 					
-					
+						if (!t.busyDialog) {
+				t.busyDialog = sap.ui.xmlfragment("com.sap.quantityDeclaration.fragments.busyDialog", this);
+				this.getView().addDependent(t.busyDialog);
+			}
+			t.busyDialog.open();
 					
 
 					var selectedArray2 = [];
@@ -629,12 +684,12 @@ sap.ui.define([
 
 							//	console.log("Message from server", serverMessage);
 							console.log("Inside mparameter success 2");
-							sap.ui.core.BusyIndicator.hide();
+						//	sap.ui.core.BusyIndicator.hide();
 
 						},
 						error: function(oError) {
 							console.log("Inside mparameter error 2");
-							sap.ui.core.BusyIndicator.hide();
+						//	sap.ui.core.BusyIndicator.hide();
 
 						}
 					};
@@ -660,7 +715,7 @@ sap.ui.define([
 										// 	MessageBox.show("For the operation the quantity declaration cannot be executed.Please select a different operation");
 										// 	return;
 										// }
-
+	t.busyDialog.close();
 										MessageBox.show(vmsg, {
 											title: "Message",
 											actions: [sap.m.MessageBox.Action.CLOSE],
@@ -709,6 +764,7 @@ sap.ui.define([
 
 									error: function(e) {
 										sap.ui.core.BusyIndicator.hide();
+											t.busyDialog.close();
 										console.log("Inside Po_confset error");
 									}
 								});
@@ -718,7 +774,8 @@ sap.ui.define([
 								//	t.messageArray.push(JSON.parse(serverMessage).details);
 								t.serverMessage2.push(JSON.parse(serverMessage2).details);
 								t.sapMessageDisplay2();
-								sap.ui.core.BusyIndicator.hide();
+									t.busyDialog.close();
+							//	sap.ui.core.BusyIndicator.hide();
 								return;
 								// return;
 							}
