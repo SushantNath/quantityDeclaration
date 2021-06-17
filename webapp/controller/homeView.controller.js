@@ -19,7 +19,8 @@ sap.ui.define([
 			gmsgbundle = this.getOwnerComponent().getModel("i18n");
 
 			var n = "0010";
-			var V = "1002439";
+			var V = "1002426";
+			//"1002439";
 			//"1002426";
 			//	var V = "1002206";
 
@@ -45,7 +46,7 @@ sap.ui.define([
 
 						}
 
-					}  */
+					} */
 
 			// var processField;
 			// var startField;
@@ -77,57 +78,61 @@ sap.ui.define([
 					sap.ui.getCore().byId("idAUnit2").setValue(oData.ZquanUnit);
 					sap.ui.getCore().byId("idDate2").setDateValue(new Date);
 					sap.ui.getCore().byId("idTime2").setDateValue(new Date);
-					sap.ui.getCore().byId("idQU2").setValue(oData.Gmein);
+
+					var conversionValue = oData.Gmein;
+					if (conversionValue === "PC") {
+						conversionValue = "PAL";
+					}
+					sap.ui.getCore().byId("idQU2").setValue(conversionValue);
 
 					processField = oData.ZactPro;
 					startField = oData.ZactStart;
 					processCheck = oData.Gv_msg2;
 
 					console.log("start and processing fields are", processField, startField);
-					
-					
-								////Validation check for product already confirmed
 
-			var errorMessage1 = "Production order already finished.No further activity can be processed";
-			var errorMessage2 = "Quantity declaration not possible. Check the sequence of confirmations";
+					////Validation check for product already confirmed
 
-			if (processCheck === "B40") {
-				MessageBox.error(errorMessage1, {
-					title: "Message",
-					actions: [sap.m.MessageBox.Action.CLOSE],
-					onClose: function(r) {
-						sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
-							target: {
-								semanticObject: "ZPTM",
-								action: "display"
+					var errorMessage1 = "Production order already finished.No further activity can be processed";
+					var errorMessage2 = "Quantity declaration not possible. Check the sequence of confirmations";
+
+					if (processCheck === "B40") {
+						MessageBox.error(errorMessage1, {
+							title: "Message",
+							actions: [sap.m.MessageBox.Action.CLOSE],
+							onClose: function(r) {
+								sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+									target: {
+										semanticObject: "ZPTM",
+										action: "display"
+									}
+
+								});
+
 							}
 
 						});
 
 					}
+					if (processCheck !== "B10" && processCheck !== "B20" && processCheck !== "B40") {
 
-				});
+						MessageBox.error(errorMessage2, {
+							title: "Message",
+							actions: [sap.m.MessageBox.Action.CLOSE],
+							onClose: function(r) {
+								sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+									target: {
+										semanticObject: "ZPTM",
+										action: "display"
+									}
 
-			}
-			if (processCheck !== "B10" && processCheck !== "B20" && processCheck !== "B40") {
+								});
 
-				MessageBox.error(errorMessage2, {
-					title: "Message",
-					actions: [sap.m.MessageBox.Action.CLOSE],
-					onClose: function(r) {
-						sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
-							target: {
-								semanticObject: "ZPTM",
-								action: "display"
 							}
 
 						});
 
 					}
-
-				});
-
-			}
 
 				}
 
@@ -136,43 +141,43 @@ sap.ui.define([
 			var errorMessage1 = "Production order already finished.No further activity can be processed";
 			var errorMessage2 = "Quantity declaration not possible. Check the sequence of confirmations";
 
-	/*		if (processCheck === "B40") {
-				MessageBox.error(errorMessage1, {
-					title: "Message",
-					actions: [sap.m.MessageBox.Action.CLOSE],
-					onClose: function(r) {
-						sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
-							target: {
-								semanticObject: "ZPTM",
-								action: "display"
+			/*		if (processCheck === "B40") {
+						MessageBox.error(errorMessage1, {
+							title: "Message",
+							actions: [sap.m.MessageBox.Action.CLOSE],
+							onClose: function(r) {
+								sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+									target: {
+										semanticObject: "ZPTM",
+										action: "display"
+									}
+
+								});
+
 							}
 
 						});
 
 					}
+					if (processCheck !== "B10" && processCheck !== "B20" && processCheck !== "B40") {
 
-				});
+						MessageBox.error(errorMessage2, {
+							title: "Message",
+							actions: [sap.m.MessageBox.Action.CLOSE],
+							onClose: function(r) {
+								sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+									target: {
+										semanticObject: "ZPTM",
+										action: "display"
+									}
 
-			}
-			if (processCheck !== "B10" && processCheck !== "B20" && processCheck !== "B40") {
+								});
 
-				MessageBox.error(errorMessage2, {
-					title: "Message",
-					actions: [sap.m.MessageBox.Action.CLOSE],
-					onClose: function(r) {
-						sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
-							target: {
-								semanticObject: "ZPTM",
-								action: "display"
 							}
 
 						});
 
-					}
-
-				});
-
-			}*/
+					}*/
 
 			this.fQuantityClick();
 
@@ -245,7 +250,7 @@ sap.ui.define([
 		onReasonF4: function() {
 
 			var e = sap.ui.getCore().byId("idOrder1").getText();
-			BusyIndicator.show();
+		//	BusyIndicator.show();
 			if (!this._ReasonDialog) {
 				this._ReasonDialog = sap.ui.xmlfragment("com.sap.quantityDeclaration.fragments.value", this);
 			}
@@ -286,8 +291,6 @@ sap.ui.define([
 			}
 			this._oDialog2.open();
 
-
-
 			var i = this.orderValue;
 			var s = this.operationValue;
 			//	var r = sap.ui.getCore().byId("idType2").getValue();
@@ -303,6 +306,10 @@ sap.ui.define([
 			var oModel = this.getOwnerComponent().getModel();
 			var l = "";
 			var r = "B20";
+
+			// if (g === "PC") {
+			// 	g = "PAL";
+			// }
 
 			var I = "/PO_CONFSet(Order='" + i + "',Operation='" + s + "',Reason='" + l + "',Number='" + n + "',Record='" + r + "',Logdate='" +
 				d + "',Logtime='" + o + "',Unit='" + g + "',Yield='" + u + "')";
@@ -360,20 +367,7 @@ sap.ui.define([
 
 		fConfirm2: function(e) {
 
-			/*	if(processField === "Processing" && startField=== "Finish"){
-					
-					MessageBox.error("Production order already finished.No further activity can be processed");
-					return;
-				}
-				
-				   if(processCheck === "B40"){
-					MessageBox.error("Production order already finished.No further activity can be processed");
-					return;
-				}
-				if(processCheck !== "B10" && processCheck !== "B20" && processCheck !== "B40" ){
-					MessageBox.error("Quantity declaration not possible. Check the sequence of confirmations");
-					return;
-				}*/
+		
 
 			messageArray = [];
 			var t = this;
@@ -395,9 +389,9 @@ sap.ui.define([
 			var selectedArray = [];
 			var payloadObject = {};
 			// Convering the quantity unit from PC to PAL for specific oredr#
-			if (g === "PC") {
-				g = "PAL";
-			}
+			// if (g === "PC") {
+			// 	g = "PAL";
+			// }
 
 			payloadObject.Lgnum = "4A10";
 			payloadObject.Huident = "";
@@ -420,7 +414,7 @@ sap.ui.define([
 
 			//	var	selectionValue = "auto";
 			var messageArray = [];
-
+      // 	sap.ui.core.BusyIndicator.show();
 			//if selected radio button is automatic then trigger background job processing
 			if (selectionValue === "auto") {
 
@@ -435,13 +429,21 @@ sap.ui.define([
 					MessageBox.error("The number of operators should be maximum 3. Please check your entry before proceeding");
 					return;
 				}
+				
+					if (!t.busyDialog) {
+				t.busyDialog = sap.ui.xmlfragment("com.sap.quantityDeclaration.fragments.busyDialog", this);
+				this.getView().addDependent(t.busyDialog);
+			}
+			t.busyDialog.open();
+				
+				
 
 				selectedArray.push(payloadObject);
 
 				var aCreateDocPayload = selectedArray;
 				oModel.setDeferredGroups(["backgroundConsumptionBatch"]);
 				oModel.setUseBatch(true);
-				sap.ui.core.BusyIndicator.show();
+			//	sap.ui.core.BusyIndicator.show();
 				var mParameter = {
 
 					urlParameters: null,
@@ -476,31 +478,33 @@ sap.ui.define([
 							//call of PO_confset
 							oModel.read(I, {
 								success: function(oData) {
-
-									if (oData.GvFlag !== "") {
-										MessageBox.show("For the operation the quantity declaration cannot be executed.Please select a different operation");
-										return;
-									}
-
 									vmsg = oData.GvMsg;
+									// if (oData.GvFlag !== "") {
+									// 	MessageBox.show(oData.GvMsg);
+									// 	return;
+									// }
+
+									//		vmsg = oData.GvMsg;
 									MessageBox.show(vmsg, {
 										title: "Message",
 										actions: [sap.m.MessageBox.Action.CLOSE],
 										onClose: function(r) {
+											t.busyDialog.close();
 											if (oData.GvFlag === "") {
-
+                                            
 												if (oData.GvStag === "X") {
+														t.busyDialog.open();
 													// oData.GvFlag === ""
 													// oData.GvStag === "X"
 													// Calling Post consumption App
-													sap.ui.core.BusyIndicator.hide();
+												//	sap.ui.core.BusyIndicator.hide();
 													//
 													//	t._oDialog2.close();
 													var d = "/PO_STAGSet(Order='" + i + "')";
 													var o = "Title";
 													oModel.read(d, {
 														success: function(OData) {
-
+                                                	t.busyDialog.close();
 															MessageBox.show(OData.GvString, {
 																title: " Staging Message",
 																actions: [sap.m.MessageBox.Action.CLOSE],
@@ -516,13 +520,14 @@ sap.ui.define([
 																}
 
 															});
-
+                                                       	t.busyDialog.close();
 															sap.ui.core.BusyIndicator.hide();
 															console.log("Inside success of PO_Stag");
-
+                                
 														},
 														error: function(OData) {
-															sap.ui.core.BusyIndicator.hide();
+														//	sap.ui.core.BusyIndicator.hide();
+														t.busyDialog.close();
 															console.log("Inside error PO_stag");
 
 														}
@@ -530,17 +535,18 @@ sap.ui.define([
 
 												} // end bracket for GVstag
 											} // end bracket for Gvflag
-											/*	else if  (oData.GvFlag !== ""){
-													MessageBox.show("For the operation the quantity declaration cannot be executed.Please select a different operation");
-												return;
-											}
-											else{
-												console.log("No Gvflag message");
-											}*/
+											/*	else if (oData.GvFlag !== "") {
+													MessageBox.show(
+														"For the operation the quantity declaration cannot be executed.Please select a different operation");
+													return;
+												} else {
+													console.log("No Gvflag message");
+												}*/
 										}
 									});
-									sap.ui.core.BusyIndicator.hide();
+								//	sap.ui.core.BusyIndicator.hide();
 									console.log("Inside Po_confset success");
+									t.busyDialog.close();
 								},
 
 								//	b.navTo("RouteView1");
@@ -548,6 +554,7 @@ sap.ui.define([
 								error: function(e) {
 									sap.ui.core.BusyIndicator.hide();
 									console.log("Inside Po_confset error");
+									t.busyDialog.close();
 								}
 							});
 
@@ -556,15 +563,16 @@ sap.ui.define([
 							//	t.messageArray.push(JSON.parse(serverMessage).details);
 							t.serverMessage.push(JSON.parse(serverMessage).details);
 							t.sapMessageDisplay();
-							sap.ui.core.BusyIndicator.hide();
+							t.busyDialog.close();
+						//	sap.ui.core.BusyIndicator.hide();
 							return;
 							// return;
 						}
 
 					},
 					error: function(oError) {
-						sap.ui.core.BusyIndicator.hide();
-						MessageBox.show("Error in background job processing", {
+					//	sap.ui.core.BusyIndicator.hide();
+						MessageBox.show("Error in consumption", {
 							icon: MessageBox.Icon.ERROR,
 							title: "Dear User",
 							actions: [sap.m.MessageBox.Action.OK]
@@ -599,6 +607,10 @@ sap.ui.define([
 						return;
 					}
 					// Added - 12152
+					
+					
+					
+					
 
 					var selectedArray2 = [];
 					selectedArray2.push(payloadObject);
@@ -606,7 +618,7 @@ sap.ui.define([
 					var aCreateDocPayload2 = selectedArray2;
 					oModel.setDeferredGroups(["backgroundConsumptionBatch2"]);
 					oModel.setUseBatch(true);
-					sap.ui.core.BusyIndicator.show();
+				//	sap.ui.core.BusyIndicator.show();
 					var mParameter2 = {
 
 						urlParameters: null,
@@ -644,10 +656,10 @@ sap.ui.define([
 
 										vmsg = oData.GvMsg;
 
-										if (oData.GvFlag !== "") {
-											MessageBox.show("For the operation the quantity declaration cannot be executed.Please select a different operation");
-											return;
-										}
+										// if (oData.GvFlag !== "") {
+										// 	MessageBox.show("For the operation the quantity declaration cannot be executed.Please select a different operation");
+										// 	return;
+										// }
 
 										MessageBox.show(vmsg, {
 											title: "Message",
@@ -655,56 +667,28 @@ sap.ui.define([
 											onClose: function(r) {
 												// Calling Post consumption App
 												console.log("calling post consumption app");
-												sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
-													target: {
-														semanticObject: "ZpostCons_semobj",
-														action: "display"
-													},
-													params: {
-														"Warehouse": "4A10",
-														"ManufacturingOrder": i,
-														"Operation": s,
-														"Quantity": u,
-														"Unit": g,
-														"mode": "crossNavigation",
-														"application": "QuantityDeclaration"
-													}
-												});
 
-												/*			if (oData.GvFlag === "") {
-															
-															if (oData.GvStag === "X") {
-															
-																sap.ui.core.BusyIndicator.hide();
-																//
-																//	t._oDialog2.close();
-																var d = "/PO_STAGSet(Order='" + i + "')";
-																var o = "Title";
-																oModel.read(d, {
-																	success: function(OData) {
+												if (oData.GvFlag === "") {
 
-																		MessageBox.show(OData.GvString, {
-																			title: " Staging Message",
-																			actions: [sap.m.MessageBox.Action.CLOSE],
-																			onClose: function(r) {
-																			
+													sap.ui.core.BusyIndicator.hide();
 
-																			}
-
-																		});
-
-																		sap.ui.core.BusyIndicator.hide();
-																		console.log("Inside success of PO_Stag");
-
-																	},
-																	error: function(OData) {
-																		sap.ui.core.BusyIndicator.hide();
-																		console.log("Inside error PO_stag");
-
-																	}
-																});
-															}//End bracket for Gvstag
-															}//end bracket for GVflag */
+													sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+														target: {
+															semanticObject: "ZpostCons_semobj",
+															action: "display"
+														},
+														params: {
+															"Warehouse": "4A10",
+															"ManufacturingOrder": i,
+															"Operation": s,
+															"Quantity": u,
+															"Unit": g,
+															"mode": "crossNavigation",
+															"application": "QuantityDeclaration"
+														}
+													});
+													//End bracket for Gvstag
+												} //end bracket for GVflag */
 												//	b.navTo("RouteView1");
 
 												// 	else if  (oData.GvFlag !== ""){
@@ -772,6 +756,11 @@ sap.ui.define([
 
 			/////////
 		},
+		
+		//Methods for busy indicator
+		
+
+	
 
 		sapMessageDisplay: function(e) {
 			//	sap.ui.core.BusyIndicator.show();
