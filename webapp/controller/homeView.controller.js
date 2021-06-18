@@ -23,45 +23,45 @@ sap.ui.define([
 			//"1002439";
 			//"1002426";
 			//	var V = "1002206";
-		var	that = this;
+			var that = this;
 
-					if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined) {
-						console.log("passed order number is undefined ");
+			/*	if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined) {
+					console.log("passed order number is undefined ");
 
-						n = "0030";
-						V = "1000082";
-					} else {
+					n = "0030";
+					V = "1000082";
+				} else {
 
-						console.log("passed order number is ", ParameterData.startupParameters.orderType);
-						console.log("passed operation number is ", ParameterData.startupParameters.operationNum);
+					console.log("passed order number is ", ParameterData.startupParameters.orderType);
+					console.log("passed operation number is ", ParameterData.startupParameters.operationNum);
 
-						if (ParameterData.startupParameters.orderType) {
+					if (ParameterData.startupParameters.orderType) {
 
-							V = ParameterData.startupParameters.orderType[0]; // “Getting the Purchase Order Value passed along with the URL
-                            that.orderNumber= V;
-						}
+						V = ParameterData.startupParameters.orderType[0]; // “Getting the Purchase Order Value passed along with the URL
+						that.orderNumber = V;
+					}
 
-						if (ParameterData.startupParameters.operationNum) {
+					if (ParameterData.startupParameters.operationNum) {
 
-							n = ParameterData.startupParameters.operationNum[0]; // “Getting the Purchase Order Value passed along with the URL
-                           that.operationNum = n;
-						}
-							if (ParameterData.startupParameters.intOper) {
+						n = ParameterData.startupParameters.operationNum[0]; // “Getting the Purchase Order Value passed along with the URL
+						that.operationNum = n;
+					}
+					if (ParameterData.startupParameters.intOper) {
 
-						var	intOper = ParameterData.startupParameters.intOper[0]; // “Getting the Purchase Order Value passed along with the URL
-                        that.iOper = intOper;
-						}
-							if (ParameterData.startupParameters.intOperItem) {
+						var intOper = ParameterData.startupParameters.intOper[0]; // “Getting the Purchase Order Value passed along with the URL
+						that.iOper = intOper;
+					}
+					if (ParameterData.startupParameters.intOperItem) {
 
-						var	intOperItem = ParameterData.startupParameters.intOperItem[0]; // “Getting the Purchase Order Value passed along with the URL
-                                      that.iOperItem =   intOperItem ;
-						}
+						var intOperItem = ParameterData.startupParameters.intOperItem[0]; // “Getting the Purchase Order Value passed along with the URL
+						that.iOperItem = intOperItem;
+					}
 
-					} 
+				} */
 
 			// var processField;
 			// var startField;
-		//	var that = this;
+			//	var that = this;
 			this.orderValue = V;
 			this.operationValue = n;
 
@@ -117,16 +117,15 @@ sap.ui.define([
 										semanticObject: "ZPTM",
 										action: "display"
 									},
-									
-										params: {
-						"orderType": b.orderNumber,
-						"operationNum": b.operationNum,
-						"mode": "crossNavigation",
-							"intOper": b.iOper,
-								"intOperItem":  b.iOperItem
-						
 
-					}
+									params: {
+										"orderType": b.orderNumber,
+										"operationNum": b.operationNum,
+										"mode": "crossNavigation",
+										"intOper": b.iOper,
+										"intOperItem": b.iOperItem
+
+									}
 
 								});
 
@@ -146,15 +145,14 @@ sap.ui.define([
 										semanticObject: "ZPTM",
 										action: "display"
 									},
-										params: {
-						"orderType": b.orderNumber,
-						"operationNum": b.operationNum,
-						"mode": "crossNavigation",
-							"intOper": b.iOper,
-								"intOperItem":  b.iOperItem
-						
+									params: {
+										"orderType": b.orderNumber,
+										"operationNum": b.operationNum,
+										"mode": "crossNavigation",
+										"intOper": b.iOper,
+										"intOperItem": b.iOperItem
 
-					}
+									}
 
 								});
 
@@ -170,44 +168,6 @@ sap.ui.define([
 
 			var errorMessage1 = "Production order already finished.No further activity can be processed";
 			var errorMessage2 = "Quantity declaration not possible. Check the sequence of confirmations";
-
-			/*		if (processCheck === "B40") {
-						MessageBox.error(errorMessage1, {
-							title: "Message",
-							actions: [sap.m.MessageBox.Action.CLOSE],
-							onClose: function(r) {
-								sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
-									target: {
-										semanticObject: "ZPTM",
-										action: "display"
-									}
-
-								});
-
-							}
-
-						});
-
-					}
-					if (processCheck !== "B10" && processCheck !== "B20" && processCheck !== "B40") {
-
-						MessageBox.error(errorMessage2, {
-							title: "Message",
-							actions: [sap.m.MessageBox.Action.CLOSE],
-							onClose: function(r) {
-								sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
-									target: {
-										semanticObject: "ZPTM",
-										action: "display"
-									}
-
-								});
-
-							}
-
-						});
-
-					}*/
 
 			this.fQuantityClick();
 
@@ -229,11 +189,11 @@ sap.ui.define([
 
 		// code for pop up close and cross navigation
 		closeDialog: function(e) {
-			
-			var t= this;
+
+			var t = this;
 			if (this._oDialog1) {
 				this._oDialog1.close();
-				
+
 			}
 
 			sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
@@ -241,15 +201,14 @@ sap.ui.define([
 					semanticObject: "ZPTM",
 					action: "display"
 				},
-					params: {
-						"orderType": t.orderNumber,
-						"operationNum": t.operationNum,
-						"mode": "crossNavigation",
-							"intOper": t.iOper,
-								"intOperItem":  t.iOperItem
-						
+				params: {
+					"orderType": t.orderNumber,
+					"operationNum": t.operationNum,
+					"mode": "crossNavigation",
+					"intOper": t.iOper,
+					"intOperItem": t.iOperItem
 
-					}
+				}
 
 			});
 
@@ -292,7 +251,7 @@ sap.ui.define([
 		onReasonF4: function() {
 
 			var e = sap.ui.getCore().byId("idOrder1").getText();
-		//	BusyIndicator.show();
+			//	BusyIndicator.show();
 			if (!this._ReasonDialog) {
 				this._ReasonDialog = sap.ui.xmlfragment("com.sap.quantityDeclaration.fragments.value", this);
 			}
@@ -409,7 +368,9 @@ sap.ui.define([
 
 		fConfirm2: function(e) {
 
-		
+			// 	this._sTimeoutId = setTimeout(function() {
+			// 	console.log("Display time out");
+			// }.bind(this), 1000);
 
 			messageArray = [];
 			var t = this;
@@ -456,7 +417,7 @@ sap.ui.define([
 
 			//	var	selectionValue = "auto";
 			var messageArray = [];
-      // 	sap.ui.core.BusyIndicator.show();
+			// 	sap.ui.core.BusyIndicator.show();
 			//if selected radio button is automatic then trigger background job processing
 			if (selectionValue === "auto") {
 
@@ -471,21 +432,19 @@ sap.ui.define([
 					MessageBox.error("The number of operators should be maximum 3. Please check your entry before proceeding");
 					return;
 				}
-				
-					if (!t.busyDialog) {
-				t.busyDialog = sap.ui.xmlfragment("com.sap.quantityDeclaration.fragments.busyDialog", this);
-				this.getView().addDependent(t.busyDialog);
-			}
-			t.busyDialog.open();
-				
-				
+
+				if (!t.busyDialog) {
+					t.busyDialog = sap.ui.xmlfragment("com.sap.quantityDeclaration.fragments.busyDialog", this);
+					this.getView().addDependent(t.busyDialog);
+				}
+				t.busyDialog.open();
 
 				selectedArray.push(payloadObject);
 
 				var aCreateDocPayload = selectedArray;
 				oModel.setDeferredGroups(["backgroundConsumptionBatch"]);
 				oModel.setUseBatch(true);
-			//	sap.ui.core.BusyIndicator.show();
+				//	sap.ui.core.BusyIndicator.show();
 				var mParameter = {
 
 					urlParameters: null,
@@ -517,74 +476,95 @@ sap.ui.define([
 
 						if (serverMessage === undefined) {
 							console.log("Inside if block for message toast");
-							//call of PO_confset
+							//call consumption
+
+							// MessageBox.show("Consumption posted successfully", {
+							// 				icon: MessageBox.Icon.SUCCESS,
+							// 				title: "Dear User",
+							// 				actions: [sap.m.MessageBox.Action.CLOSE],
+
+							// 				onClose: function(r) {
+							///////////////////////
+             //            	this._sTimeoutId = setTimeout(function() {
+													// console.log("Display time out");
+											
 							oModel.read(I, {
 								success: function(oData) {
 									vmsg = oData.GvMsg;
-									// if (oData.GvFlag !== "") {
-									// 	MessageBox.show(oData.GvMsg);
-									// 	return;
-									// }
 
-									//		vmsg = oData.GvMsg;
 									MessageBox.show(vmsg, {
 										title: "Message",
 										actions: [sap.m.MessageBox.Action.CLOSE],
 										onClose: function(r) {
 											t.busyDialog.close();
+											//Checking validation for consumption
 											if (oData.GvFlag === "") {
-                                            
-												if (oData.GvStag === "X") {
-														t.busyDialog.open();
-													// oData.GvFlag === ""
-													// oData.GvStag === "X"
-													// Calling Post consumption App
-												//	sap.ui.core.BusyIndicator.hide();
-													//
-													//	t._oDialog2.close();
-													var d = "/PO_STAGSet(Order='" + i + "')";
-													var o = "Title";
-													oModel.read(d, {
-														success: function(OData) {
-                                                	t.busyDialog.close();
-															MessageBox.show(OData.GvString, {
-																title: " Staging Message",
-																actions: [sap.m.MessageBox.Action.CLOSE],
-																onClose: function(r) {
-																	sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
-																		target: {
-																			semanticObject: "ZPTM",
-																			action: "display"
-																		},
-																			params: {
-						"orderType": t.orderNumber,
-						"operationNum": t.operationNum,
-						"mode": "crossNavigation",
-							"intOper": t.iOper,
-								"intOperItem":  t.iOperItem
-						
+												//Checking staging parameter
 
-					}
+											
+
+												MessageBox.show("Consumption posted successfully", {
+													icon: MessageBox.Icon.SUCCESS,
+													title: "Dear User",
+													actions: [sap.m.MessageBox.Action.CLOSE],
+
+													onClose: function(r) {
+
+														if (oData.GvStag === "X") {
+
+															t.busyDialog.open();
+															//Calling staging odata dervices
+															var d = "/PO_STAGSet(Order='" + i + "')";
+															var o = "Title";
+															oModel.read(d, {
+																success: function(OData) {
+																	t.busyDialog.close();
+																	MessageBox.show(OData.GvString, {
+																		title: " Staging Message",
+																		actions: [sap.m.MessageBox.Action.CLOSE],
+																		onClose: function(r) {
+																			sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+																				target: {
+																					semanticObject: "ZPTM",
+																					action: "display"
+																				},
+																				params: {
+																					"orderType": t.orderNumber,
+																					"operationNum": t.operationNum,
+																					"mode": "crossNavigation",
+																					"intOper": t.iOper,
+																					"intOperItem": t.iOperItem
+
+																				}
+
+																			});
+
+																		}
 
 																	});
+																	t.busyDialog.close();
+																	sap.ui.core.BusyIndicator.hide();
+																	console.log("Inside success of PO_Stag");
+
+																},
+																error: function(OData) {
+																	//	sap.ui.core.BusyIndicator.hide();
+																	t.busyDialog.close();
+																	console.log("Inside error PO_stag");
 
 																}
-
 															});
-                                                       	t.busyDialog.close();
-															sap.ui.core.BusyIndicator.hide();
-															console.log("Inside success of PO_Stag");
-                                
-														},
-														error: function(OData) {
-														//	sap.ui.core.BusyIndicator.hide();
-														t.busyDialog.close();
-															console.log("Inside error PO_stag");
 
-														}
-													});
+															//	}
+															//		});
 
-												} // end bracket for GVstag
+														} // end bracket for GVstag
+
+													}
+												});
+                                            
+											//	}.bind(this), 1000); End bracket for timeout functionality
+                                            
 											} // end bracket for Gvflag
 											/*	else if (oData.GvFlag !== "") {
 													MessageBox.show(
@@ -595,7 +575,7 @@ sap.ui.define([
 												}*/
 										}
 									});
-								//	sap.ui.core.BusyIndicator.hide();
+									//	sap.ui.core.BusyIndicator.hide();
 									console.log("Inside Po_confset success");
 									t.busyDialog.close();
 								},
@@ -608,6 +588,10 @@ sap.ui.define([
 									t.busyDialog.close();
 								}
 							});
+				//		}.bind(this), 1000); //End bracket for timeout functionality
+							///////////////////////////////////												
+							//	}
+							//	});
 
 						} else {
 							t.serverMessage = [];
@@ -615,14 +599,14 @@ sap.ui.define([
 							t.serverMessage.push(JSON.parse(serverMessage).details);
 							t.sapMessageDisplay();
 							t.busyDialog.close();
-						//	sap.ui.core.BusyIndicator.hide();
+							//	sap.ui.core.BusyIndicator.hide();
 							return;
 							// return;
 						}
 
 					},
 					error: function(oError) {
-					//	sap.ui.core.BusyIndicator.hide();
+						//	sap.ui.core.BusyIndicator.hide();
 						MessageBox.show("Error in consumption", {
 							icon: MessageBox.Icon.ERROR,
 							title: "Dear User",
@@ -658,14 +642,12 @@ sap.ui.define([
 						return;
 					}
 					// Added - 12152
-					
-					
-						if (!t.busyDialog) {
-				t.busyDialog = sap.ui.xmlfragment("com.sap.quantityDeclaration.fragments.busyDialog", this);
-				this.getView().addDependent(t.busyDialog);
-			}
-			t.busyDialog.open();
-					
+
+					if (!t.busyDialog) {
+						t.busyDialog = sap.ui.xmlfragment("com.sap.quantityDeclaration.fragments.busyDialog", this);
+						this.getView().addDependent(t.busyDialog);
+					}
+					t.busyDialog.open();
 
 					var selectedArray2 = [];
 					selectedArray2.push(payloadObject);
@@ -673,7 +655,7 @@ sap.ui.define([
 					var aCreateDocPayload2 = selectedArray2;
 					oModel.setDeferredGroups(["backgroundConsumptionBatch2"]);
 					oModel.setUseBatch(true);
-				//	sap.ui.core.BusyIndicator.show();
+					//	sap.ui.core.BusyIndicator.show();
 					var mParameter2 = {
 
 						urlParameters: null,
@@ -684,12 +666,12 @@ sap.ui.define([
 
 							//	console.log("Message from server", serverMessage);
 							console.log("Inside mparameter success 2");
-						//	sap.ui.core.BusyIndicator.hide();
+							//	sap.ui.core.BusyIndicator.hide();
 
 						},
 						error: function(oError) {
 							console.log("Inside mparameter error 2");
-						//	sap.ui.core.BusyIndicator.hide();
+							//	sap.ui.core.BusyIndicator.hide();
 
 						}
 					};
@@ -715,7 +697,7 @@ sap.ui.define([
 										// 	MessageBox.show("For the operation the quantity declaration cannot be executed.Please select a different operation");
 										// 	return;
 										// }
-	t.busyDialog.close();
+										t.busyDialog.close();
 										MessageBox.show(vmsg, {
 											title: "Message",
 											actions: [sap.m.MessageBox.Action.CLOSE],
@@ -726,6 +708,22 @@ sap.ui.define([
 												if (oData.GvFlag === "") {
 
 													sap.ui.core.BusyIndicator.hide();
+
+													/*		sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+																		target: {
+																			semanticObject: "ZPTM",
+																			action: "display"
+																		},
+																		params: {
+																			"orderType": t.orderNumber,
+																			"operationNum": t.operationNum,
+																			"mode": "crossNavigation",
+																			"intOper": t.iOper,
+																			"intOperItem": t.iOperItem
+
+																		}
+
+																	}); */
 
 													sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
 														target: {
@@ -764,7 +762,7 @@ sap.ui.define([
 
 									error: function(e) {
 										sap.ui.core.BusyIndicator.hide();
-											t.busyDialog.close();
+										t.busyDialog.close();
 										console.log("Inside Po_confset error");
 									}
 								});
@@ -774,8 +772,8 @@ sap.ui.define([
 								//	t.messageArray.push(JSON.parse(serverMessage).details);
 								t.serverMessage2.push(JSON.parse(serverMessage2).details);
 								t.sapMessageDisplay2();
-									t.busyDialog.close();
-							//	sap.ui.core.BusyIndicator.hide();
+								t.busyDialog.close();
+								//	sap.ui.core.BusyIndicator.hide();
 								return;
 								// return;
 							}
@@ -813,11 +811,8 @@ sap.ui.define([
 
 			/////////
 		},
-		
-		//Methods for busy indicator
-		
 
-	
+		//Methods for busy indicator
 
 		sapMessageDisplay: function(e) {
 			//	sap.ui.core.BusyIndicator.show();
