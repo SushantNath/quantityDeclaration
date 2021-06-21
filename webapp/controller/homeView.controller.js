@@ -25,7 +25,7 @@ sap.ui.define([
 			//	var V = "1002206";
 			var that = this;
 
-				if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined) {
+	/*			if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined) {
 					console.log("passed order number is undefined ");
 
 					n = "0030";
@@ -57,7 +57,7 @@ sap.ui.define([
 						that.iOperItem = intOperItem;
 					}
 
-				} 
+				}  */
 
 			// var processField;
 			// var startField;
