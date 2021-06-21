@@ -25,7 +25,7 @@ sap.ui.define([
 			//	var V = "1002206";
 			var that = this;
 
-			/*	if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined) {
+				if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined) {
 					console.log("passed order number is undefined ");
 
 					n = "0030";
@@ -57,7 +57,7 @@ sap.ui.define([
 						that.iOperItem = intOperItem;
 					}
 
-				} */
+				} 
 
 			// var processField;
 			// var startField;
@@ -340,7 +340,7 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 					console.log("Inside Po_confset error  radio button");
 				}
-			});
+			}); 
 
 		},
 
@@ -559,6 +559,27 @@ sap.ui.define([
 															//		});
 
 														} // end bracket for GVstag
+														
+														else{
+															
+																sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+																				target: {
+																					semanticObject: "ZPTM",
+																					action: "display"
+																				},
+																				params: {
+																					"orderType": t.orderNumber,
+																					"operationNum": t.operationNum,
+																					"mode": "crossNavigation",
+																					"intOper": t.iOper,
+																					"intOperItem": t.iOperItem
+
+																				}
+
+																			});
+															
+															
+														}
 
 													}
 												});
