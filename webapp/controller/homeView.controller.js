@@ -4,6 +4,8 @@ var messageArray = [];
 var processField;
 var startField;
 var processCheck;
+var reason;
+var recordType;
 sap.ui.define([
 	"sap/ui/core/mvc/Controller", "sap/m/MessageToast", "sap/m/MessageBox", "sap/ui/core/BusyIndicator",
 	"sap/ui/model/Filter", "sap/ui/model/json/JSONModel",
@@ -19,13 +21,13 @@ sap.ui.define([
 			gmsgbundle = this.getOwnerComponent().getModel("i18n");
 
 			var n = "0010";
-			var V = "1002426";
+			var V = "1002441";
 			//"1002439";
 			//"1002426";
 			//	var V = "1002206";
 			var that = this;
 
-	/*			if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined) {
+				if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined) {
 					console.log("passed order number is undefined ");
 
 					n = "0030";
@@ -57,7 +59,7 @@ sap.ui.define([
 						that.iOperItem = intOperItem;
 					}
 
-				}  */
+				}  
 
 			// var processField;
 			// var startField;
@@ -99,6 +101,8 @@ sap.ui.define([
 					processField = oData.ZactPro;
 					startField = oData.ZactStart;
 					processCheck = oData.Gv_msg2;
+					reason= oData.Grund;
+					recordType=oData.Satza;
 
 					console.log("start and processing fields are", processField, startField);
 
@@ -134,8 +138,36 @@ sap.ui.define([
 						});
 
 					}
-					if (processCheck !== "B10" && processCheck !== "B20" && processCheck !== "B40") {
+				if (processCheck !== "B10" && processCheck !== "B20" && processCheck !== "B40") {
+                     
+						MessageBox.error(errorMessage2, {
+							title: "Message",
+							actions: [sap.m.MessageBox.Action.CLOSE],
+							onClose: function(r) {
+								sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+									target: {
+										semanticObject: "ZPTM",
+										action: "display"
+									},
+									params: {
+										"orderType": b.orderNumber,
+										"operationNum": b.operationNum,
+										"mode": "crossNavigation",
+										"intOper": b.iOper,
+										"intOperItem": b.iOperItem
 
+									}
+
+								});
+
+							}
+
+						});
+
+					}
+					// check for reason and record type
+						if (reason === "0000" && recordType === "B20" ) {
+                     
 						MessageBox.error(errorMessage2, {
 							title: "Message",
 							actions: [sap.m.MessageBox.Action.CLOSE],
