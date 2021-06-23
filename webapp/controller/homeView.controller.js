@@ -27,39 +27,39 @@ sap.ui.define([
 			//	var V = "1002206";
 			var that = this;
 
-				if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined) {
-					console.log("passed order number is undefined ");
+			if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined) {
+				console.log("passed order number is undefined ");
 
-					n = "0030";
-					V = "1000082";
-				} else {
+				n = "0030";
+				V = "1000082";
+			} else {
 
-					console.log("passed order number is ", ParameterData.startupParameters.orderType);
-					console.log("passed operation number is ", ParameterData.startupParameters.operationNum);
+				console.log("passed order number is ", ParameterData.startupParameters.orderType);
+				console.log("passed operation number is ", ParameterData.startupParameters.operationNum);
 
-					if (ParameterData.startupParameters.orderType) {
+				if (ParameterData.startupParameters.orderType) {
 
-						V = ParameterData.startupParameters.orderType[0]; // “Getting the Purchase Order Value passed along with the URL
-						that.orderNumber = V;
-					}
+					V = ParameterData.startupParameters.orderType[0]; // “Getting the Purchase Order Value passed along with the URL
+					that.orderNumber = V;
+				}
 
-					if (ParameterData.startupParameters.operationNum) {
+				if (ParameterData.startupParameters.operationNum) {
 
-						n = ParameterData.startupParameters.operationNum[0]; // “Getting the Purchase Order Value passed along with the URL
-						that.operationNum = n;
-					}
-					if (ParameterData.startupParameters.intOper) {
+					n = ParameterData.startupParameters.operationNum[0]; // “Getting the Purchase Order Value passed along with the URL
+					that.operationNum = n;
+				}
+				if (ParameterData.startupParameters.intOper) {
 
-						var intOper = ParameterData.startupParameters.intOper[0]; // “Getting the Purchase Order Value passed along with the URL
-						that.iOper = intOper;
-					}
-					if (ParameterData.startupParameters.intOperItem) {
+					var intOper = ParameterData.startupParameters.intOper[0]; // “Getting the Purchase Order Value passed along with the URL
+					that.iOper = intOper;
+				}
+				if (ParameterData.startupParameters.intOperItem) {
 
-						var intOperItem = ParameterData.startupParameters.intOperItem[0]; // “Getting the Purchase Order Value passed along with the URL
-						that.iOperItem = intOperItem;
-					}
+					var intOperItem = ParameterData.startupParameters.intOperItem[0]; // “Getting the Purchase Order Value passed along with the URL
+					that.iOperItem = intOperItem;
+				}
 
-				}  
+			}
 
 			// var processField;
 			// var startField;
@@ -101,8 +101,8 @@ sap.ui.define([
 					processField = oData.ZactPro;
 					startField = oData.ZactStart;
 					processCheck = oData.Gv_msg2;
-					reason= oData.Grund;
-					recordType=oData.Satza;
+					reason = oData.Grund;
+					recordType = oData.Satza;
 
 					console.log("start and processing fields are", processField, startField);
 
@@ -138,8 +138,8 @@ sap.ui.define([
 						});
 
 					}
-				if (processCheck !== "B10" && processCheck !== "B20" && processCheck !== "B40") {
-                     
+					if (processCheck !== "B10" && processCheck !== "B20" && processCheck !== "B40") {
+
 						MessageBox.error(errorMessage2, {
 							title: "Message",
 							actions: [sap.m.MessageBox.Action.CLOSE],
@@ -166,8 +166,8 @@ sap.ui.define([
 
 					}
 					// check for reason and record type
-						if (reason === "0000" && recordType === "B20" ) {
-                     
+					if (reason === "0000" && recordType === "B20") {
+
 						MessageBox.error(errorMessage2, {
 							title: "Message",
 							actions: [sap.m.MessageBox.Action.CLOSE],
@@ -372,7 +372,7 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 					console.log("Inside Po_confset error  radio button");
 				}
-			}); 
+			});
 
 		},
 
@@ -517,9 +517,9 @@ sap.ui.define([
 
 							// 				onClose: function(r) {
 							///////////////////////
-             //            	this._sTimeoutId = setTimeout(function() {
-													// console.log("Display time out");
-											
+							//            	this._sTimeoutId = setTimeout(function() {
+							// console.log("Display time out");
+
 							oModel.read(I, {
 								success: function(oData) {
 									vmsg = oData.GvMsg;
@@ -532,8 +532,6 @@ sap.ui.define([
 											//Checking validation for consumption
 											if (oData.GvFlag === "") {
 												//Checking staging parameter
-
-											
 
 												MessageBox.show("Consumption posted successfully", {
 													icon: MessageBox.Icon.SUCCESS,
@@ -591,33 +589,31 @@ sap.ui.define([
 															//		});
 
 														} // end bracket for GVstag
-														
-														else{
-															
-																sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
-																				target: {
-																					semanticObject: "ZPTM",
-																					action: "display"
-																				},
-																				params: {
-																					"orderType": t.orderNumber,
-																					"operationNum": t.operationNum,
-																					"mode": "crossNavigation",
-																					"intOper": t.iOper,
-																					"intOperItem": t.iOperItem
+														else {
 
-																				}
+															sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+																target: {
+																	semanticObject: "ZPTM",
+																	action: "display"
+																},
+																params: {
+																	"orderType": t.orderNumber,
+																	"operationNum": t.operationNum,
+																	"mode": "crossNavigation",
+																	"intOper": t.iOper,
+																	"intOperItem": t.iOperItem
 
-																			});
-															
-															
+																}
+
+															});
+
 														}
 
 													}
 												});
-                                            
-											//	}.bind(this), 1000); End bracket for timeout functionality
-                                            
+
+												//	}.bind(this), 1000); End bracket for timeout functionality
+
 											} // end bracket for Gvflag
 											/*	else if (oData.GvFlag !== "") {
 													MessageBox.show(
@@ -641,7 +637,7 @@ sap.ui.define([
 									t.busyDialog.close();
 								}
 							});
-				//		}.bind(this), 1000); //End bracket for timeout functionality
+							//		}.bind(this), 1000); //End bracket for timeout functionality
 							///////////////////////////////////												
 							//	}
 							//	});
@@ -659,13 +655,39 @@ sap.ui.define([
 
 					},
 					error: function(oError) {
-						//	sap.ui.core.BusyIndicator.hide();
+						t.busyDialog.close();
+
 						MessageBox.show("Error in consumption", {
 							icon: MessageBox.Icon.ERROR,
-							title: "Dear User",
-							actions: [sap.m.MessageBox.Action.OK]
+							title: "Dear user",
+							actions: [sap.m.MessageBox.Action.CLOSE],
+							onClose: function() {
 
+								sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+									target: {
+										semanticObject: "ZPTM",
+										action: "display"
+									},
+									params: {
+										"orderType": t.orderNumber,
+										"operationNum": t.operationNum,
+										"mode": "crossNavigation",
+										"intOper": t.iOper,
+										"intOperItem": t.iOperItem
+
+									}
+
+								});
+
+							}
 						});
+
+						/*	MessageBox.show("Error in consumption", {
+								icon: MessageBox.Icon.ERROR,
+								title: "Dear User",
+								actions: [sap.m.MessageBox.Action.OK]
+
+							}); */
 					}
 
 				};
@@ -762,21 +784,6 @@ sap.ui.define([
 
 													sap.ui.core.BusyIndicator.hide();
 
-													/*		sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
-																		target: {
-																			semanticObject: "ZPTM",
-																			action: "display"
-																		},
-																		params: {
-																			"orderType": t.orderNumber,
-																			"operationNum": t.operationNum,
-																			"mode": "crossNavigation",
-																			"intOper": t.iOper,
-																			"intOperItem": t.iOperItem
-
-																		}
-
-																	}); */
 
 													sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
 														target: {
@@ -833,13 +840,42 @@ sap.ui.define([
 
 						},
 						error: function(oError) {
-							sap.ui.core.BusyIndicator.hide();
-							MessageBox.show("Error in background job processing", {
+							t.busyDialog.close();
+							//////////////////////////
+										MessageBox.show("Error in consumption", {
+							icon: MessageBox.Icon.ERROR,
+							title: "Dear user",
+							actions: [sap.m.MessageBox.Action.CLOSE],
+							onClose: function() {
+
+								sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+									target: {
+										semanticObject: "ZPTM",
+										action: "display"
+									},
+									params: {
+										"orderType": t.orderNumber,
+										"operationNum": t.operationNum,
+										"mode": "crossNavigation",
+										"intOper": t.iOper,
+										"intOperItem": t.iOperItem
+
+									}
+
+								});
+
+							}
+						});
+							
+							
+							
+							//////////////////////
+						/*	MessageBox.show("Error in consumption", {
 								icon: MessageBox.Icon.ERROR,
 								title: "Dear User",
 								actions: [sap.m.MessageBox.Action.OK]
 
-							});
+							}); */
 						}
 
 					};
