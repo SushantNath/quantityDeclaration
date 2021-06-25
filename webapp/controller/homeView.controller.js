@@ -6,6 +6,7 @@ var startField;
 var processCheck;
 var reason;
 var recordType;
+var globalFlag;
 sap.ui.define([
 	"sap/ui/core/mvc/Controller", "sap/m/MessageToast", "sap/m/MessageBox", "sap/ui/core/BusyIndicator",
 	"sap/ui/model/Filter", "sap/ui/model/json/JSONModel",
@@ -21,7 +22,7 @@ sap.ui.define([
 			gmsgbundle = this.getOwnerComponent().getModel("i18n");
 
 			var n = "0010";
-			var V = "1002441";
+			var V = "1002394";
 			//"1002439";
 			//"1002426";
 			//	var V = "1002206";
@@ -59,7 +60,7 @@ sap.ui.define([
 					that.iOperItem = intOperItem;
 				}
 
-			}
+			} 
 
 			// var processField;
 			// var startField;
@@ -422,12 +423,14 @@ sap.ui.define([
 			var l = "";
 			var r = "B20";
 			var selectedArray = [];
+			var selectedArrayFlag= [];
 			var payloadObject = {};
+			var payloadObjectFlag={};
 			// Convering the quantity unit from PC to PAL for specific oredr#
 			// if (g === "PC") {
 			// 	g = "PAL";
 			// }
-
+            //normal payload
 			payloadObject.Lgnum = "4A10";
 			payloadObject.Huident = "";
 			payloadObject.MfgOrder = i;
@@ -435,6 +438,18 @@ sap.ui.define([
 			payloadObject.Altme = g;
 			payloadObject.Operation = s;
 			payloadObject.Psa = "";
+			payloadObjectFlag.Flag = "";
+			
+			//flagged payload
+			payloadObjectFlag.Lgnum = "4A10";
+			payloadObjectFlag.Huident = "";
+			payloadObjectFlag.MfgOrder = i;
+			payloadObjectFlag.Quana = u;
+			payloadObjectFlag.Altme = g;
+			payloadObjectFlag.Operation = s;
+			payloadObjectFlag.Psa = "";
+			payloadObjectFlag.Flag = "X";
+			
 
 			var l = "";
 
@@ -472,8 +487,10 @@ sap.ui.define([
 				t.busyDialog.open();
 
 				selectedArray.push(payloadObject);
+				selectedArrayFlag.push(payloadObjectFlag);
 
 				var aCreateDocPayload = selectedArray;
+				var aCreateDocPayloadFlag = selectedArrayFlag;
 				oModel.setDeferredGroups(["backgroundConsumptionBatch"]);
 				oModel.setUseBatch(true);
 				//	sap.ui.core.BusyIndicator.show();
@@ -519,6 +536,12 @@ sap.ui.define([
 							///////////////////////
 							//            	this._sTimeoutId = setTimeout(function() {
 							// console.log("Display time out");
+							
+							if(	globalFlag === "second") {
+								
+								return;
+							}
+							
 
 							oModel.read(I, {
 								success: function(oData) {
@@ -532,6 +555,18 @@ sap.ui.define([
 											//Checking validation for consumption
 											if (oData.GvFlag === "") {
 												//Checking staging parameter
+												globalFlag = "second";
+												//////////////////////////////////////////////////////
+													for (var m = 0; m < aCreateDocPayloadFlag.length; m++) {
+
+					singleentry.properties = aCreateDocPayloadFlag[m];
+					singleentry.changeSetId = "changeset " + m;
+					oModel.createEntry("/PO_POSTSet", singleentry);
+
+				}
+				oModel.submitChanges(mParameter);
+												
+												/////////////////////////////////////////////////////////
 
 												MessageBox.show("Consumption posted successfully", {
 													icon: MessageBox.Icon.SUCCESS,
