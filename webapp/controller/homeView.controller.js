@@ -28,39 +28,39 @@ sap.ui.define([
 			//	var V = "1002206";
 			var that = this;
 
-		/*	if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined) {
-				console.log("passed order number is undefined ");
+			/*	if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined) {
+					console.log("passed order number is undefined ");
 
-				n = "0030";
-				V = "1000082";
-			} else {
+					n = "0030";
+					V = "1000082";
+				} else {
 
-				console.log("passed order number is ", ParameterData.startupParameters.orderType);
-				console.log("passed operation number is ", ParameterData.startupParameters.operationNum);
+					console.log("passed order number is ", ParameterData.startupParameters.orderType);
+					console.log("passed operation number is ", ParameterData.startupParameters.operationNum);
 
-				if (ParameterData.startupParameters.orderType) {
+					if (ParameterData.startupParameters.orderType) {
 
-					V = ParameterData.startupParameters.orderType[0]; // “Getting the Purchase Order Value passed along with the URL
-					that.orderNumber = V;
-				}
+						V = ParameterData.startupParameters.orderType[0]; // “Getting the Purchase Order Value passed along with the URL
+						that.orderNumber = V;
+					}
 
-				if (ParameterData.startupParameters.operationNum) {
+					if (ParameterData.startupParameters.operationNum) {
 
-					n = ParameterData.startupParameters.operationNum[0]; // “Getting the Purchase Order Value passed along with the URL
-					that.operationNum = n;
-				}
-				if (ParameterData.startupParameters.intOper) {
+						n = ParameterData.startupParameters.operationNum[0]; // “Getting the Purchase Order Value passed along with the URL
+						that.operationNum = n;
+					}
+					if (ParameterData.startupParameters.intOper) {
 
-					var intOper = ParameterData.startupParameters.intOper[0]; // “Getting the Purchase Order Value passed along with the URL
-					that.iOper = intOper;
-				}
-				if (ParameterData.startupParameters.intOperItem) {
+						var intOper = ParameterData.startupParameters.intOper[0]; // “Getting the Purchase Order Value passed along with the URL
+						that.iOper = intOper;
+					}
+					if (ParameterData.startupParameters.intOperItem) {
 
-					var intOperItem = ParameterData.startupParameters.intOperItem[0]; // “Getting the Purchase Order Value passed along with the URL
-					that.iOperItem = intOperItem;
-				}
+						var intOperItem = ParameterData.startupParameters.intOperItem[0]; // “Getting the Purchase Order Value passed along with the URL
+						that.iOperItem = intOperItem;
+					}
 
-			}  */
+				}  */
 
 			// var processField;
 			// var startField;
@@ -396,56 +396,54 @@ sap.ui.define([
 
 			selectionValue = "nocomp";
 		},
-		
+
 		//not used
-	/*		fConfirm3: function(e) {
-				///////////////////////////////////////////////////
+		/*		fConfirm3: function(e) {
+					///////////////////////////////////////////////////
 	
 	
 
-		var t = this;
-			var i = sap.ui.getCore().byId("idOrder2").getValue();
-			var s = sap.ui.getCore().byId("idOper2").getValue();
-			//	var r = sap.ui.getCore().byId("idType2").getValue();
-			var d = sap.ui.getCore().byId("idDate2").getValue();
-			//	var o = "164059";
-			//sap.ui.getCore().byId("idTime2").getValue();
-			var logTime = sap.ui.getCore().byId("idTime2").getValue();
-			var logtime1 = (logTime.replace(":", ""));
-			var o = (logtime1.replace(":", "")); //time
-			var u = sap.ui.getCore().byId("idQuan2").getValue();
-			var g = sap.ui.getCore().byId("idQU2").getValue();
-			var n = sap.ui.getCore().byId("idNumber2").getValue();
-			var oModel = t.getOwnerComponent().getModel();
-			var l = "";
-			var r = "B20";
-			var selectedArray = [];
-			var selectedArrayFlag = [];
-			var payloadObject = {};
-			
-				//normal payload
-			payloadObject.Lgnum = "4A10";
-			payloadObject.Huident = "";
-			payloadObject.MfgOrder = i;
-			payloadObject.Quana = u;
-			payloadObject.Altme = g;
-			payloadObject.Operation = s;
-			payloadObject.Psa = "";
-			payloadObject.Flag = "";
-			
-				oModel.create("/PO_POSTSet", payloadObject, null, function (response) {
-			console.log("Inside Success Create");
-		}, function (Error) {
-			//show error 
-			console.log("Inside Error Create");
-		});
-	
-	//////////////////////////////////////////////////	
+			var t = this;
+				var i = sap.ui.getCore().byId("idOrder2").getValue();
+				var s = sap.ui.getCore().byId("idOper2").getValue();
+				//	var r = sap.ui.getCore().byId("idType2").getValue();
+				var d = sap.ui.getCore().byId("idDate2").getValue();
+				//	var o = "164059";
+				//sap.ui.getCore().byId("idTime2").getValue();
+				var logTime = sap.ui.getCore().byId("idTime2").getValue();
+				var logtime1 = (logTime.replace(":", ""));
+				var o = (logtime1.replace(":", "")); //time
+				var u = sap.ui.getCore().byId("idQuan2").getValue();
+				var g = sap.ui.getCore().byId("idQU2").getValue();
+				var n = sap.ui.getCore().byId("idNumber2").getValue();
+				var oModel = t.getOwnerComponent().getModel();
+				var l = "";
+				var r = "B20";
+				var selectedArray = [];
+				var selectedArrayFlag = [];
+				var payloadObject = {};
 				
+					//normal payload
+				payloadObject.Lgnum = "4A10";
+				payloadObject.Huident = "";
+				payloadObject.MfgOrder = i;
+				payloadObject.Quana = u;
+				payloadObject.Altme = g;
+				payloadObject.Operation = s;
+				payloadObject.Psa = "";
+				payloadObject.Flag = "";
 				
-			}, */
-			
+					oModel.create("/PO_POSTSet", payloadObject, null, function (response) {
+				console.log("Inside Success Create");
+			}, function (Error) {
+				//show error 
+				console.log("Inside Error Create");
+			});
 	
+		//////////////////////////////////////////////////	
+					
+					
+				}, */
 
 		//code for quantuty save
 
@@ -454,7 +452,7 @@ sap.ui.define([
 			// 	this._sTimeoutId = setTimeout(function() {
 			// 	console.log("Display time out");
 			// }.bind(this), 1000);
-          globalFlag = "";
+			globalFlag = "";
 			messageArray = [];
 			var t = this;
 			var i = sap.ui.getCore().byId("idOrder2").getValue();
@@ -470,8 +468,7 @@ sap.ui.define([
 			var g = sap.ui.getCore().byId("idQU2").getValue();
 			var n = sap.ui.getCore().byId("idNumber2").getValue();
 			var oModel = t.getOwnerComponent().getModel();
-			
-			
+
 			var l = "";
 			var r = "B20";
 			var selectedArray = [];
@@ -545,8 +542,7 @@ sap.ui.define([
 				oModel.setDeferredGroups(["backgroundConsumptionBatch"]);
 				oModel.setUseBatch(true);
 				//	sap.ui.core.BusyIndicator.show();
-	
-	
+
 				var mParameter = {
 
 					urlParameters: null,
@@ -591,219 +587,209 @@ sap.ui.define([
 							// console.log("Display time out");
 
 							// if (globalFlag === "second") {
-       //                      	t.busyDialog.close();
-                             	
-       //                      	////////////////////////////////////
-                             	
-                             	
-                             	
-       //                      	//////////////////////////////////
-                             	
-                             	
+							//                      	t.busyDialog.close();
+
+							//                      	////////////////////////////////////
+
+							//                      	//////////////////////////////////
+
 							// 	return;
 							// }
 
 							oModel.read(I, {
 								success: function(oData) {
 									vmsg = oData.GvMsg;
-									
-									
-									
-										if (globalFlag === "second") {
+
+									if (globalFlag === "second") {
 										/////////////////////////////////////
-											if (oData.GvStag === "X") {
-                                             // globalFlag = "";
-															t.busyDialog.open();
-															//Calling staging odata dervices
-															var d = "/PO_STAGSet(Order='" + i + "')";
-															var o = "Title";
-														/*	oModel.read(d, {
-																success: function(OData) {
-																	t.busyDialog.close();
-																	MessageBox.show(OData.GvString, {
-																		title: " Staging Message",
-																		actions: [sap.m.MessageBox.Action.CLOSE],
-																		onClose: function(r) {
-																			sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
-																				target: {
-																					semanticObject: "ZPTM",
-																					action: "display"
-																				},
-																				params: {
-																					"orderType": t.orderNumber,
-																					"operationNum": t.operationNum,
-																					"mode": "crossNavigation",
-																					"intOper": t.iOper,
-																					"intOperItem": t.iOperItem
+										if (oData.GvStag === "X") {
+											// globalFlag = "";
+											t.busyDialog.open();
+											//Calling staging odata dervices
+											var d = "/PO_STAGSet(Order='" + i + "')";
+											var o = "Title";
+											/*	oModel.read(d, {
+													success: function(OData) {
+														t.busyDialog.close();
+														MessageBox.show(OData.GvString, {
+															title: " Staging Message",
+															actions: [sap.m.MessageBox.Action.CLOSE],
+															onClose: function(r) {
+																sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+																	target: {
+																		semanticObject: "ZPTM",
+																		action: "display"
+																	},
+																	params: {
+																		"orderType": t.orderNumber,
+																		"operationNum": t.operationNum,
+																		"mode": "crossNavigation",
+																		"intOper": t.iOper,
+																		"intOperItem": t.iOperItem
 
-																				}
+																	}
 
-																			});
+																});
 
-																		}
+															}
 
-																	});
-																	t.busyDialog.close();
-																	sap.ui.core.BusyIndicator.hide();
-																	console.log("Inside success of PO_Stag");
+														});
+														t.busyDialog.close();
+														sap.ui.core.BusyIndicator.hide();
+														console.log("Inside success of PO_Stag");
 
-																},
-																error: function(OData) {
-																	//	sap.ui.core.BusyIndicator.hide();
-																	t.busyDialog.close();
-																	console.log("Inside error PO_stag");
-
-																}
-															});*/
-
-															//	}
-															//		});
-
-														} // end bracket for GVstag
-														else {
-
-															sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
-																target: {
-																	semanticObject: "ZPTM",
-																	action: "display"
-																},
-																params: {
-																	"orderType": t.orderNumber,
-																	"operationNum": t.operationNum,
-																	"mode": "crossNavigation",
-																	"intOper": t.iOper,
-																	"intOperItem": t.iOperItem
-
-																}
-
-															});
-
-														}
-										
-										
-										////////////////////////////////////////////
-											
-                             
-							
-											
-										} // closing if bracket for global flag
-                        //	if (globalFlag !== "second"){
-                        
-                        else{
-									MessageBox.show(vmsg, {
-										title: "Message",
-										actions: [sap.m.MessageBox.Action.CLOSE],
-										onClose: function(r) {
-											t.busyDialog.close();
-											//Checking validation for consumption
-											if (oData.GvFlag === "") {
-												//Checking staging parameter
-												globalFlag = "second";
-												//////////////////////////////////////////////////////
-												for (var m = 0; m < aCreateDocPayloadFlag.length; m++) {
-
-													singleentry.properties = aCreateDocPayloadFlag[m];
-													singleentry.changeSetId = "changeset " + m;
-													oModel.createEntry("/PO_POSTSet", singleentry);
-
-												}
-												oModel.submitChanges(mParameter);
-
-												/////////////////////////////////////////////////////////
-
-												MessageBox.show("Consumption posted successfully", {
-													icon: MessageBox.Icon.SUCCESS,
-													title: "Dear User",
-													actions: [sap.m.MessageBox.Action.CLOSE],
-
-													onClose: function(r) {
-
-														if (oData.GvStag === "X") {
-
-															t.busyDialog.open();
-															//Calling staging odata dervices
-															var d = "/PO_STAGSet(Order='" + i + "')";
-															var o = "Title";
-															oModel.read(d, {
-																success: function(OData) {
-																	t.busyDialog.close();
-																	MessageBox.show(OData.GvString, {
-																		title: " Staging Message",
-																		actions: [sap.m.MessageBox.Action.CLOSE],
-																		onClose: function(r) {
-																			sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
-																				target: {
-																					semanticObject: "ZPTM",
-																					action: "display"
-																				},
-																				params: {
-																					"orderType": t.orderNumber,
-																					"operationNum": t.operationNum,
-																					"mode": "crossNavigation",
-																					"intOper": t.iOper,
-																					"intOperItem": t.iOperItem
-
-																				}
-
-																			});
-
-																		}
-
-																	});
-																	t.busyDialog.close();
-																	sap.ui.core.BusyIndicator.hide();
-																	console.log("Inside success of PO_Stag");
-
-																},
-																error: function(OData) {
-																	//	sap.ui.core.BusyIndicator.hide();
-																	t.busyDialog.close();
-																	console.log("Inside error PO_stag");
-
-																}
-															});
-
-															//	}
-															//		});
-
-														} // end bracket for GVstag
-														else {
-
-															sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
-																target: {
-																	semanticObject: "ZPTM",
-																	action: "display"
-																},
-																params: {
-																	"orderType": t.orderNumber,
-																	"operationNum": t.operationNum,
-																	"mode": "crossNavigation",
-																	"intOper": t.iOper,
-																	"intOperItem": t.iOperItem
-
-																}
-
-															});
-
-														}
+													},
+													error: function(OData) {
+														//	sap.ui.core.BusyIndicator.hide();
+														t.busyDialog.close();
+														console.log("Inside error PO_stag");
 
 													}
-												});
+												});*/
 
-												//	}.bind(this), 1000); End bracket for timeout functionality
+											//	}
+											//		});
 
-											} // end bracket for Gvflag
-											/*	else if (oData.GvFlag !== "") {
-													MessageBox.show(
-														"For the operation the quantity declaration cannot be executed.Please select a different operation");
-													return;
-												} else {
-													console.log("No Gvflag message");
-												}*/
+										} // end bracket for GVstag
+										else {
+
+											sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+												target: {
+													semanticObject: "ZPTM",
+													action: "display"
+												},
+												params: {
+													"orderType": t.orderNumber,
+													"operationNum": t.operationNum,
+													"mode": "crossNavigation",
+													"intOper": t.iOper,
+													"intOperItem": t.iOperItem
+
+												}
+
+											});
+
 										}
-									});
-									
-                        }//closing bracket of else for global flag === second
+
+										////////////////////////////////////////////
+
+									} // closing if bracket for global flag
+									//	if (globalFlag !== "second"){
+									else {
+										MessageBox.show(vmsg, {
+											title: "Message",
+											actions: [sap.m.MessageBox.Action.CLOSE],
+											onClose: function(r) {
+												t.busyDialog.close();
+												//Checking validation for consumption
+												if (oData.GvFlag === "") {
+													//Checking staging parameter
+													globalFlag = "second";
+													//////////////////////////////////////////////////////
+													for (var m = 0; m < aCreateDocPayloadFlag.length; m++) {
+
+														singleentry.properties = aCreateDocPayloadFlag[m];
+														singleentry.changeSetId = "changeset " + m;
+														oModel.createEntry("/PO_POSTSet", singleentry);
+
+													}
+													oModel.submitChanges(mParameter);
+
+													/////////////////////////////////////////////////////////
+
+													MessageBox.show("Consumption posted successfully", {
+														icon: MessageBox.Icon.SUCCESS,
+														title: "Dear User",
+														actions: [sap.m.MessageBox.Action.CLOSE],
+
+														onClose: function(r) {
+
+															if (oData.GvStag === "X") {
+
+																t.busyDialog.open();
+																//Calling staging odata dervices
+																var d = "/PO_STAGSet(Order='" + i + "')";
+																var o = "Title";
+																oModel.read(d, {
+																	success: function(OData) {
+																		t.busyDialog.close();
+																		MessageBox.show(OData.GvString, {
+																			title: " Staging Message",
+																			actions: [sap.m.MessageBox.Action.CLOSE],
+																			onClose: function(r) {
+																				sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+																					target: {
+																						semanticObject: "ZPTM",
+																						action: "display"
+																					},
+																					params: {
+																						"orderType": t.orderNumber,
+																						"operationNum": t.operationNum,
+																						"mode": "crossNavigation",
+																						"intOper": t.iOper,
+																						"intOperItem": t.iOperItem
+
+																					}
+
+																				});
+
+																			}
+
+																		});
+																		t.busyDialog.close();
+																		sap.ui.core.BusyIndicator.hide();
+																		console.log("Inside success of PO_Stag");
+
+																	},
+																	error: function(OData) {
+																		//	sap.ui.core.BusyIndicator.hide();
+																		t.busyDialog.close();
+																		console.log("Inside error PO_stag");
+
+																	}
+																});
+
+																//	}
+																//		});
+
+															} // end bracket for GVstag
+															else {
+
+																sap.ushell.Container.getService("CrossApplicationNavigation").toExternal({
+																	target: {
+																		semanticObject: "ZPTM",
+																		action: "display"
+																	},
+																	params: {
+																		"orderType": t.orderNumber,
+																		"operationNum": t.operationNum,
+																		"mode": "crossNavigation",
+																		"intOper": t.iOper,
+																		"intOperItem": t.iOperItem
+
+																	}
+
+																});
+
+															}
+
+														}
+													});
+
+													//	}.bind(this), 1000); End bracket for timeout functionality
+
+												} // end bracket for Gvflag
+												/*	else if (oData.GvFlag !== "") {
+														MessageBox.show(
+															"For the operation the quantity declaration cannot be executed.Please select a different operation");
+														return;
+													} else {
+														console.log("No Gvflag message");
+													}*/
+											}
+										});
+
+									} //closing bracket of else for global flag === second
 									//	sap.ui.core.BusyIndicator.hide();
 									console.log("Inside Po_confset success");
 									t.busyDialog.close();
@@ -947,9 +933,9 @@ sap.ui.define([
 									success: function(oData) {
 
 										vmsg = oData.GvMsg;
-										
+
 										////////////////////////////////
-										
+
 										//	if (globalFlag === "second") {
 										/////////////////////////////////////
 										/*	if (oData.GvStag === "X") {
@@ -981,18 +967,12 @@ sap.ui.define([
 													});
 
 														} */
-										
-										
+
 										////////////////////////////////////////////
-											
-                             
-							
-											
-									//	} // closing if bracket for global flag
-										
-										
+
+										//	} // closing if bracket for global flag
+
 										//////////////////////////////////////
-										
 
 										// if (oData.GvFlag !== "") {
 										// 	MessageBox.show("For the operation the quantity declaration cannot be executed.Please select a different operation");
