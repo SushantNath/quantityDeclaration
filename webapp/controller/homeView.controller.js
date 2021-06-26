@@ -445,9 +445,6 @@ sap.ui.define([
 				
 			}, */
 			
-			
-			
-			
 	
 
 		//code for quantuty save
@@ -953,9 +950,9 @@ sap.ui.define([
 										
 										////////////////////////////////
 										
-											if (globalFlag === "second") {
+										//	if (globalFlag === "second") {
 										/////////////////////////////////////
-											if (oData.GvStag === "X") {
+										/*	if (oData.GvStag === "X") {
                                              // globalFlag = "";
 															t.busyDialog.open();
 															//Calling staging odata dervices
@@ -983,7 +980,7 @@ sap.ui.define([
 														}
 													});
 
-														}
+														} */
 										
 										
 										////////////////////////////////////////////
@@ -991,7 +988,7 @@ sap.ui.define([
                              
 							
 											
-										} // closing if bracket for global flag
+									//	} // closing if bracket for global flag
 										
 										
 										//////////////////////////////////////
