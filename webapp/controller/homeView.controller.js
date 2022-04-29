@@ -21,18 +21,19 @@ sap.ui.define([
 			var ParameterData = this.getOwnerComponent().getComponentData();
 			gmsgbundle = this.getOwnerComponent().getModel("i18n");
 
-			var n = "0010";
-			var V = "1002512";
+			// var n = "0010";
+			// var V = "1003298";
+			//"1000460";
 			//"1002439";
 			//"1002426";
 			//	var V = "1002206";
 			var that = this;
 
-			/*	if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined) {
+				if (ParameterData.startupParameters.orderNumber === undefined && ParameterData.startupParameters.operationNum === undefined) {
 					console.log("passed order number is undefined ");
 
-					n = "0030";
-					V = "1000082";
+					var n = "0010";
+			var V = "1003298";
 				} else {
 
 					console.log("passed order number is ", ParameterData.startupParameters.orderType);
@@ -60,7 +61,7 @@ sap.ui.define([
 						that.iOperItem = intOperItem;
 					}
 
-				}  */
+				}  
 
 			// var processField;
 			// var startField;
@@ -97,13 +98,26 @@ sap.ui.define([
 					if (conversionValue === "PC") {
 						conversionValue = "PAL";
 					}
-					sap.ui.getCore().byId("idQU2").setValue(conversionValue);
+					
+						//code check - sushant
+						
+		// 				  Promise.all([ that.getUnitValues()
+		//      //  getUnitValues, quantityUnitValues
+	    //   ]).then(
+        //           that.quantityUnitValues());
+						
+						that.getUnitValues();
+						
+						// code check end- sushant
+				//	sap.ui.getCore().byId("idQU2").setValue(conversionValue);//Sushant - 16394 - 26 April 2022
 
 					processField = oData.ZactPro;
 					startField = oData.ZactStart;
 					processCheck = oData.Gv_msg2;
 					reason = oData.Grund;
 					recordType = oData.Satza;
+					
+				//	that. quantityUnitValues();
 
 					console.log("start and processing fields are", processField, startField);
 
@@ -205,6 +219,203 @@ sap.ui.define([
 			this.fQuantityClick();
 
 		},
+		
+		// Code change by sushant , Wricef- 16394- 26 April 2022 - start
+		
+		//Code to fetch values for dropdown/ unit
+		
+			getUnitValues: function(e) {
+				
+			var	that = this;
+			
+			//promise function start
+			
+			 var that = this;
+			 	var oModel = this.getOwnerComponent().getModel();
+			 	var n = "0010";
+			var V = "1003298";
+
+//Expand
+this.getOwnerComponent().getModel().read("/GET_UOMSet('78909')", {
+    urlParameters: {
+        $expand: "UOMNav"
+    },
+    success: function (oData) {
+        var expandModel = new JSONModel(oData);
+        that.getView().setModel(expandModel, "expandModel");
+        that.getView().getModel("expandModel").refresh();
+        console.log("Expand values are",expandModel)
+    }
+});
+
+			/*	var I = "/PO_GETSet(Aufnr='" + V + "',Vornr='" + n + "')";
+  return new Promise(
+	function(resolve, reject) {
+				    oModel.read(I, {
+					  success: function(oData) {
+					    resolve(oData);
+					  //  that.quantityUnitValues();
+					    console.log("Inside promise success getUnitValues");
+					  },
+                      error: function(oResult) {
+					    reject(oResult);
+					     console.log("Inside promise error");
+                      }
+	                });
+        }); */
+			
+			// oModel.read(I, {
+			// 		  success: function(oData) {
+					   
+			// 		  //  that.quantityUnitValues();
+			// 		    console.log("Inside promise success getUnitValues");
+			// 		  },
+   //                   error: function(oResult) {
+					  
+			// 		     console.log("Inside promise error");
+   //                   }
+	  //              });
+			
+			//Promise funtion end
+			
+			
+				
+				
+
+					
+					
+					
+			},
+			
+			quantityUnitValues: function(e) {
+				
+					var oModel = this.getOwnerComponent().getModel();
+			 	var n = "0010";
+			var V = "1003298";
+				var I = "/PO_GETSet(Aufnr='" + V + "',Vornr='" + n + "')";
+					oModel.read(I, {
+					  success: function(oData) {
+					   
+					  //  that.quantityUnitValues();
+					    console.log("Inside promise success quantityUnitValues");
+					  },
+                      error: function(oResult) {
+					  
+					     console.log("Inside promise error");
+                      }
+	                });
+				
+					//Activity information for for Last Activity Processing Start blank
+					var modelValue;
+                    var keyValue;
+                    var that=this;
+			var oActivityProcessStartBlank = {
+				activity: [{
+
+						actId: "B30",
+						activityDes: "Interrupt Processing"
+					}, {
+
+						actId: "B40",
+						activityDes: "End Processing"
+					}, {
+
+						actId: "B20",
+						activityDes: "Start Failure"
+					}
+
+				]
+			};
+				
+				
+ // return new Promise(
+	// function(resolve, reject) {
+	// 			    oModel.read(I, {
+	// 				  success: function(oData) {
+	// 				    resolve(oData);
+	// 				  //  that.quantityUnitValues();
+	// 				    console.log("Inside promise success getUnitValues");
+	// 				  },
+ //                     error: function(oResult) {
+	// 				    reject(oResult);
+	// 				     console.log("Inside promise error");
+ //                     }
+	//                 });
+ //       });
+			
+		
+				
+				
+				this.oConfirmModel = new sap.ui.model.json.JSONModel(oActivityProcessStartBlank);
+				modelValue = this.oConfirmModel;
+					that.getView().setModel(that.oConfirmModel, "confirmData");
+					var oDDL = sap.ui.getCore().byId("idQU2");
+				//	oDDL.setSelectedKey("1000");
+					// var oDDLTemplate = new sap.ui.core.Item({
+					// 	key: "{confirmData>actId}",
+					// 	text: "{confirmData>activityDes}"
+					// });
+					
+					// oDDL.setModel(that.oJson);
+					// oDDL.bindAggregation("items", "confirmData>/activity", oDDLTemplate);
+					
+					//////////////
+					
+						
+		
+
+// 	oDDL.onBeforeRendering=function() {
+				
+// 					that.getView().setModel(that.oConfirmModel, "confirmData");
+// 			//	this.setSelectedText("B40");
+    
+// };
+
+
+					
+					sap.ui.getCore().byId("idQU2").bindItems({
+            path: "confirmData>/activity",
+            template: new sap.ui.core.Item({
+          
+                key: "{confirmData>actId}",
+                text: "{confirmData>activityDes}"
+            }),
+            events: {
+                dataReceived: function () {
+                  
+                }.bind(this)
+            }
+        });
+        
+        	oDDL.onAfterRendering=function() {
+        		
+        		var textValue= "Start Failure";
+        		var i;
+        		var defaultValue ;
+        		
+        		for(i=0;i<3;i++){
+        		defaultValue = modelValue.oData['activity'][i].activityDes;
+        		
+        		if (defaultValue === textValue){
+        			 keyValue= 	modelValue.oData['activity'][i].actId;
+        			console.log("Key value is",keyValue);
+        		}
+        			
+        		}
+        		
+        		
+    //     		if(textValue === "Start Failure" ){
+				// var keyValue= 	this.getSelectedKey();
+				// //	that.getView().setModel(that.oConfirmModel, "confirmData");
+				 this.setSelectedKey(keyValue);
+    //     		}
+    
+        	};
+				
+			},
+
+		
+			// Code change by sushant , Wricef- 16394- 26 April 2022 - End
 
 		fActClick: function(e) {
 
@@ -335,7 +546,8 @@ sap.ui.define([
 			var logtime1 = (logTime.replace(":", ""));
 			var o = (logtime1.replace(":", "")); //time
 			var u = sap.ui.getCore().byId("idQuan2").getValue();
-			var g = sap.ui.getCore().byId("idQU2").getValue();
+			var g = "";
+			//sap.ui.getCore().byId("idQU2").getSelectedItem(); //Sushant - 16394 - 26 April 2022
 			var n = sap.ui.getCore().byId("idNumber2").getValue();
 			var oModel = this.getOwnerComponent().getModel();
 			var l = "";
@@ -376,6 +588,7 @@ sap.ui.define([
 			});
 
 		},
+
 
 		//Selecttin event for automatic component consumption
 
@@ -694,6 +907,22 @@ sap.ui.define([
 
 													}
 													oModel.submitChanges(mParameter);
+
+													////////////////////Testing promise//////////////////////////
+
+											/*		var promise = Promise.resolve();
+
+													//Chain the promises
+													promise = promise.then(function() {
+														return;
+													});
+
+													promise.then(function() {
+															//All done
+														})
+														.catch(function() {
+															//Error somewhere. remaining not executed
+														});  */
 
 													/////////////////////////////////////////////////////////
 

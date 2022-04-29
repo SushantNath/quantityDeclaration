@@ -119,7 +119,7 @@
 							<f:FormElement label="Quantity">
 							<f:fields>
 								<Input id="idQuan2" width="8rem" class="ColInput" editable="true"/>
-						        <Input id="idQU2" width="4rem" class="ColInput" editable="true"/>
+						        <Select id="idQU2" width="4rem" class="ColInput" />
 					<!--	<RadioButtonGroup id="rbg2" columns="2" selectedIndex="3" class="sapUiMediumMarginBottom">
 		             	<RadioButton id="idAuto2" text="{i18n>Auto}" select="autoCompSel" />-->
 						
